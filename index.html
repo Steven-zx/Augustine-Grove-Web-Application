@@ -3,15 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link 1  href="./dist/output.css" rel="stylesheet"> 2 
+<link  href="./dist/output.css" rel="stylesheet"> 2 
 <title>My Tailwind Project</title>
 </head>
-<body>
-<h1 class="text-3xl font-bold text-blue-500">Hello Tailwind!</h1>
-<p class="text-gray-700 text-lg">This is a paragraph styled with Tailwind CSS.</p>
-<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-Click Me
-</button> 3 
-<div class="bg-red-500 p-4 text-white">This is a test.</div>
-</body>
-</html>
+<body class="bg-gray-100">
+
+    <!-- Hero Section -->
+    <section class="text-center py-20">
+        <h1 class="text-5xl font-extrabold text-blue-600">
+            Tailwind CSS is Working!
+        </h1>
+        <p class="mt-4 text-lg text-gray-700">
+            This is a simple test to check if Tailwind CSS is working properly.
+        </p>
+    </section>
+  
+    <!-- Button Section -->
+    <div class="text-center py-10">
+        <button class="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none">
+            Click Me
+        </button>
+    </div>
+  
+    <!-- Grid Section -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+            <h3 class="text-xl font-bold text-gray-800">Card 1</h3>
+            <p class="text-gray-600">This is a sample card. Tailwind CSS makes it easy to create responsive layouts!</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+            <h3 class="text-xl font-bold text-gray-800">Card 2</h3>
+            <p class="text-gray-600">Another example of a card. Tailwind CSS has utility classes to control spacing, colors, and more.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+            <h3 class="text-xl font-bold text-gray-800">Card 3</h3>
+            <p class="text-gray-600">Tailwind's utility-first approach allows for quick, efficient UI development!</p>
+        </div>
+    </section>
+  
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-6 mt-10">
+        <p>Built with ❤️ using Tailwind CSS</p>
+    </footer>
+  
+  </body>
+  
+  </html>
