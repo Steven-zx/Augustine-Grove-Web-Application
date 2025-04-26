@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'E111Viva'; /* CAPITAL E */
+    src: url('../fonts/E111Viva.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.text-outline {
+    color: #FFDDAB; /* Main text color */
+    text-shadow: 
+        -2px -2px 0 #804E38,  
+        2px 2px 0 #804E38; /* Outline color */
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

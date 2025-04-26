@@ -1,15 +1,21 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './index.html',          // Make sure this path is correct for your HTML file
-    './src/**/*.html',       // Include all HTML files within the src folder if needed
-    './src/**/*.js',         // Include all JavaScript files that use Tailwind CSS
+    './index.html',
+    './src/**/*.html',
+    './src/**/*.js',
   ],
-  darkMode: 'media',         // You can keep this if you want dark mode based on system preference
+  darkMode: 'media',
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        custom: ['E111Viva', 'serif'], // <-- fixed
+      },
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
