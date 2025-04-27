@@ -80,70 +80,61 @@
         </div>
       </section>
 
-      <section class="bg-[#FFDDAB] bg-opacity-60 py-12 px-20">
+      
+      <section class="bg-[#ffe5bd] py-12 px-8 md:px-20">
         <div class="container mx-auto px-4">
-          
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-3xl font-bold">Latest Community Updates</h2>
-                <a href="#all-announcements" class="text-[#5F8B4C] font-semibold hover:underline text-sm md:text-base">
-                  View More
-                </a>
-              </div>
-              
+      
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
+            <h2 class="text-2xl md:text-3xl font-bold">Latest Community Updates</h2>
+            <a href="#all-announcements" class="text-[#5F8B4C] font-semibold hover:underline text-sm md:text-base">View More ></a>
+          </div>
       
           <div class="relative">
-            <!-- Carousel Container -->
+            <!-- Carousel -->
             <div id="carousel" class="flex overflow-x-auto no-scrollbar scroll-smooth space-x-6 pb-4">
-              
-              <!-- Card 1 (WITH picture) -->
-              <div class="flex-shrink-0 w-[300px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[500px] flex flex-col">
+      
+              <!-- Card 1 (with picture) -->
+              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
                 <img src="pictures/announcement1.png" alt="New Pool Rules" class="rounded-2xl mb-4 h-44 object-cover">
-                
                 <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg font-bold text-left">New Pool Rules</h3>
+                  <h3 class="text-lg md:text-xl font-bold text-left">New Pool Rules</h3>
                   <p class="text-gray-500 text-sm text-right">Admin</p>
                 </div>
-      
                 <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
                   Please be informed that new pool safety rules are now implemented for everyone's safety and enjoyment this summer season...
                 </p>
-      
                 <div class="flex justify-between items-center mt-auto">
                   <p class="text-gray-500 text-xs">May 1, 2025</p>
                   <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
                 </div>
               </div>
       
-              <!-- Card 2 (WITH picture) -->
-              <div class="flex-shrink-0 w-[300px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[500px] flex flex-col">
+              <!-- Card 2 (with picture) -->
+              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
                 <img src="pictures/announcement2.png" alt="Basketball Court" class="rounded-2xl mb-4 h-44 object-cover">
-                
                 <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg font-bold text-left">Basketball Court Renovation</h3>
+                  <h3 class="text-lg md:text-xl font-bold text-left">Basketball Court Renovation</h3>
                   <p class="text-gray-500 text-sm text-right">Admin</p>
                 </div>
-      
                 <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
                   The basketball court will be closed for renovations starting this week. Residents are advised to use alternative facilities temporarily...
                 </p>
-      
                 <div class="flex justify-between items-center mt-auto">
                   <p class="text-gray-500 text-xs">April 29, 2025</p>
                   <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
                 </div>
               </div>
       
-              <!-- Card 3 (NO picture = longer text) -->
-              <div class="flex-shrink-0 w-[300px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[500px] flex flex-col">
+              <!-- Card 3 (no picture) -->
+              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
                 <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg font-bold text-left">Visitor QR System Launched</h3>
+                  <h3 class="text-lg md:text-xl font-bold text-left">Visitor QR System Launched</h3>
                   <p class="text-gray-500 text-sm text-right">Admin</p>
                 </div>
-      
                 <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
                   Homeowners can now generate QR codes for their visitors through the community portal. This new system improves security, allows faster entry at the gate, and keeps records more efficiently. Instructions on generating codes are available on the website and in the latest announcement bulletin...
                 </p>
-      
                 <div class="flex justify-between items-center mt-auto">
                   <p class="text-gray-500 text-xs">April 25, 2025</p>
                   <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
@@ -152,18 +143,172 @@
       
             </div>
       
-            <!-- Left and Right Arrow Buttons -->
-            <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-[#5F8B4C] text-white p-2 rounded-full shadow-md hover:bg-green-700">
-              ‹
+            <!-- Buttons -->
+            <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
+              <img src="pictures/prev_button.png" alt="Previous" class="w-full h-full object-contain">
             </button>
-            <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-[#5F8B4C] text-white p-2 rounded-full shadow-md hover:bg-green-700">
-              ›
+      
+            <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
+              <img src="pictures/next_button.png" alt="Next" class="w-full h-full object-contain">
             </button>
+      
           </div>
+      
         </div>
       </section>
       
-                  
+      <section class="bg-[#FAF1E6] py-16 px-8 md:px-20">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl md:text-3xl font-bold text-[#5F8B4C] mb-2">Our Services and Amenities</h2>
+          <p class="text-gray-700 font-semibold">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        </div>
+      
+        <!-- Top Row: 3 Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <!-- Clubhouse -->
+          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
+            <div class="absolute -top-8">
+              <div class="bg-white p-3 rounded-xl shadow-md">
+                <img src="pictures/clubhouse_icon.png" alt="Clubhouse Icon" class="w-12 h-12">
+              </div>
+            </div>
+            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Clubhouse</h3>
+            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+              →
+            </button>
+          </div>
+      
+          <!-- Swimming Pool -->
+          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
+            <div class="absolute -top-8">
+              <div class="bg-white p-3 rounded-xl shadow-md">
+                <img src="pictures/pool_icon.png" alt="Swimming Pool Icon" class="w-12 h-12">
+              </div>
+            </div>
+            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Swimming Pool</h3>
+            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+              →
+            </button>
+          </div>
+      
+          <!-- Basketball Court -->
+          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
+            <div class="absolute -top-8">
+              <div class="bg-white p-3 rounded-xl shadow-md">
+                <img src="pictures/court_icon.png" alt="Basketball Icon" class="w-12 h-12">
+              </div>
+            </div>
+            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Basketball Court</h3>
+            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+              →
+            </button>
+          </div>
+        </div>
+      
+<!-- Bottom Row: 2 Cards -->
+<div class="flex flex-col md:flex-row justify-center items-center gap-8">
+    <!-- Security Card -->
+    <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+      <div class="absolute -top-8">
+        <div class="bg-white p-3 rounded-xl shadow-md">
+          <img src="pictures/security2_icon.png" alt="Security Icon" class="w-12 h-12">
+        </div>
+      </div>
+      <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
+      <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+      <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+        Generate QR
+      </button>
+    </div>
+  
+    <!-- Park and Playground Card -->
+    <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+      <div class="absolute -top-8">
+        <div class="bg-white p-3 rounded-xl shadow-md">
+          <img src="pictures/park_icon.png" alt="Park Icon" class="w-12 h-12">
+        </div>
+      </div>
+      <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Park and Playground</h3>
+      <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+      <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+        Coming Soon
+      </button>
+    </div>
+  </div>
+  
+      
+      </section>
+      
+      <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          
+          <!-- Left: Logo and Description -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <img src="pictures/logo 2.png" alt="Logo" class="h-10">
+              <span class="text-xl font-bold">Augustine Grove</span>
+            </div>
+            <p class="text-sm">
+              Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
+            </p>
+          </div>
+      
+          <!-- Contact Us -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Contact us</h4>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/phone-icon.svg" alt="Phone" class="h-4 w-4">
+              <span>(555) 123-4562</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/email-icon.svg" alt="Email" class="h-4 w-4">
+              <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/fb-icon.svg" alt="Facebook" class="h-4 w-4">
+              <span>Augustine Grove Subdivision</span>
+            </div>
+          </div>
+      
+          <!-- Quick Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Quick links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#" class="hover:underline">Home</a></li>
+              <li><a href="#" class="hover:underline">About Us</a></li>
+              <li><a href="#" class="hover:underline">Amenities</a></li>
+              <li><a href="#" class="hover:underline">Gallery</a></li>
+              <li><a href="#" class="hover:underline">Announcements / News</a></li>
+              <li><a href="#" class="hover:underline">Contact Us</a></li>
+              <li><a href="#" class="hover:underline">FAQs</a></li>
+            </ul>
+          </div>
+      
+          <!-- Office Hours -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Office Hours</h4>
+            <ul class="text-sm space-y-1">
+              <li>Monday - Friday: 9AM - 5PM</li>
+              <li>Saturday: 10AM - 2PM</li>
+              <li>Sunday: Closed</li>
+            </ul>
+          </div>
+      
+        </div>
+      
+        <!-- Bottom -->
+        <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
+          <span>© 2025 Augustine Grove by Aser's Angels</span>
+          <span>|</span>
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" class="hover:underline">Terms and Conditions</a>
+        </div>
+      </footer>
+      
       
       <script>
         const menuBtn = document.getElementById('menu-btn');
