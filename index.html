@@ -8,48 +8,89 @@
 <title>Augustine Grove</title>
 </head>
 <body class="bg-[#FFDDAB]">
-dhajshdasjdhjas
-    
-    <nav class="flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white">
-        <div class="flex items-center gap-2">
-            <img src="pictures/logo 2.png" alt="Logo" class=" h-8 w-auto md:h-12 lg:h-16">
-            <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-        </div>
-        <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
-            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-        <div id="menu" class="hidden md:flex flex-col md:flex-row items-center gap-6 bg-[#5F8B4C] md:bg-transparent absolute md:static w-full md:w-auto top-16 left-0 p-4 md:p-0 transition-all duration-300 ease-in-out z-50">
-            <ul class="flex flex-col md:flex-row gap-8 text-md font-semibold font-poppins">
-                <li><a href="#" class="hover:underline">Announcements</a></li>
-                <li><a href="#" class="hover:underline">Amenities</a></li>
-                <li><a href="#" class="hover:underline">Gallery</a></li>
-                <li><a href="#" class="hover:underline">About</a></li>
-            </ul>
-            <img src="pictures/profile.png" alt="Profile" class="h-8">
-        </div>
-    </nav>
-      
 
-    <section class="relative h-screen bg-cover bg-center flex flex-col items-center justify-center" style="background-image: url('pictures/bg.png');">
+<!-- Nav BAr -->   
+<nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
+  <div class="flex items-center gap-2">
+    <img src="pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+  </div>
+
+  <!-- Hamburger Button -->
+  <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Desktop Menu -->
+  <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
+    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    <img src="pictures/profile.png" alt="Profile" class="h-8">
+  </div>
+
+  <!-- Mobile Slide-in Menu -->
+  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden">
+    <div class="flex items-center justify-between p-4 border-b border-gray-300">
+      <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
+      <button id="close-btn" class="text-[#5F8B4C]">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+      <img src="pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+      <div class="text-left">
+        <p class="font-semibold text-[#5F8B4C]">John Smith</p>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    
+
+<!-- Bottom Log Out Button -->
+<div class="w-full text-center mt-20 mb-6">
+  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+    Log Out
+  </button>
+
+  </div>
+</nav>
+
+
+<!-- Hero Section -->
+    <section class="relative h-72 md:h-screen bg-cover bg-center flex flex-col items-center justify-center" style="background-image: url('pictures/bg.png');">
         <div class="absolute inset-0 bg-black opacity-30"></div> <!-- dark overlay -->
 
         <div class="relative text-center z-10">
-        <h1 class="font-bold text-xl md:text-4xl mb-10 text-[#FAF1E6]">WELCOME TO</h1>
-        <h1 class="font-custom text-4xl md:text-9xl mb-20 text-outline">Augustine Grove</h1>
-        <div class="flex gap-20 justify-center ">
-            <a href="#updates" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white px-6 py-3 rounded-[80px] transition transform hover:scale-105 duration-300">Updates</a>              
-            <a href="#amenities" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] px-6 py-3 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
+        <h1 class="font-bold text-xl md:text-4xl mb-4 md:mb-10 text-[#FAF1E6]">WELCOME TO</h1>
+        <h1 class="font-custom text-6xl md:text-9xl mb-8 md:mb-20 text-outline">Augustine Grove</h1>
+        <div class="flex md:gap-20 gap-10 justify-center ">
+            <a href="#updates" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">  Updates     > </a>              
+            <a href="#amenities" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
           </div>
         </div>
       </section>
 
-
+<!-- Map -->
       <section class="bg-[#FAF1E6] p-10 md:px-40 md:py-20 flex flex-col md:flex-row items-center gap-12">
         <div class="w-full md:w-1/2">
             <h1 class="text-3xl font-bold mb-4">Augustine Community Map</h1>
-            <img src="pictures/AG Map 1.png" alt="Community Map" class="rounded-[80px] shadow-lg w-auto">
+            <img src="pictures/AG Map 1.png" alt="Community Map" class="rounded-[80px] border-2 border-[#5F8B4C] shadow-lg w-full max-h-[500px] object-contain mx-auto">
         </div>
         <div class="w-full md:w-1/2">
           <h2 class="text-3xl font-bold mb-4">Overview</h2>
@@ -83,7 +124,7 @@ dhajshdasjdhjas
         </div>
       </section>
 
-      
+<!-- Announcements -->
       <section class="bg-[#ffe5bd] py-12 px-8 md:px-20">
         <div class="container mx-auto px-4">
       
@@ -159,94 +200,99 @@ dhajshdasjdhjas
       
         </div>
       </section>
-      
-      <section class="bg-[#FAF1E6] py-16 px-8 md:px-20">
-        <div class="text-center mb-12">
-          <h2 class="text-2xl md:text-3xl font-bold text-[#5F8B4C] mb-2">Our Services and Amenities</h2>
-          <p class="text-gray-700 font-semibold">Enjoy the perfect balance of convenience, peace, and community living.</p>
-        </div>
-      
-        <!-- Top Row: 3 Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <!-- Clubhouse -->
-          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
-            <div class="absolute -top-8">
-              <div class="bg-white p-3 rounded-xl shadow-md">
-                <img src="pictures/clubhouse_icon.png" alt="Clubhouse Icon" class="w-12 h-12">
-              </div>
-            </div>
-            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Clubhouse</h3>
-            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
-              →
-            </button>
-          </div>
-      
-          <!-- Swimming Pool -->
-          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
-            <div class="absolute -top-8">
-              <div class="bg-white p-3 rounded-xl shadow-md">
-                <img src="pictures/pool_icon.png" alt="Swimming Pool Icon" class="w-12 h-12">
-              </div>
-            </div>
-            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Swimming Pool</h3>
-            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
-              →
-            </button>
-          </div>
-      
-          <!-- Basketball Court -->
-          <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center">
-            <div class="absolute -top-8">
-              <div class="bg-white p-3 rounded-xl shadow-md">
-                <img src="pictures/court_icon.png" alt="Basketball Icon" class="w-12 h-12">
-              </div>
-            </div>
-            <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Basketball Court</h3>
-            <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-            <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
-              →
-            </button>
-          </div>
-        </div>
-      
-<!-- Bottom Row: 2 Cards -->
-<div class="flex flex-col md:flex-row justify-center items-center gap-8">
-    <!-- Security Card -->
-    <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
-      <div class="absolute -top-8">
-        <div class="bg-white p-3 rounded-xl shadow-md">
-          <img src="pictures/security2_icon.png" alt="Security Icon" class="w-12 h-12">
-        </div>
-      </div>
-      <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
-      <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-      <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
-        Generate QR
-      </button>
-    </div>
-  
-    <!-- Park and Playground Card -->
-    <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
-      <div class="absolute -top-8">
-        <div class="bg-white p-3 rounded-xl shadow-md">
-          <img src="pictures/park_icon.png" alt="Park Icon" class="w-12 h-12">
-        </div>
-      </div>
-      <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Park and Playground</h3>
-      <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-      <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
-        Coming Soon
-      </button>
-    </div>
+
+<!-- Amenities Section -->
+<section class="bg-[#FAF1E6] py-16 px-8 md:px-20">
+  <div class="text-center mb-12">
+    <h2 class="text-2xl md:text-3xl font-bold text-[#5F8B4C] mb-2">Our Services and Amenities</h2>
+    <p class="text-gray-700 font-semibold">Enjoy the perfect balance of convenience, peace, and community living.</p>
   </div>
-  
-      
-      </section>
+
+  <div class="flex flex-col items-center gap-12">
+    
+    <!-- Top Row: 3 Cards -->
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Clubhouse -->
+      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+        <div class="absolute -top-8">
+          <div class="bg-white p-3 rounded-xl shadow-md">
+            <img src="pictures/clubhouse_icon.png" alt="Clubhouse Icon" class="w-12 h-12">
+          </div>
+        </div>
+        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Clubhouse</h3>
+        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+          →
+        </button>
+      </div>
+
+      <!-- Swimming Pool -->
+      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+        <div class="absolute -top-8">
+          <div class="bg-white p-3 rounded-xl shadow-md">
+            <img src="pictures/pool_icon.png" alt="Swimming Pool Icon" class="w-12 h-12">
+          </div>
+        </div>
+        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Swimming Pool</h3>
+        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+          →
+        </button>
+      </div>
+
+      <!-- Basketball Court -->
+      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+        <div class="absolute -top-8">
+          <div class="bg-white p-3 rounded-xl shadow-md">
+            <img src="pictures/court_icon.png" alt="Basketball Court Icon" class="w-12 h-12">
+          </div>
+        </div>
+        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Basketball Court</h3>
+        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        <button class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+          →
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Row: 2 Cards -->
+    <div class="flex flex-col md:flex-row gap-8 md:mt-4">
+      <!-- Security -->
+      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+        <div class="absolute -top-8">
+          <div class="bg-white p-3 rounded-xl shadow-md">
+            <img src="pictures/security2_icon.png" alt="Security Icon" class="w-12 h-12">
+          </div>
+        </div>
+        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
+        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+          Generate QR
+        </button>
+      </div>
+
+      <!-- Park and Playground -->
+      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+        <div class="absolute -top-8">
+          <div class="bg-white p-3 rounded-xl shadow-md">
+            <img src="pictures/park_icon.png" alt="Park Icon" class="w-12 h-12">
+          </div>
+        </div>
+        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Park and Playground</h3>
+        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+        <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+          Coming Soon
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
       
       <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
           
           <!-- Left: Logo and Description -->
           <div class="space-y-4">
@@ -263,15 +309,15 @@ dhajshdasjdhjas
           <div class="space-y-4">
             <h4 class="font-bold mb-2">Contact us</h4>
             <div class="flex items-center gap-2 text-sm">
-              <img src="pictures/phone-icon.svg" alt="Phone" class="h-4 w-4">
+              <img src="pictures/phone_icon.png" alt="Phone" class="h-4 w-4">
               <span>(555) 123-4562</span>
             </div>
             <div class="flex items-center gap-2 text-sm">
-              <img src="pictures/email-icon.svg" alt="Email" class="h-4 w-4">
+              <img src="pictures/email_icon.png" alt="Email" class="h-4 w-4">
               <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
             </div>
             <div class="flex items-center gap-2 text-sm">
-              <img src="pictures/fb-icon.svg" alt="Facebook" class="h-4 w-4">
+              <img src="pictures/fb_icon.png" alt="Facebook" class="h-4 w-4">
               <span>Augustine Grove Subdivision</span>
             </div>
           </div>
@@ -312,16 +358,30 @@ dhajshdasjdhjas
         </div>
       </footer>
       
-      
-      <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const menu = document.getElementById('menu');
-      
-        menuBtn.addEventListener('click', () => {
-          menu.classList.toggle('hidden');
-          menuBtn.classList.toggle('rotate-90'); // Add rotation when clicked
-        });
-      </script>
+ <!-- Scripts -->     
+ <script>
+  const menuBtn = document.getElementById('menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const closeBtn = document.getElementById('close-btn');
+
+  // Open Sidebar
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.remove('translate-x-full');
+    sidebar.classList.add('translate-x-0');
+    document.body.classList.add('overflow-hidden'); // Prevent scroll
+  });
+
+  // Close Sidebar
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('translate-x-0');
+    sidebar.classList.add('translate-x-full');
+    document.body.classList.remove('overflow-hidden'); // Restore scroll
+  });
+</script>
+
+
+
+        
       
       <script>
         const carousel = document.getElementById('carousel');
@@ -336,6 +396,8 @@ dhajshdasjdhjas
           carousel.scrollBy({ left: -350, behavior: 'smooth' });
         });
       </script>
+
+      
       
       
   </body>
