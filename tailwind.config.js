@@ -5,6 +5,12 @@ module.exports = {
     './src/**/*.html',
     './src/**/*.js',
   ],
+  safelist: [
+    'translate-x-full',
+    'translate-x-0',
+    'transform',
+    'pointer-events-none',
+  ],
   darkMode: 'media',
   theme: {
     extend: {
