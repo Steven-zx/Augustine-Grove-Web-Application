@@ -9,27 +9,71 @@
 </head>
 <body class="bg-[#FAF1E6] font-poppins">
 
-    <nav class="flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white">
-        <div class="flex items-center gap-2">
-            <img src="pictures/logo 2.png" alt="Logo" class=" h-8 w-auto md:h-12 lg:h-16">
-            <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-        </div>
-        <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
-            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+    <!-- Nav BAr -->
+<nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
+    <div class="flex items-center gap-2">
+      <img src="pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+      <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+    </div>
+  
+    <!-- Hamburger Button -->
+    <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
+      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  
+    <!-- Desktop Menu -->
+    <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
+      <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+        <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      </ul>
+      <img src="pictures/profile.png" alt="Profile" class="h-8">
+    </div>
+  
+    <!-- Mobile Slide-in Menu -->
+    <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
+  
+      <div class="flex items-center justify-between p-4 border-b border-gray-300">
+        <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
+        <button id="close-btn" class="text-[#5F8B4C]">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
-        <div id="menu" class="hidden md:flex flex-col md:flex-row items-center gap-6 bg-[#5F8B4C] md:bg-transparent absolute md:static w-full md:w-auto top-16 left-0 p-4 md:p-0 transition-all duration-300 ease-in-out z-50">
-            <ul class="flex flex-col md:flex-row gap-8 text-md font-semibold font-poppins">
-                <li><a href="index.html" class="hover:underline">Home</a></li>
-                <li><a href="#" class="hover:underline">Announcements</a></li>
-                <li><a href="#" class="hover:underline">Amenities</a></li>
-                <li><a href="#" class="hover:underline">Gallery</a></li>
-                <li><a href="aboutpage.html" class="hover:underline">About</a></li>
-            </ul>
-            <img src="pictures/profile.png" alt="Profile" class="h-8">
+      </div>
+  
+      <!-- Profile Card -->
+      <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+        <img src="pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+        <div class="text-left">
+          <p class="font-semibold text-[#5F8B4C]">John Smith</p>
         </div>
-    </nav>
+      </div>
+  
+      <!-- Nav Links -->
+      <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+        <li><a href="#" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      </ul>
+      
+  
+  <!-- Bottom Log Out Button -->
+  <div class="w-full text-center mt-20 mb-6">
+    <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+      Log Out
+    </button>
+    </div>
+    
+  </div>
+  </nav> <!-- End of sidebar -->
+
+
 
     <main class="min-h-screen">
         <section class="relative h-screen bg-cover bg-center flex flex-col items-center justify-center" style="background-image: url('pictures/About Page.png');">
