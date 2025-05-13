@@ -1,8 +1,12 @@
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    @apply font-poppins;
+  }
 
 @font-face {
     font-family: 'E111Viva'; /* CAPITAL E */

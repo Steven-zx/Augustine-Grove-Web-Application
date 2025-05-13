@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amenities</title>
+
+  <!-- Tailwind CSS -->
+  <link href="./dist/output.css" rel="stylesheet" />
+
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+  <style>
+    /* Apply Poppins font to the whole document */
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  
+    /* === CALENDAR CONTAINER === */
+    #calendar {
+      max-width: 300px;             /* Control calendar width */
+      width: 100%;
+      aspect-ratio: 1 / 1;          /* Makes the calendar perfectly square */
+    }
+  
+    /* === REMOVE EVENT VISUALS (DOTS, COLORS, TITLES) === */
+  
+    /* Completely hide the event element’s background/border */
+    .fc .fc-event {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  
+    /* Hide additional dot indicators in day cells */
+    .fc .fc-event::after,
+    .fc .fc-daygrid-event-dot {
+      display: none !important;
+    }
+  
+    /* Hide event titles and times (just in case FullCalendar tries to display them) */
+    .fc-event-title,
+    .fc-event-time {
+      display: none !important;
+    }
+  
+    /* === DAY CELL STYLING === */
+  
+    /* Make each day cell square and center content inside */
+    .fc-daygrid-day-frame {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    /* Style the numbers inside the cells (day of the month) */
+    .fc-daygrid-day-number {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 0.75rem;   /* Smaller digits */
+      font-weight: normal;  /* No bold */
+    }
+  
+    /* Remove the background color highlight for today's date */
+    .fc .fc-day-today {
+      background-color: inherit !important;
+      border-radius: 0;
+    }
+  
+    /* === NAVIGATION BUTTONS (NEXT / PREV) === */
+  
+    /* Remove default styles from prev/next buttons */
+    .fc .fc-button {
+      background: none !important;
+      border: none !important;
+      color: #333 !important;
+      font-size: 1rem;         /* Slightly smaller text */
+      box-shadow: none !important;
+    }
+  
+    /* Optional: subtle hover effect on navigation buttons */
+    .fc .fc-button:hover {
+      background-color: transparent !important;
+      color: #666 !important;
+    }
+  
+    /* === MONTH-YEAR HEADER === */
+  
+    /* Make the month + year title smaller */
+    .fc .fc-toolbar-title {
+      font-size: 1rem !important;  /* Adjust this to your preference */
+      font-weight: 700;
+      color: #333;
+    }
+  
+    /* === WEEKDAY HEADERS (Sun, Mon, ...) === */
+  
+    /* Make weekday names smaller and non-bold */
+    .fc .fc-col-header-cell-cushion {
+      font-size: 0.75rem;    /* Tailwind: text-sm */
+      font-weight: normal;
+    }
+  
+    /* === LEGEND DOTS (for custom color indicators) === */
+    .legend-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      margin-right: 6px;
+    }
+  </style>
+  
+</head>
+<body class="bg-[#FAF1E6]">
+
+ 
+    
+
+  <!-- Calendar Section -->
+  <div class="bg-[#E6DCD0] py-20 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+    <h2 class="text-center text-xl font-semibold text-green-800 mt-10 mb-6">Amenity Booking Calendar</h2>
+    <div class="flex flex-col md:flex-row justify-between gap-8">
+        <div id="calendar" class="w-[300px] mx-auto"></div>
+    
+      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
+        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
+        <p><span class="legend-dot" style="background-color: #facc15;"></span> Partially booked</p>
+        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
+        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-600 text-center">
+      For booking assistance or questions, please contact the Augustine Grove HOA office at (555) 123-4567
+    </p>
+  </div>
+
+<!-- Time Block Modal -->
+<div id="timeBlockModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 hidden">
+  <div class="bg-white w-1/4 h-screen rounded-l-3xl p-4 overflow-y-auto shadow-lg relative">
+    <!-- Close Button -->
+    <button onclick="document.getElementById('timeBlockModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl">&times;</button>
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <button class="text-lg">&lt;</button>
+      <h2 id="timeBlockDate" class="text-lg font-semibold text-center flex-1">April 16, 2025</h2>
+      <button class="text-lg">&gt;</button>
+    </div>
+
+    <!-- Time Blocks -->
+    <div id="timeBlocks" class="space-y-4">
+      <!-- JavaScript inserts blocks here -->
+    </div>
+  </div>
+</div>
+
+<div class="bg-[#f3ebe3] rounded-xl p-6 max-w-2xl mx-auto mt-10">
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-green-700 pb-2">Booking Terms & Conditions</h2>
+  <ul class="space-y-2 text-sm text-gray-800">
+    <li>
+      <span class="font-semibold text-green-700">1. Eligibility:</span>
+      Only residents with good standing (no outstanding HOA dues) may book amenities.
+    </li>
+    <li>
+      <span class="font-semibold text-green-700">2. Booking Limits:</span>
+      Each household may book the clubhouse a maximum of twice per month and reserve the pool for exclusive use once per month.
+    </li>
+    <li>
+      <span class="font-semibold text-green-700">3. Cancellation Policy:</span>
+      Cancellations must be made at least 48 hours in advance for a full refund. Later cancellations forfeit 50% of the booking fee.
+    </li>
+    <li>
+      <span class="font-semibold text-green-700">4. Damages:</span>
+      The booking resident is responsible for any damages incurred during their reservation period.
+    </li>
+    <li>
+      <span class="font-semibold text-green-700">5. Noise Restrictions:</span>
+      All events must observe quiet hours from 10PM to 6AM.
+    </li>
+    <li>
+      <span class="font-semibold text-green-700">6. Cleaning:</span>
+      Facilities must be cleaned and returned to their original condition after use.
+    </li>
+  </ul>
+</div>
+
+  
+
+  <!-- Calendar Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: '',
+          center: 'title',
+          right: 'prev,next'
+        },
+        events: [
+          {
+            title: '',
+            start: '2025-05-10',
+            bgColor: '#f97316',
+            extendedProps: {
+              description: '🏀 Basketball Court Booked by HOA 3'
+            }
+          },
+          {
+            title: '',
+            start: '2025-05-12',
+            bgColor: '#22c55e',
+            extendedProps: {
+              description: '🏠 Clubhouse Reserved for a Private Event'
+            }
+          },
+          {
+            title: '',
+            start: '2025-05-15',
+            bgColor: '#ef4444',
+            extendedProps: {
+              description: '🧼 Pool Maintenance Scheduled'
+            }
+          }
+        ],
+        dateClick: function (info) {
+  const date = info.dateStr;
+  document.getElementById('timeBlockDate').textContent = `Schedule for ${new Date(date).toDateString()}`;
+
+  // TODO: Replace with backend fetch later
+  renderTimeBlocks(date);
+
+  // Show modal
+  document.getElementById('timeBlockModal').classList.remove('hidden');
+},
+
+
+        eventDidMount: function (info) {
+          const bgColor = info.event.extendedProps.bgColor || '#e0e0e0';
+          const cell = info.el.closest('.fc-daygrid-day');
+          if (cell) cell.style.backgroundColor = bgColor;
+        }
+      });
+      function renderTimeBlocks(dateStr) {
+  const container = document.getElementById('timeBlocks');
+  container.innerHTML = '';
+
+  // Fake booking data for demo
+  const fakeBookings = [
+    { hour: 10, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
+    { hour: 11, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
+    { hour: 10, amenity: 'Clubhouse', color: 'bg-green-100', dot: 'bg-green-500' },
+    { hour: 14, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' }
+  ];
+
+  for (let hour = 8; hour <= 18; hour++) {
+    const block = document.createElement('div');
+    block.className = 'relative border-t pt-2 pb-4 pl-4';
+
+    const label = document.createElement('div');
+    label.className = 'text-sm text-gray-500';
+    label.textContent = `${hour}:00`;
+
+    block.appendChild(label);
+
+    const bookings = fakeBookings.filter(b => b.hour === hour);
+
+    bookings.forEach(b => {
+      const pill = document.createElement('div');
+      pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm text-gray-800 font-medium flex items-center gap-2 ${b.color}`;
+      pill.innerHTML = `<span class="w-2 h-2 rounded-full ${b.dot}"></span> ${b.amenity}`;
+      block.appendChild(pill);
+    });
+
+    container.appendChild(block);
+  }
+}
+
+      calendar.render();
+    });
+  </script>
+
+<script>
+    const modal = document.getElementById('bookingModal');
+    const closeBtn = document.getElementById('closeModal');
+  
+  
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  
+    // Optional: Close when clicking outside modal
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  </script>
+  
+</body>
+</html>

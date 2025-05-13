@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Announcement</title>
+  <link  href="../../dist/output.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    .rich-btn {
+      @apply text-green-700 hover:text-green-900 mr-2;
+    }
+  </style>
+</head>
+
+<body class="bg-[#FAF1E6] min-h-screen flex items-center justify-center p-6">
+
+  <div class="w-full max-w-3xl bg-[#e8ddcf] rounded-xl shadow-xl p-8">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Create Announcement</h1>
+      <a href="announcements.html" class="text-green-700 hover:text-green-900 text-xl font-bold">×</a>
+    </div>
+
+    <!-- Title -->
+    <label class="block text-gray-800 font-bold mb-1">
+      * Title
+    </label>
+    <input type="text" id="title" maxlength="100"
+           class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+           placeholder="Type title here.">
+    <div class="text-right text-sm text-gray-500 mb-4" id="titleCount">0/100</div>
+
+   
+      <!-- File Upload -->
+<div class="md:col-span-2 mb-4">
+  <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+    Attach Image (optional)
+  </label>
+  <input name="image" id="imageInput" type="file" accept="image/*"
+         class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5F8B4C] file:text-white hover:file:bg-green-700" />
+  <p class="text-xs text-gray-500 mt-1">Upload a photo to better describe the issue.</p>
+
+  <!-- Preview Area -->
+  <div class="mt-4" id="imagePreviewContainer" style="display: none;">
+    <p class="text-sm font-medium text-gray-700 mb-2">Image Preview:</p>
+    <img id="imagePreview" src="#" alt="Preview" class="rounded-lg max-h-60 border border-gray-300">
+  </div>
+</div>
+
+    <!-- Body -->
+    <!-- Body Section with icons embedded inside the same container -->
+<label class="block text-gray-800 font-bold mb-1">
+    * Body
+  </label>
+  
+  <div class="relative bg-white border border-gray-300 rounded-lg overflow-hidden mb-4">
+    <!-- Rich Text Toolbar Inside -->
+    <div class="flex items-center space-x-4 p-2 border-b border-gray-200 bg-white">
+      
+      <!-- Bold -->
+      <button class="text-green-700 hover:text-green-900 font-bold" title="Bold">B</button>
+  
+      <!-- Italic -->
+      <button class="text-green-700 hover:text-green-900 italic" title="Italic">I</button>
+  
+      <!-- Bullet List -->
+      <button class="text-green-700 hover:text-green-900" title="Bullet List">•</button>
+    </div>
+  
+    <!-- Text Area -->
+    <textarea id="body" rows="6"
+              class="w-full px-4 py-3 focus:outline-none resize-none"
+              placeholder="Type body here..."></textarea>
+  </div>
+  
+    <p class="text-xs italic text-red-600 mb-4">* Indicates required field</p>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-4">
+      <a href="announcements.html"
+         class="px-5 py-2 rounded-full bg-gray-300 text-gray-800 hover:bg-gray-400 font-semibold">
+        Cancel
+      </a>
+      <button onclick="postAnnouncement()"
+              class="px-6 py-2 rounded-full bg-green-700 text-white font-semibold hover:bg-green-800">
+        Post
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const titleInput = document.getElementById('title');
+    const titleCount = document.getElementById('titleCount');
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+
+    titleInput.addEventListener('input', () => {
+      titleCount.textContent = `${titleInput.value.length}/100`;
+    });
+
+    imageUpload.addEventListener('change', () => {
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          imagePreview.src = e.target.result;
+          imagePreview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function postAnnouncement() {
+      const title = titleInput.value.trim();
+      const body = document.getElementById('body').value.trim();
+
+      if (!title || !body) {
+        alert("Please fill out the required fields.");
+        return;
+      }
+
+      // Simulate posting (replace with backend connection)
+      alert("Announcement posted! 🎉");
+      window.location.href = "announcements.html";
+    }
+  </script>
+</body>
+</html>

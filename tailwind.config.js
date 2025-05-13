@@ -1,7 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    './pages/**/*.html',
     './index.html',
+    './amenities.html',
+    './announcements.html',
+    './about.html',
+    './try.html',
+    './concerns.html',
+    './profile.html',
+    './announcement_detail.html',
+    './create_announcement.html',
+    './about.html',
+    './gallery.html',
+    './cal.html',
+    './cal_copy.html',
+    './booking_form.html',
     './src/**/*.html',
     './src/**/*.js',
   ],
@@ -16,7 +30,7 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
-        custom: ['E111Viva', 'serif'], // <-- fixed
+        custom: ['E111Viva', 'serif'], 
       },
     },
   },

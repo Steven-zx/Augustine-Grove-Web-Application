@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Concerns</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="../../dist/output.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
+
+  <!-- Page Title -->
+  <h1 class="sm:text-2xl md:text-xl font-bold px-4 sm:px-10 md:px-20 py-6">Concerns and Issues</h1>
+
+  <!-- Admin Only Buttons -->
+  <div id="admin-buttons" class="flex justify-start gap-4 md:px-20 mb-4">
+    <a href="create_announcement.html" class="text-[#5F8B4C] font-bold px-4 py-2 rounded-3xl text-sm border-[#5F8B4C] border-2 hover:bg-[#5F8B4C]/20">
+      + Create Announcement
+    </a>
+    <a href="concerns.html" class= "text-[#5F8B4C] font-bold px-4 py-2 rounded-3xl text-sm border-[#5F8B4C] border-2 hover:bg-[#5F8B4C]/20">
+      View Concerns
+    </a>
+  </div>
+
+  <!-- Filter Container -->
+  <section class="px-6">
+    <div class="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 md:gap-4">
+      <!-- Filters (Category, Month, Importance, Sort By) -->
+      <!-- Repeatable filter item -->
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        <label class="block text-base font-bold text-[#2E4C2C]">Issue Type</label>
+        <div class="relative">
+          <select id="filter-issue-type" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+            <option>All Categories</option>
+            <option>Facilities</option>
+            <option>Noise</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repeat for other filters -->
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        <label class="block text-base font-bold text-[#2E4C2C]">Month</label>
+        <div class="relative">
+          <select id="filter-month" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+            <option>All Months</option>
+            <option>April</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        <label class="block text-base font-bold text-[#2E4C2C]">Sort By</label>
+        <div class="relative">
+          <select id="filter-sort" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+            <option>Newest</option>
+            <option>Oldest</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- Concerns Section -->
+<section id="concerns" class="px-20 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <!-- Concern cards will be dynamically added here by JavaScript -->
+     <!-- Template for Concern Card -->
+<template id="concern-template">
+    <div class="bg-[#FAF1E6] border border-[#5F8B4C] rounded-xl px-6 py-4 shadow-md">
+      <div>
+        <p class="text-[#2E4C2C] font-bold">Name:</p>
+        <span class="name"></span>
+      </div>
+      <p><strong class="text-[#2E4C2C]">Location:</strong> <span class="location"></span></p>
+      <p><strong class="text-[#2E4C2C]">Issue Type:</strong> <span class="issue-type"></span></p>
+      <p><strong class="text-[#2E4C2C]">Email Address:</strong> <span class="email"></span></p>
+      <p><strong class="text-[#2E4C2C]">Description:</strong> <span class="description block mt-1 text-gray-700 text-sm md:text-base"></span></p>
+  
+      <div class="flex justify-between items-center text-sm text-gray-600 mt-4">
+        <div class="flex items-center gap-1">
+          <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-base"></i>
+          <span class="date"></span>
+        </div>
+        <div class="flex items-center gap-1 text-[#5F8B4C] font-medium cursor-pointer hover:underline">
+          <i class="fa-solid fa-check-to-slot text-[#5F8B4C] text-xs"></i>
+          <span class="resolve-text">Mark as resolved</span>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  </section>
+
+<!-- Pagination -->
+<div id="pagination" class="flex justify-end gap-3 px-10 mt-10 mb-16"></div>
+<script>
+    const concernsData = [
+      {
+        id: "1",
+        name: "Juan Dela Cruz",
+        location: "Basketball Court",
+        description: "There is a noticeable water leak near the basketball court that has been worsening.",
+        date: "April 5, 2025",
+        issueType: "Facilities",
+        email: "juan@email.com"
+      },
+      {
+        id: "2",
+        name: "Maria Santos",
+        location: "Block 3",
+        description: "Residents from Block 3 have reported loud music being played past 11PM.",
+        date: "April 10, 2025",
+        issueType: "Noise",
+        email: "maria@email.com"
+      },
+      {
+        id: "3",
+        name: "Carlos Reyes",
+        location: "Main Avenue",
+        description: "A streetlight on Main Ave. has been flickering and needs maintenance.",
+        date: "May 2, 2025",
+        issueType: "Facilities",
+        email: "carlos@email.com"
+      },
+      {
+        id: "4",
+        name: "Carlos Reyes",
+        location: "Main Avenue",
+        description: "A streetlight on Main Ave. has been flickering and needs maintenance.",
+        date: "May 2, 2025",
+        issueType: "Facilities",
+        email: "carlos@email.com"
+      },
+      {
+        id: "5",
+        name: "Carlos Reyes",
+        location: "Main Avenue",
+        description: "A streetlight on Main Ave. has been flickering and needs maintenance.",
+        date: "May 2, 2025",
+        issueType: "Facilities",
+        email: "carlos@email.com"
+      },
+      {
+        id: "6",
+        name: "Carlos Reyes",
+        location: "Main Avenue",
+        description: "A streetlight on Main Ave. has been flickering and needs maintenance.",
+        date: "May 2, 2025",
+        issueType: "Facilities",
+        email: "carlos@email.com"
+      },
+      {
+        id: "7",
+        name: "Carlos Reyes",
+        location: "Main Avenue",
+        description: "A streetlight on Main Ave. has been flickering and needs maintenance.",
+        date: "May 2, 2025",
+        issueType: "Facilities",
+        email: "carlos@email.com"
+      },
+    ];
+  
+    const concernsContainer = document.getElementById("concerns");
+    const concernTemplate = document.getElementById("concern-template");
+    const paginationContainer = document.getElementById("pagination");
+  
+    const cardsPerPage = 4;
+    let currentPage = 1;
+    let filteredConcerns = [...concernsData];
+  
+    function displayConcerns(data, page = 1) {
+  concernsContainer.innerHTML = "";
+  currentPage = page;
+
+  const start = (page - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+  const paginatedData = data.slice(start, end);
+
+  paginatedData.forEach((concern) => {
+    const clone = concernTemplate.content.cloneNode(true);
+    clone.querySelector(".name").textContent = concern.name;
+    clone.querySelector(".location").textContent = concern.location;
+    clone.querySelector(".issue-type").textContent = concern.issueType;
+    clone.querySelector(".email").textContent = concern.email;
+    clone.querySelector(".description").textContent = concern.description;
+    clone.querySelector(".date").textContent = concern.date;
+
+    concernsContainer.appendChild(clone);
+  });
+
+  renderPagination(data.length, currentPage);
+}
+
+  
+// 🟢 Render pagination buttons for Concerns
+function renderPagination(totalItems, currentPage) {
+  const totalPages = Math.ceil(totalItems / cardsPerPage);
+  paginationContainer.innerHTML = "";
+
+  // ← Prev button
+  paginationContainer.appendChild(
+    createPageButton("←", currentPage - 1, currentPage === 1)
+  );
+
+  // Middle page numbers
+  const pagesToShow = 3;
+  let startPage = Math.max(1, currentPage - 1);
+  let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+  if (endPage - startPage < pagesToShow - 1) {
+    startPage = Math.max(1, endPage - pagesToShow + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    paginationContainer.appendChild(
+      createPageButton(i, i, false, i === currentPage)
+    );
+  }
+
+  // → Next button
+  paginationContainer.appendChild(
+    createPageButton("→", currentPage + 1, currentPage === totalPages)
+  );
+}
+
+// 🟢 Create a page button for Concerns
+function createPageButton(text, page, disabled = false, isActive = false) {
+  const btn = document.createElement("button");
+  btn.textContent = text;
+  btn.className =
+    "px-3 py-1 mx-1 rounded-md text-sm transition " +
+    (isActive
+      ? "bg-[#5F8B4C] text-white font-semibold"
+      : "bg-[#E6DCD0] text-[#5F8B4C] hover:bg-[#5F8B4C]/20") +
+    (disabled ? " opacity-50 cursor-not-allowed" : "");
+
+  btn.disabled = disabled;
+
+  btn.onclick = () => {
+    if (!disabled) {
+      currentPage = page;
+      displayConcerns(filteredConcerns, currentPage); // use displayConcerns for this page
+    }
+  };
+
+  return btn;
+}
+
+
+  
+    // Filter elements
+    const filterIssueType = document.getElementById("filter-issue-type");
+    const filterMonth = document.getElementById("filter-month");
+    const filterSort = document.getElementById("filter-sort");
+  
+    function getMonthName(dateStr) {
+      const month = new Date(dateStr).toLocaleString('default', { month: 'long' });
+      return month;
+    }
+  
+    function filterConcerns() {
+      const issue = filterIssueType.value;
+      const month = filterMonth.value;
+      const sort = filterSort.value;
+  
+      filteredConcerns = concernsData.filter(concern => {
+        const matchIssue = issue === "All Categories" || concern.issueType === issue;
+        const concernMonth = getMonthName(concern.date);
+        const matchMonth = month === "All Months" || concernMonth === month;
+        return matchIssue && matchMonth;
+      });
+  
+      if (sort === "Oldest") {
+        filteredConcerns.sort((a, b) => new Date(a.date) - new Date(b.date));
+      } else {
+        filteredConcerns.sort((a, b) => new Date(b.date) - new Date(a.date));
+      }
+  
+      currentPage = 1; // Reset to first page after filtering
+      displayConcerns(filteredConcerns, currentPage);
+    }
+  
+    filterIssueType.addEventListener("change", filterConcerns);
+    filterMonth.addEventListener("change", filterConcerns);
+    filterSort.addEventListener("change", filterConcerns);
+  
+    // Initial load
+    displayConcerns(filteredConcerns, currentPage);
+  </script>
+  
+  
+</body>
+</html>

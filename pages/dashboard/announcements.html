@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Announcements</title>
+  <link href="../../dist/output.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .page-btn {
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.75rem;
+      border: 1px solid #5F8B4C;
+      background-color: #E6DCD0;
+      transition: background-color 0.2s ease;
+      font-weight: 600;
+      color: #5F8B4C;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      background-color: #c6baa8;
+    }
+
+    .page-btn.active {
+      background-color: #5F8B4C;
+      color: white;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fadeSlide: 'fadeSlide 0.3s ease-out'
+          },
+          keyframes: {
+            fadeSlide: {
+              '0%': { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+</head>
+<body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
+
+<!-- Nav BAr -->
+<nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
+  <a href="../index.html" class="flex items-center gap-2">
+    <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+  </a>
+
+  <!-- Hamburger Button -->
+  <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Desktop Menu -->
+  <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
+    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    <img src="/pictures/profile.png" alt="Profile" class="h-8">
+  </div>
+
+  <!-- Mobile Slide-in Menu -->
+  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
+
+    <div class="flex items-center justify-between p-4 border-b border-gray-300">
+      <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
+      <button id="close-btn" class="text-[#5F8B4C]">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+      <div class="text-left">
+        <p class="font-semibold text-[#5F8B4C]">John Smith</p>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    
+
+<!-- Bottom Log Out Button -->
+<div class="w-full text-center mt-20 mb-6">
+  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+    Log Out
+  </button>
+  </div>
+  
+</div>
+</nav>
+
+<!--announcements-->
+  <h1 class="md:text-2xl text-xl font-bold px-4 sm:px-10 md:px-20 py-6">Community Announcements</h1>
+
+  <!-- Filter Container -->
+  <section class="px-6">
+    <div class="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 md:gap-4">
+      <!-- Filters (Category, Month, Importance, Sort By) -->
+      <!-- Repeatable filter item -->
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        
+        <label class="block text-base font-bold text-[#2E4C2C]">Category</label>
+        
+        <div class="relative">
+          <!-- ✅ Category Filter -->
+    <select id="filter-category" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+      <option value="all">All Categories</option>
+      <option value="Facilities">Facilities</option>
+      <option value="Upgrades">Upgrades</option>
+    </select>
+      
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repeat for other filters -->
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        <label class="block text-base font-bold text-[#2E4C2C]">Month</label>
+       
+        <div class="relative">
+          <!-- ✅ Month Filter -->
+<select id="filter-month" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+  <option value="all">All Months</option>
+  <option value="April">April</option>
+  <option value="May">May</option>
+  <option value="June">June</option>
+</select>
+
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+        <label class="block text-base font-bold text-[#2E4C2C]">Importance</label>
+        <div class="relative">
+
+          <!-- ✅ Importance Filter -->
+<select id="filter-importance" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+  <option value="all">All</option>
+  <option value="High">High</option>
+  <option value="Medium">Medium</option>
+</select>
+
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+            <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+              <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Sort By Filter -->
+<div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+  <label class="block text-base font-bold text-[#2E4C2C]">Sort By</label>
+  <div class="relative">
+    <select id="filter-sort" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+    </select>
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+      <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+        <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="text-center mt-4">
+  <button onclick="resetFilters()" class="px-4 py-2 bg-[#5F8B4C] text-white rounded-lg text-sm hover:bg-green-700">
+    Clear Filters
+  </button>
+</div> -->
+
+ </div>
+  </section>
+
+<!-- Announcements Section -->
+<!--announcement cards -->
+<section id="announcements" class="max-w-4xl mx-auto mt-8 px-4 space-y-6">
+  <!-- The announcement cards will be inserted here by JavaScript -->
+</section>
+
+<!-- Template Announcement Card -->
+<!-- This template will be cloned by JS to create multiple announcement cards -->
+<template id="announcement-template">
+  <!-- Outer Card Container -->
+  <div class="bg-[#FAF1E6] rounded-xl border border-[#5F8B4C] px-4 py-4 flex flex-col md:flex-row items-start gap-6 shadow-md h-full">
+    
+    <!-- Left Image -->
+    <img class="w-full md:w-48 h-40 object-cover rounded-lg" src="" alt="Announcement Image">
+    
+    <!-- Right Side Content -->
+    <div class="flex-1 flex flex-col justify-between min-h-[10rem]">
+      <div>
+        <!-- Announcement Title -->
+        <h3 class="text-lg md:text-xl font-bold mb-2 title"></h3>
+
+        <!-- Description with Read More -->
+        <p class="text-gray-700 text-sm md:text-base mb-4">
+          <span class="description"></span>
+          <a href="#" class="read-more text-green-700 hover:underline">...read more</a>
+        </p>
+      </div>
+
+      <!-- Date & Author -->
+      <div class="flex justify-between items-center text-sm text-gray-500 pt-4 mt-auto">
+        <div class="flex items-center gap-1">
+          <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-lg"></i>
+          <span class="date"></span>
+        </div>
+        <div class="flex items-center gap-1">
+         <i class="fa-solid fa-user text-[#5F8B4C] text-base"></i>
+          <span class="author">Admin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Pagination -->
+<div id="pagination" class="flex justify-end gap-3 px-10 mt-10 mb-16"></div>
+
+<!-- Concerns Section -->
+<section class="bg-[#FFF8F0] py-12 px-4 md:px-20">
+  <h2 class="text-base text-[#333333] md:text-xl font-bold mb-4 md:px-40">Do you have any concerns?</h2>
+  <div class="bg-[#E6DCD0] p-6 md:p-10 rounded-xl shadow-md max-w-5xl mx-auto">
+    <h3 class="text-lg md:text-xl text-[#333333] font-semibold text-center mb-6">Report an Issue</h3>
+
+    <!-- ✅ Make form POST to backend with multipart for file upload -->
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-10"
+          method="POST"
+          action="/api/concerns"
+          enctype="multipart/form-data">
+
+      <!-- Name -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Name
+        </label>
+        <input name="name" type="text" placeholder="Your name"
+               class="w-full rounded-lg px-4 py-2 focus:outline-none"
+               required />
+      </div>
+
+      <!-- Location -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Location
+        </label>
+        <input name="location" type="text" placeholder="Location of Issue Ex. Block 10 Lot 2"
+               class="w-full rounded-lg px-4 py-2 focus:outline-none"
+               required>
+      </input>
+            
+      </div>
+
+      <!-- Issue Type -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Issue Type
+        </label>
+        <select name="issueType"
+                class="w-full rounded-lg px-4 py-2 focus:outline-none"
+                required>
+          <option disabled selected>Select Issue Type</option>
+          <option>Noise</option>
+          <option>Maintenance</option>
+          <option>Safety</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Email or Phone -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Email Address or Mobile Number
+        </label>
+        <input name="contact" type="text"
+               placeholder="Your email address or mobile number"
+               class="w-full rounded-lg px-4 py-2 focus:outline-none"
+               required />
+      </div>
+
+      <!-- File Upload -->
+<div class="md:col-span-2">
+  <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+    Attach Image (optional)
+  </label>
+  <input name="image" id="imageInput" type="file" accept="image/*"
+         class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5F8B4C] file:text-white hover:file:bg-green-700" />
+  <p class="text-xs text-gray-500 mt-1">Upload a photo to better describe the issue.</p>
+
+  <!-- Preview Area -->
+  <div class="mt-4" id="imagePreviewContainer" style="display: none;">
+    <p class="text-sm font-medium text-gray-700 mb-2">Image Preview:</p>
+    <img id="imagePreview" src="#" alt="Preview" class="rounded-lg max-h-60 border border-gray-300">
+  </div>
+</div>
+
+      <!-- Description -->
+      <div class="md:col-span-2">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          Description
+        </label>
+        <textarea name="description" rows="4"
+                  placeholder="Please describe the issue in detail."
+                  class="w-full rounded-lg px-4 py-2 focus:outline-none"></textarea>
+        <p class="text-xs italic text-red-500 mt-1">* Indicates required field</p>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="md:col-span-2 flex justify-end">
+        <button type="submit"
+                class="font-bold bg-[#5F8B4C] text-white px-6 py-2 rounded-full text-sm hover:bg-green-700">
+          Submit Report
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+  <!-- JavaScript to Load Announcements -->
+  <script>
+    const announcementsData = [
+      {
+        id: "1",
+        title: "Community Pool Closing Schedule",
+        description: "Due to maintenance, the community pool will be closed from April 10 to April 20.",
+        date: "April 7, 2025",
+        image: "pictures/bg.png",
+        category: "Facilities",
+        month: "April",
+        importance: "High"
+      },
+      {
+        id: "2",
+        title: "New Playground Installation",
+        description: "New playground coming soon!",
+        date: "April 15, 2025",
+        image: "pictures/playground.jpg",
+        category: "Upgrades",
+        month: "April",
+        importance: "Medium"
+      },
+      {
+        id: "3",
+        title: "Security Update Notice",
+        description: "New security policies will take effect starting May 1.",
+        date: "April 20, 2025",
+        image: "pictures/security.jpg",
+        category: "Security",
+        month: "April",
+        importance: "High"
+      },
+      {
+        id: "4",
+        title: "Clubhouse Repainting",
+        description: "Scheduled repainting of the clubhouse interiors begins May 10.",
+        date: "May 1, 2025",
+        image: "pictures/clubhouse.jpg",
+        category: "Maintenance",
+        month: "May",
+        importance: "Low"
+      }
+    ];
+  
+    const announcementsContainer = document.getElementById("announcements");
+    const template = document.getElementById("announcement-template");
+    const paginationContainer = document.getElementById("pagination");
+  
+    const cardsPerPage = 3;
+    let currentPage = 1;
+    let filteredData = [...announcementsData]; // 👈 for filtering
+  
+    // 🟢 Render announcements per page
+    function loadAnnouncements(data, page = 1) {
+      announcementsContainer.innerHTML = "";
+      const start = (page - 1) * cardsPerPage;
+      const end = start + cardsPerPage;
+      const paginated = data.slice(start, end);
+  
+      paginated.forEach(item => {
+        const clone = template.content.cloneNode(true);
+        clone.querySelector("img").src = item.image;
+        clone.querySelector(".title").textContent = item.title;
+        clone.querySelector(".description").textContent = item.description;
+        clone.querySelector(".date").textContent = item.date;
+        clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
+        clone.firstElementChild.classList.add("animate-fadeSlide"); // ✨ optional animation
+        announcementsContainer.appendChild(clone);
+      });
+  
+      renderPagination(data.length, page);
+    }
+  
+    // 🟢 Render pagination buttons
+    function renderPagination(totalItems, currentPage) {
+      const totalPages = Math.ceil(totalItems / cardsPerPage);
+      paginationContainer.innerHTML = "";
+  
+      // ← Prev
+      paginationContainer.appendChild(
+        createPageButton("←", currentPage - 1, currentPage === 1)
+      );
+  
+      // Middle page numbers
+      const pagesToShow = 3;
+      let startPage = Math.max(1, currentPage - 1);
+      let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+      if (endPage - startPage < pagesToShow - 1) {
+        startPage = Math.max(1, endPage - pagesToShow + 1);
+      }
+  
+      for (let i = startPage; i <= endPage; i++) {
+        paginationContainer.appendChild(
+          createPageButton(i, i, false, i === currentPage)
+        );
+      }
+  
+      // → Next
+      paginationContainer.appendChild(
+        createPageButton("→", currentPage + 1, currentPage === totalPages)
+      );
+    }
+  
+    // 🟢 Create a page button
+    function createPageButton(text, page, disabled = false, isActive = false) {
+      const btn = document.createElement("button");
+      btn.textContent = text;
+      btn.className = "page-btn" + (isActive ? " active" : "");
+      btn.disabled = disabled;
+      btn.onclick = () => {
+        currentPage = page;
+        loadAnnouncements(filteredData, currentPage); // use filtered!
+      };
+      return btn;
+    }
+  
+    // 🟢 Apply filters
+    function applyFilters() {
+      const category = document.getElementById("filter-category")?.value || "all";
+      const month = document.getElementById("filter-month")?.value || "all";
+      const importance = document.getElementById("filter-importance")?.value || "all";
+  
+      filteredData = announcementsData.filter(item => {
+        const matchCategory = category === "all" || item.category === category;
+        const matchMonth = month === "all" || item.month === month;
+        const matchImportance = importance === "all" || item.importance === importance;
+        return matchCategory && matchMonth && matchImportance;
+      });
+  
+      currentPage = 1; // 💥 reset
+      loadAnnouncements(filteredData, currentPage);
+    }
+  
+    // 🔁 Hook filter dropdowns
+    document.getElementById("filter-category")?.addEventListener("change", applyFilters);
+    document.getElementById("filter-month")?.addEventListener("change", applyFilters);
+    document.getElementById("filter-importance")?.addEventListener("change", applyFilters);
+  
+    // 👑 Initial Load
+    loadAnnouncements(filteredData, currentPage);
+  </script>
+  <script>
+  const imageInput = document.getElementById('imageInput');
+  const previewContainer = document.getElementById('imagePreviewContainer');
+  const previewImage = document.getElementById('imagePreview');
+
+  imageInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      previewContainer.style.display = 'block';
+
+      reader.addEventListener('load', function () {
+        previewImage.setAttribute('src', this.result);
+      });
+
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.style.display = 'none';
+    }
+  });
+</script>
+
+    
+</body>
+</html>
