@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amenities</title>
 
-  <!-- Tailwind CSS -->
   <link href="../../dist/output.css" rel="stylesheet">
-
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- FullCalendar CSS -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
@@ -145,12 +142,12 @@
 
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
-    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-    </ul>
+ <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+  <li><a href="announcements.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+  <li><a href="amenities.html" class="text-[#FFDDAB]">Amenities</a></li>
+  <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+  <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+</ul>
     <img src="/pictures/profile.png" alt="Profile" class="h-8">
   </div>
 
@@ -479,7 +476,8 @@
         modal.classList.add('hidden');
       }
     });
-  </script>
+</script>
+
   
 </body>
 </html>

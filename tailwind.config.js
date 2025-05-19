@@ -18,6 +18,7 @@ module.exports = {
     './booking_form.html',
     './src/**/*.html',
     './src/**/*.js',
+    './bookings.html',
   ],
   safelist: [
     'translate-x-full',

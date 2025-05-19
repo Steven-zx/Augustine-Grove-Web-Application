@@ -17,7 +17,14 @@
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+    <!-- Admin Badge beside logo or user -->
+<div class="gap-2 text-base font-bold">
+  ADMIN
+</div>
+</div>
+
   </a>
 
   <!-- Hamburger Button -->
@@ -30,24 +37,45 @@
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
     <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
-  
+
+     <!-- Notification Bell -->
+<div class="relative" id="notification-wrapper">
+  <!-- Bell Icon -->
+  <button onclick="toggleNotifications()" class="relative focus:outline-none">
+    <i class="fas fa-bell text-2xl hover:text-[#FFDDAB] transition"></i>
+    <!-- Red Dot Notification Count -->
+    <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">2</span>
+  </button>
+
+  <!-- Dropdown -->
+  <div id="notification-dropdown" class="hidden absolute right-0 mt-3 w-72 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
+    <div class="p-4 border-b font-semibold text-gray-800">Notifications</div>
+    <ul class="max-h-60 overflow-y-auto text-sm text-gray-700 divide-y">
+      <li class="p-3 hover:bg-gray-100">📅 New booking request by John Doe</li>
+      <li class="p-3 hover:bg-gray-100">⚠️ New concern submitted by Jane Smith</li>
+    </ul>
+    <div class="p-2 text-center text-blue-600 hover:underline cursor-pointer text-sm">View all</div>
+  </div>
+</div>
+ 
     <!--profile button-->
 <div class="relative">
   <button id="profileBtn" class="focus:outline-none">
-    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+   <i class="fa-solid fa-circle-user text-3xl hover:text-[#FFDDAB] transition"></i>
   </button>
 
   <!-- Modal Dropdown -->
   <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+   <!--
     <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
       Profile
-    </a>
+    </a>  -->
     <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
       Log Out
@@ -77,12 +105,14 @@
       </div>
     </div>
 
+
+
     <!-- Nav Links -->
     <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
-      <li><a href="dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
 
@@ -104,8 +134,8 @@
     <h1 class="font-bold text-xl md:text-4xl mb-4 md:mb-10 text-[#FAF1E6]">WELCOME TO</h1>
     <h1 class="font-custom text-6xl md:text-9xl mb-8 md:mb-20 text-outline">Augustine Grove</h1>
     <div class="flex md:gap-20 gap-10 justify-center">
-      <a href="dashboard/announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
-      <a href="dashboard/amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
+      <a href="concerns.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Concerns</a>              
+      <a href="#" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Bookings</a>
     </div>
     <!-- Dots/Indicators -->
 <div id="carousel-dots" class="mt-10 md:mt-20 flex justify-center gap-4 z-10 relative">
@@ -460,6 +490,24 @@ closeBtn.addEventListener('click', () => {
     // redirect or clear session, etc.
   }
 </script>
+
+<!--notification bell-->
+<script>
+  const dropdown = document.getElementById("notification-dropdown");
+  const wrapper = document.getElementById("notification-wrapper");
+
+  function toggleNotifications() {
+    dropdown.classList.toggle("hidden");
+  }
+
+  // Close dropdown when clicking outside
+  window.addEventListener("click", function (e) {
+    if (!wrapper.contains(e.target)) {
+      dropdown.classList.add("hidden");
+    }
+  });
+</script>
+
 
 <!--hero background image slider-->
 <script>

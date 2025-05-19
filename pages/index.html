@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link  href="../dist/output.css" rel="stylesheet">
+<link  href="../../dist/output.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -96,27 +96,37 @@
 </div>
 </nav>
 
-<!-- Hero Section -->
-    <section id="hero" class="relative h-72 md:h-screen bg-cover bg-center flex flex-col items-center justify-center transition-all duration-1000 ease-in-out" style="background-image: url('/pictures/hero1.jpg');">
-  <div class="absolute inset-0 bg-black opacity-30"></div> <!-- dark overlay -->
+<section id="hero" class="relative h-72 md:h-screen overflow-hidden bg-black">
+  <!-- Slide Container -->
+  <div id="slider" class="flex w-full h-full transition-transform duration-1000 ease-in-out">
+    <img src="/pictures/hero1.png" class="w-full h-full object-cover flex-shrink-0" />
+    <img src="/pictures/hero2.png" class="w-full h-full object-cover flex-shrink-0" />
+    <img src="/pictures/hero3.png" class="w-full h-full object-cover flex-shrink-0" />
+    <img src="/pictures/hero4.png" class="w-full h-full object-cover flex-shrink-0" />
+  </div>
 
-  <div class="relative text-center z-10">
+
+
+  <!-- Text & Buttons -->
+  <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center z-20">
     <h1 class="font-bold text-xl md:text-4xl mb-4 md:mb-10 text-[#FAF1E6]">WELCOME TO</h1>
     <h1 class="font-custom text-6xl md:text-9xl mb-8 md:mb-20 text-outline">Augustine Grove</h1>
     <div class="flex md:gap-20 gap-10 justify-center">
-      <a href="dashboard/announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
-      <a href="dashboard/amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
+      <a href="announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
+      <a href="amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
     </div>
-    <!-- Dots/Indicators -->
-<div id="carousel-dots" class="mt-10 md:mt-20 flex justify-center gap-4 z-10 relative">
-  <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#5F8B4C]"></div>
-  <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
-  <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
-  <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
-</div>
 
+    <!-- Dot Indicators -->
+    <div id="carousel-dots" class="mt-10 md:mt-20 flex justify-center gap-4">
+      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#5F8B4C]"></div>
+      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
+      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
+      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
+    </div>
   </div>
+  
 </section>
+
 
 <!-- Map -->
       <section class="bg-[#FAF1E6] p-10 md:px-40 md:py-20 flex flex-col md:flex-row items-center gap-12">
@@ -329,10 +339,76 @@
         </div>
         <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
         <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-        <a href="#" class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
-          Generate QR
-        </a>
+        <button onclick="openQRModal()" class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+  Generate QR
+</button>
+
       </div>
+     
+      <!-- QR Code Modal -->
+<div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#E6DCD0] w-[90%] max-w-md p-6 rounded-2xl shadow-lg relative">
+    <!-- Close Button -->
+    <button onclick="closeQRModal()" class="absolute top-4 right-4 text-green-800 text-xl font-bold hover:text-green-600">
+      &times;
+    </button>
+
+    <h2 class="text-xl font-bold mb-4 text-center">Generate Visitor QR Code</h2>
+    
+    <form class="space-y-4 text-left text-sm">
+      <!-- Visitor Name -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span> Visitor Name</label>
+        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Enter visitor's full name">
+      </div>
+
+      <!-- Residence -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Residence to Visit</label>
+        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Enter house blk and lot number">
+      </div>
+
+      <!-- Visit Date -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Visit Date</label>
+        <input type="date" class="w-full mt-1 p-2 rounded-md border border-gray-300">
+      </div>
+
+      <!-- Purpose -->
+      <div>
+        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Purpose of Visit</label>
+        <select class="w-full mt-1 p-2 rounded-md border border-gray-300">
+          <option>Select purpose</option>
+          <option>Delivery</option>
+          <option>Guest</option>
+          <option>Maintenance</option>
+        </select>
+      </div>
+
+      <!-- Vehicle -->
+      <div>
+        <label class="font-semibold">Vehicle (if any)</label>
+        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Vehicle model and plate number">
+      </div>
+
+      <!-- Number of Visitors -->
+      <div>
+        <label class="font-semibold  block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Number of Visitors</label>
+        <input type="number" min="1" value="1" class="w-full mt-1 p-2 rounded-md border border-gray-300">
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center pt-2">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-full">
+          Generate QR Code
+        </button>
+      </div>
+
+      <p class="text-xs text-red-600 text-center pt-2">* Indicates required field</p>
+    </form>
+  </div>
+</div>
+
 
       <!-- Park and Playground -->
       <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
@@ -463,27 +539,23 @@ closeBtn.addEventListener('click', () => {
 
 <!--hero background image slider-->
 <script>
-  const heroSection = document.getElementById("hero");
+  const slider = document.getElementById("slider");
   const dots = document.querySelectorAll("#carousel-dots div");
-  const bgImages = [
-    "/pictures/hero1.png",
-    "/pictures/hero2.png",
-    "/pictures/hero3.png",
-    "/pictures/hero4.png"
-  ];
 
+  const totalSlides = slider.children.length;
   let current = 0;
 
   setInterval(() => {
-    current = (current + 1) % bgImages.length;
-    heroSection.style.backgroundImage = `url('${bgImages[current]}')`;
+    current = (current + 1) % totalSlides;
+    slider.style.transform = `translateX(-${current * 100}%)`;
 
-    // Update dot indicators
+    // Update dots
     dots.forEach((dot, index) => {
       dot.style.backgroundColor = index === current ? "#5F8B4C" : "#FAF1E6";
     });
-  }, 3000);
+  }, 4000);
 </script>
+
  
  <!--announcement carousel-->
 <script>
@@ -525,6 +597,18 @@ closeBtn.addEventListener('click', () => {
   // 🚀 Load on page ready
   loadLatestAnnouncements();
 </script>
+
+<!--qr modal-->
+<script>
+  function openQRModal() {
+    document.getElementById('qrModal').classList.remove('hidden');
+  }
+
+  function closeQRModal() {
+    document.getElementById('qrModal').classList.add('hidden');
+  }
+</script>
+
 
 <!-- AOS (Animate on Scroll) JS -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
