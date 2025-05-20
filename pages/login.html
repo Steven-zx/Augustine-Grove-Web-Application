@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HOA Sign Up</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>HOA Login</title>
+  <link href="/public/output.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
     body { font-family: 'Poppins', sans-serif; }
@@ -20,10 +20,10 @@
       <img src="pictures/logo 2.png" alt="AG Logo" class="h-16">
     </div>
 
-    <!-- Sign Up Form -->
-    <form class="space-y-4">
-      <input type="email" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" />    
-      <input type="password" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" />
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="email" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />    
+      <input type="password" id="password" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
 
       <!-- Submit Button -->
       <div class="flex justify-center">
@@ -33,8 +33,51 @@
       </div>
     </form>
 
-    <p class="text-xs text-center mt-4 text-[#FAF1E6]">Already have an account? <a href="#" class="underline">Log in</a></p>
+    <p class="text-xs text-center mt-4 text-[#FAF1E6]">Don't have an account? <a href="/signup" class="underline">Sign up</a></p>
   </div>
 
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      
+      // Disable button to prevent multiple submissions
+      submitButton.disabled = true;
+      submitButton.textContent = 'Logging in...';
+
+      try {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            password
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Login failed');
+        }
+
+        alert(data.message || 'Login successful!');
+        window.location.href = data.redirect || '/dashboard';
+      } catch (error) {
+        console.error('Error:', error);
+        alert(error.message);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Log in';
+      }
+    });
+  </script>
 </body>
 </html>

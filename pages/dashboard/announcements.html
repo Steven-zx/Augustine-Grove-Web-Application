@@ -49,8 +49,14 @@
         }
       }
     }
+    
   </script>
-  
+ 
+  <!-- Add Supabase client library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
 </head>
 <body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
 
@@ -357,171 +363,209 @@
 </section>
 
 
-  <!-- JavaScript to Load Announcements -->
-  <script>
-    const announcementsData = [
-      {
-        id: "1",
-        title: "Community Pool Closing Schedule",
-        description: "Due to maintenance, the community pool will be closed from April 10 to April 20.",
-        date: "April 7, 2025",
-        image: "pictures/bg.png",
-        category: "Facilities",
-        month: "April",
-        importance: "High"
-      },
-      {
-        id: "2",
-        title: "New Playground Installation",
-        description: "New playground coming soon!",
-        date: "April 15, 2025",
-        image: "/pictures/hero1.png",
-        category: "Upgrades",
-        month: "April",
-        importance: "Medium"
-      },
-      {
-        id: "3",
-        title: "Security Update Notice",
-        description: "New security policies will take effect starting May 1.",
-        date: "April 20, 2025",
-        image: "pictures/security.png",
-        category: "Security",
-        month: "April",
-        importance: "High"
-      },
-      {
-        id: "4",
-        title: "Clubhouse Repainting",
-        description: "Scheduled repainting of the clubhouse interiors begins May 10.",
-        date: "May 1, 2025",
-        image: "pictures/clubhouse.png",
-        category: "Maintenance",
-        month: "May",
-        importance: "Low"
-      }
-    ];
+ 
+
+
+ 
+
+<script>
+
   
-    const announcementsContainer = document.getElementById("announcements");
-    const template = document.getElementById("announcement-template");
-    const paginationContainer = document.getElementById("pagination");
-  
-    const cardsPerPage = 3;
-    let currentPage = 1;
-    let filteredData = [...announcementsData]; // 👈 for filtering
-  
-    // 🟢 Render announcements per page
-    function loadAnnouncements(data, page = 1) {
-      announcementsContainer.innerHTML = "";
-      const start = (page - 1) * cardsPerPage;
-      const end = start + cardsPerPage;
-      const paginated = data.slice(start, end);
-  
-      paginated.forEach(item => {
-        const clone = template.content.cloneNode(true);
-        clone.querySelector("img").src = item.image;
-        clone.querySelector(".title").textContent = item.title;
-        clone.querySelector(".description").textContent = item.description;
-        clone.querySelector(".date").textContent = item.date;
-        clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
-        clone.firstElementChild.classList.add("animate-fadeSlide"); // ✨ optional animation
-        announcementsContainer.appendChild(clone);
-      });
-  
-      renderPagination(data.length, page);
-    }
-  
-    // 🟢 Render pagination buttons
-    function renderPagination(totalItems, currentPage) {
-      const totalPages = Math.ceil(totalItems / cardsPerPage);
-      paginationContainer.innerHTML = "";
-  
-      // ← Prev
-      paginationContainer.appendChild(
-        createPageButton("←", currentPage - 1, currentPage === 1)
-      );
-  
-      // Middle page numbers
-      const pagesToShow = 3;
-      let startPage = Math.max(1, currentPage - 1);
-      let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
-      if (endPage - startPage < pagesToShow - 1) {
-        startPage = Math.max(1, endPage - pagesToShow + 1);
-      }
-  
-      for (let i = startPage; i <= endPage; i++) {
-        paginationContainer.appendChild(
-          createPageButton(i, i, false, i === currentPage)
-        );
-      }
-  
-      // → Next
-      paginationContainer.appendChild(
-        createPageButton("→", currentPage + 1, currentPage === totalPages)
-      );
-    }
-  
-    // 🟢 Create a page button
-    function createPageButton(text, page, disabled = false, isActive = false) {
-      const btn = document.createElement("button");
-      btn.textContent = text;
-      btn.className = "page-btn" + (isActive ? " active" : "");
-      btn.disabled = disabled;
-      btn.onclick = () => {
-        currentPage = page;
-        loadAnnouncements(filteredData, currentPage); // use filtered!
-      };
-      return btn;
-    }
-  
-    // 🟢 Apply filters
-    function applyFilters() {
-      const category = document.getElementById("filter-category")?.value || "all";
-      const month = document.getElementById("filter-month")?.value || "all";
-      const importance = document.getElementById("filter-importance")?.value || "all";
-  
-      filteredData = announcementsData.filter(item => {
-        const matchCategory = category === "all" || item.category === category;
-        const matchMonth = month === "all" || item.month === month;
-        const matchImportance = importance === "all" || item.importance === importance;
-        return matchCategory && matchMonth && matchImportance;
-      });
-  
-      currentPage = 1; // 💥 reset
+  // DOM Elements
+  const announcementsContainer = document.getElementById("announcements");
+  const template = document.getElementById("announcement-template");
+  const paginationContainer = document.getElementById("pagination");
+
+  // Configuration
+  const cardsPerPage = 3;
+  let currentPage = 1;
+  let filteredData = [];
+  let allAnnouncements = [];
+
+  // 🟢 Fetch announcements from Supabase
+  async function fetchAnnouncements() {
+    try {
+      const { data, error } = await supabase
+        .from('announcements')
+        .select('*')
+        .order('date', { ascending: false });
+
+      if (error) throw error;
+
+      // Format the data for display
+      allAnnouncements = data.map(item => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        date: new Date(item.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        image: item.image_url || '/pictures/default-announcement.png',
+        category: item.category || 'General',
+        month: new Date(item.date).toLocaleDateString('en-US', { month: 'long' }),
+        importance: item.importance || 'Medium'
+      }));
+
+      filteredData = [...allAnnouncements];
       loadAnnouncements(filteredData, currentPage);
+    } catch (error) {
+      console.error('Error fetching announcements:', error);
+      announcementsContainer.innerHTML = `
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load announcements. Please try again later.
+        </div>
+      `;
     }
-  
-    // 🔁 Hook filter dropdowns
+  }
+
+  // 🟢 Load announcements into the page
+  function loadAnnouncements(data, page = 1) {
+    announcementsContainer.innerHTML = "";
+    const start = (page - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    const paginated = data.slice(start, end);
+
+    if (paginated.length === 0) {
+      announcementsContainer.innerHTML = `
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          No announcements found matching your filters.
+        </div>
+      `;
+      paginationContainer.innerHTML = "";
+      return;
+    }
+
+    paginated.forEach(item => {
+      const clone = template.content.cloneNode(true);
+      clone.querySelector("img").src = item.image;
+      clone.querySelector(".title").textContent = item.title;
+      clone.querySelector(".description").textContent = item.description;
+      clone.querySelector(".date").textContent = item.date;
+      clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
+      clone.firstElementChild.classList.add("animate-fadeSlide");
+      announcementsContainer.appendChild(clone);
+    });
+
+    renderPagination(data.length, page);
+  }
+
+  // 🟢 Render pagination buttons
+  function renderPagination(totalItems, currentPage) {
+    const totalPages = Math.ceil(totalItems / cardsPerPage);
+    paginationContainer.innerHTML = "";
+
+    // ← Previous button
+    const prevButton = createPageButton("←", currentPage - 1, currentPage === 1);
+    paginationContainer.appendChild(prevButton);
+
+    // Page numbers
+    const maxVisiblePages = 3;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      paginationContainer.appendChild(
+        createPageButton(i, i, false, i === currentPage)
+      );
+    }
+
+    // → Next button
+    const nextButton = createPageButton("→", currentPage + 1, currentPage === totalPages);
+    paginationContainer.appendChild(nextButton);
+  }
+
+  // 🟢 Create a page button
+  function createPageButton(text, page, disabled = false, isActive = false) {
+    const btn = document.createElement("button");
+    btn.textContent = text;
+    btn.className = "page-btn" + (isActive ? " active" : "");
+    btn.disabled = disabled;
+    btn.onclick = () => {
+      currentPage = page;
+      loadAnnouncements(filteredData, currentPage);
+    };
+    return btn;
+  }
+
+  // 🟢 Apply filters
+  function applyFilters() {
+    const category = document.getElementById("filter-category")?.value || "all";
+    const month = document.getElementById("filter-month")?.value || "all";
+    const importance = document.getElementById("filter-importance")?.value || "all";
+    const sort = document.getElementById("filter-sort")?.value || "newest";
+
+    filteredData = allAnnouncements.filter(item => {
+      const matchCategory = category === "all" || item.category === category;
+      const matchMonth = month === "all" || item.month === month;
+      const matchImportance = importance === "all" || item.importance === importance;
+      return matchCategory && matchMonth && matchImportance;
+    });
+
+    // Apply sorting
+    if (sort === "newest") {
+      filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    currentPage = 1;
+    loadAnnouncements(filteredData, currentPage);
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchAnnouncements();
+    
+    // Event listeners for filters
     document.getElementById("filter-category")?.addEventListener("change", applyFilters);
     document.getElementById("filter-month")?.addEventListener("change", applyFilters);
     document.getElementById("filter-importance")?.addEventListener("change", applyFilters);
-  
-    // 👑 Initial Load
-    loadAnnouncements(filteredData, currentPage);
-  </script>
-  <script>
-  const imageInput = document.getElementById('imageInput');
-  const previewContainer = document.getElementById('imagePreviewContainer');
-  const previewImage = document.getElementById('imagePreview');
-
-  imageInput.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      previewContainer.style.display = 'block';
-
-      reader.addEventListener('load', function () {
-        previewImage.setAttribute('src', this.result);
-      });
-
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.style.display = 'none';
-    }
+    document.getElementById("filter-sort")?.addEventListener("change", applyFilters);
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+  // 1. Initialize Supabase 
+  const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  // 2. Fetch and display announcements
+  async function loadAnnouncements() {
+    const { data, error } = await supabase
+      .from('announcements')
+      .select('*')
+      .order('date', { ascending: false });
     
+    if (error) {
+      console.error("Fetch error:", error);
+      return;
+    }
+    
+    // Render announcements using your existing template
+    const container = document.getElementById('announcements');
+    const template = document.getElementById('announcement-template');
+    
+    data.forEach(item => {
+      const clone = template.content.cloneNode(true);
+      clone.querySelector(".title").textContent = item.title;
+      clone.querySelector(".description").textContent = item.description;
+      clone.querySelector(".date").textContent = new Date(item.date).toLocaleDateString();
+      clone.querySelector("img").src = item.image_url || 'default-image.jpg';
+      container.appendChild(clone);
+    });
+  }
+
+  // 3. Load data when page opens
+  document.addEventListener('DOMContentLoaded', loadAnnouncements);
+</script>
+
 </body>
 </html>
