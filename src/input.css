@@ -29,6 +29,15 @@ body {
     @apply text-[#5F8B4C] !important; /* Make the icon the brand color */
 }
 
+.my-custom-list li {
+  padding-left: 20px; /* Adds 20px space between bullet and text, or pushes entire item right if list-style-position is outside */
+}
+
+/* Option B: Indent specific list item */
+.extra-indent-li {
+  padding-left: 30px; /* Adjust this value */
+}
+
 /* Extend Padding */
 .pt-1 { padding-top: 0.25rem; }  /* 4px */
 .pt-2 { padding-top: 0.5rem; }   /* 8px */
