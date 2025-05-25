@@ -10,11 +10,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
-
-  <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
   <style>
     /* Apply Poppins font to the whole document */
@@ -121,7 +118,7 @@
       margin-right: 6px;
     }
   </style>
-  
+
 </head>
 <body class="bg-[#FAF1E6]">
 
@@ -295,46 +292,191 @@
     
 
 
-  <!-- Calendar Section -->
-  <div class="bg-[#E6DCD0] py-20 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
-    <h2 class="text-center text-xl font-semibold text-green-800 mt-10 mb-6">Amenity Booking Calendar</h2>
-    <div class="flex flex-col md:flex-row justify-between gap-8">
-        <div id="calendar" class="w-[300px] mx-auto"></div>
+<!-- Outer Container -->
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+  
+  <!-- Title -->
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2 text-center">Amenity Booking Calendar</h2>
+  
+  <!-- Amenity Buttons -->
+  <div class="flex justify-center space-x-4 mb-6">
+    <button onclick="switchAmenity('basketball')" id="btn-basketball"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Basketball Court
+    </button>
+    <button onclick="switchAmenity('pool')" id="btn-pool"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Swimming Pool
+    </button>
+    <button onclick="switchAmenity('clubhouse')" id="btn-clubhouse"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Clubhouse
+    </button>
+  </div>
+
+  <!-- Calendar + Time Slots Side by Side on Desktop -->
+  <div class="flex flex-col md:flex-row gap-20 px-20">
     
-      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
-        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
-        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
-        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
+    <!-- Calendar -->
+    <div class="bg-white rounded-xl p-4 shadow-md w-full md:w-[300px]" id="calendar"></div>
+
+    <!-- Time Slots -->
+    <div class="flex-1 text-sm text-gray-800">
+      <p class="mb-4">Click a date to see available time slots.</p>
+
+      <!-- Legend -->
+      <div class="flex items-center space-x-2 mb-2">
+        <div class="w-5 h-5 bg-red-400 rounded"></div>
+        <span>Fully booked</span>
       </div>
-    </div>
 
-    <p class="mt-8 text-xs text-gray-600 text-center">
-      For booking assistance or questions, please contact the Augustine Grove HOA office at (555) 123-4567
-    </p>
-  </div>
-
-<!-- Time Block Modal -->
-<div id="timeBlockModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 hidden">
-  <div class="bg-white w-1/4 h-screen rounded-l-3xl p-4 overflow-y-auto shadow-lg relative">
-    <!-- Close Button -->
-    <button onclick="document.getElementById('timeBlockModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl">&times;</button>
-
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-4">
-      <button class="text-lg">&lt;</button>
-      <h2 id="timeBlockDate" class="text-lg font-semibold text-center flex-1">April 16, 2025</h2>
-      <button class="text-lg">&gt;</button>
-    </div>
-
-    <!-- Time Blocks -->
-    <div id="timeBlocks" class="space-y-4">
-      <!-- JavaScript inserts blocks here -->
+      <!-- Time Slot Buttons will appear here -->
+      <div id="time-slots" class="mt-4"></div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <p class="text-xs text-center text-gray-600 mt-6">
+    For booking assistance, contact Augustine Grove HOA at (555) 123-4567
+  </p>
 </div>
 
-<div class="bg-[#E6DCD0] py-20 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
-  <h2 class="text-lg font-semibold mb-4 border-b-2 border-green-700 pb-2">Booking Terms & Conditions</h2>
+ <script>
+  // Amenity data: stores fully booked dates and available time slots for each amenity
+  const amenities = {
+    basketball: {
+      fullyBooked: ['2025-06-10', '2025-06-15'], // red background days
+      availableTimes: {
+        '2025-06-11': ['8AM - 10AM', '1PM - 4PM'],
+        '2025-06-12': ['Whole day']
+      }
+    },
+    pool: {
+      fullyBooked: ['2025-06-12'],
+      availableTimes: {
+        '2025-06-10': ['10AM - 1PM', '3PM - 6PM']
+      }
+    },
+    clubhouse: {
+      fullyBooked: [],
+      availableTimes: {
+        '2025-06-11': ['Morning only', '2PM - 5PM']
+      }
+    }
+  };
+
+  // Keeps track of which amenity is currently selected
+  let selectedAmenity = 'basketball';
+
+  // This will store the FullCalendar instance
+  let calendar;
+
+  // Function to handle switching amenities when buttons are clicked
+  function switchAmenity(amenity) {
+    selectedAmenity = amenity; // Update selected amenity
+
+    // Reset button styles (remove green highlight from all)
+    document.querySelectorAll('button[id^="btn-"]').forEach(btn => {
+      btn.classList.remove('bg-green-700', 'text-white');
+      btn.classList.add('bg-green-200', 'text-green-900');
+    });
+
+    // Highlight the button of the selected amenity
+    const activeBtn = document.getElementById(`btn-${amenity}`);
+    activeBtn.classList.add('bg-green-700', 'text-white');
+    activeBtn.classList.remove('bg-green-200', 'text-green-900');
+
+    // Re-render the calendar with the new amenity’s data
+    renderCalendar();
+
+    // Clear the time slots section
+    document.getElementById("time-slots").innerHTML = '';
+  }
+
+  // Function to create and show the calendar for the selected amenity
+  function renderCalendar() {
+    // Destroy previous calendar instance if one exists
+    if (calendar) calendar.destroy();
+
+    // Create an array of "Fully Booked" background events for the current amenity
+    const events = amenities[selectedAmenity].fullyBooked.map(date => ({
+      title: 'Fully Booked',
+      start: date,
+      display: 'background', // background only (no title on the day)
+      color: '#f87171' // light red
+    }));
+
+    // Create a new FullCalendar instance and attach it to the #calendar div
+    calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+      initialView: 'dayGridMonth', // shows the full month view
+      headerToolbar: {
+        left: 'prev',
+        center: 'title',
+        right: 'next'
+      },
+      selectable: true, // allows the user to click dates
+      dateClick: function(info) {
+        // When a date is clicked, handle it (check available slots, etc.)
+        handleDateClick(info.dateStr);
+      },
+      events: events // Load "fully booked" background dates
+    });
+
+    // Render the calendar
+    calendar.render();
+  }
+
+  // Function that runs when a calendar date is clicked
+  function handleDateClick(dateStr) {
+    const slotContainer = document.getElementById("time-slots");
+
+    // If the selected date is fully booked, show message and return early
+    if (amenities[selectedAmenity].fullyBooked.includes(dateStr)) {
+      slotContainer.innerHTML = `<p class="text-red-600 font-semibold">This date is fully booked.</p>`;
+      return;
+    }
+
+    // Get available times for that date and amenity
+    const times = amenities[selectedAmenity].availableTimes[dateStr];
+
+    // If no time slots available, show message
+    if (!times || times.length === 0) {
+      slotContainer.innerHTML = `<p class="text-gray-600">No available time slots for this date.</p>`;
+      return;
+    }
+
+    // Create buttons for each available time slot
+    const buttons = times.map(time =>
+      `<button onclick="proceedToForm('${selectedAmenity}', '${dateStr}', '${time}')" 
+               class="w-full text-left bg-green-200 hover:bg-green-300 p-2 mt-1 rounded-md">
+         ${time}
+       </button>`
+    ).join('');
+
+    // Display the available time slot buttons below the calendar
+    slotContainer.innerHTML = `
+      <p class="text-gray-700 mb-2">Available time slots for <strong>${dateStr}</strong>:</p>
+      ${buttons}
+    `;
+  }
+
+  // This function is triggered when a time slot button is clicked
+  function proceedToForm(amenity, date, time) {
+    // For now, just show an alert
+    alert(`Redirecting to form:\nAmenity: ${amenity}\nDate: ${date}\nTime: ${time}`);
+
+    // Uncomment this line to redirect to the actual booking form page
+    // window.location.href = `booking-form.html?amenity=${amenity}&date=${date}&time=${encodeURIComponent(time)}`;
+  }
+
+  // When the page loads, select the default amenity ('basketball')
+  document.addEventListener('DOMContentLoaded', () => {
+    switchAmenity('basketball');
+  });
+</script>
+
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2">Booking Terms & Conditions</h2>
   <ul class="space-y-2 text-sm text-gray-800">
     <li>
       <span class="font-semibold text-green-700">1. Eligibility:</span>
@@ -362,121 +504,6 @@
     </li>
   </ul>
 </div>
-
-  
-
-  <!-- Calendar Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const calendarEl = document.getElementById('calendar');
-
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: '',
-          center: 'title',
-          right: 'prev,next'
-        },
-        events: [
-          {
-            title: '',
-            start: '2025-05-10',
-            bgColor: '#f97316',
-            extendedProps: {
-              description: '🏀 Basketball Court Booked by HOA 3'
-            }
-          },
-          {
-            title: '',
-            start: '2025-05-12',
-            bgColor: '#22c55e',
-            extendedProps: {
-              description: '🏠 Clubhouse Reserved for a Private Event'
-            }
-          },
-          {
-            title: '',
-            start: '2025-05-15',
-            bgColor: '#ef4444',
-            extendedProps: {
-              description: '🧼 Pool Maintenance Scheduled'
-            }
-          }
-        ],
-        dateClick: function (info) {
-  const date = info.dateStr;
-  document.getElementById('timeBlockDate').textContent = `Schedule for ${new Date(date).toDateString()}`;
-
-  // TODO: Replace with backend fetch later
-  renderTimeBlocks(date);
-
-  // Show modal
-  document.getElementById('timeBlockModal').classList.remove('hidden');
-},
-
-
-        eventDidMount: function (info) {
-          const bgColor = info.event.extendedProps.bgColor || '#e0e0e0';
-          const cell = info.el.closest('.fc-daygrid-day');
-          if (cell) cell.style.backgroundColor = bgColor;
-        }
-      });
-      function renderTimeBlocks(dateStr) {
-  const container = document.getElementById('timeBlocks');
-  container.innerHTML = '';
-
-  // Fake booking data for demo
-  const fakeBookings = [
-    { hour: 10, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-    { hour: 11, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-    { hour: 10, amenity: 'Clubhouse', color: 'bg-green-100', dot: 'bg-green-500' },
-    { hour: 14, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' }
-  ];
-
-  for (let hour = 8; hour <= 18; hour++) {
-    const block = document.createElement('div');
-    block.className = 'relative border-t pt-2 pb-4 pl-4';
-
-    const label = document.createElement('div');
-    label.className = 'text-sm text-gray-500';
-    label.textContent = `${hour}:00`;
-
-    block.appendChild(label);
-
-    const bookings = fakeBookings.filter(b => b.hour === hour);
-
-    bookings.forEach(b => {
-      const pill = document.createElement('div');
-      pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm text-gray-800 font-medium flex items-center gap-2 ${b.color}`;
-      pill.innerHTML = `<span class="w-2 h-2 rounded-full ${b.dot}"></span> ${b.amenity}`;
-      block.appendChild(pill);
-    });
-
-    container.appendChild(block);
-  }
-}
-
-      calendar.render();
-    });
-  </script>
-
-<script>
-    const modal = document.getElementById('bookingModal');
-    const closeBtn = document.getElementById('closeModal');
-  
-  
-    // Close modal
-    closeBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
-  
-    // Optional: Close when clicking outside modal
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.add('hidden');
-      }
-    });
-</script>
 
   
 </body>
