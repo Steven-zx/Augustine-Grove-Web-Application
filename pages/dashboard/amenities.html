@@ -295,24 +295,49 @@
     
 
 
-  <!-- Calendar Section -->
-  <div class="bg-[#E6DCD0] py-20 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
-    <h2 class="text-center text-xl font-semibold text-green-800 mt-10 mb-6">Amenity Booking Calendar</h2>
-    <div class="flex flex-col md:flex-row justify-between gap-8">
-        <div id="calendar" class="w-[300px] mx-auto"></div>
-    
-      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
-        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
-        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
-        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
-      </div>
-    </div>
-
-    <p class="mt-8 text-xs text-gray-600 text-center">
-      For booking assistance or questions, please contact the Augustine Grove HOA office at (555) 123-4567
-    </p>
+ <!-- Outer Container -->
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+  
+  <!-- Title -->
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2 text-center">Amenity Booking Calendar</h2>
+  
+  <!-- Amenity Buttons -->
+  <div class="flex justify-center space-x-4 mb-6">
+    <button onclick="switchAmenity('basketball')" id="btn-basketball"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Basketball Court
+    </button>
+    <button onclick="switchAmenity('pool')" id="btn-pool"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Swimming Pool
+    </button>
+    <button onclick="switchAmenity('clubhouse')" id="btn-clubhouse"
+      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#E6DCD0]">
+      Clubhouse
+    </button>
   </div>
 
+  <!-- Calendar + Time Slots Side by Side on Desktop -->
+  <div class="flex flex-col md:flex-row gap-20 px-20">
+    
+    <!-- Calendar -->
+    <div class="bg-white rounded-xl p-4 shadow-md w-full md:w-[300px]" id="calendar"></div>
+
+    <!-- Time Slots -->
+    <div class="flex-1 text-sm text-gray-800">
+      <p class="mb-4">Click a date to see available time slots.</p>
+
+      <!-- Legend -->
+      <div class="flex items-center space-x-2 mb-2">
+        <div class="w-5 h-5 bg-red-400 rounded"></div>
+        <span>Fully booked</span>
+      </div>
+
+      <!-- Time Slot Buttons will appear here -->
+      <div id="time-slots" class="mt-4"></div>
+    </div>
+  </div>
+  
 <!-- Time Block Modal -->
 <div id="timeBlockModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 hidden">
   <div class="bg-white w-1/4 h-screen rounded-l-3xl p-4 overflow-y-auto shadow-lg relative">

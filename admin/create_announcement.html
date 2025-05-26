@@ -112,186 +112,169 @@
     </div>
   </div>
 
-  <script>
-  // Initialize Supabase client immediately and attach to window
-  (function() {
-    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
-  })();
+   <script>
+    // Initialize Supabase client in an immediately invoked function
+    (function() {
+      window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+      window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+      window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+    })();
 
-  // Initialize when DOM loads
-  document.addEventListener('DOMContentLoaded', function() {
-    let currentStep = 1;
-    const totalSteps = 4;
+    // DOM Elements
+    const titleInput = document.getElementById('title');
+    const titleCount = document.getElementById('titleCount');
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
 
-    function showStep(step) {
-      for (let i = 1; i <= totalSteps; i++) {
-        document.getElementById(`step-${i}`).classList.add("hidden");
+    // Character counter for title
+    titleInput.addEventListener('input', () => {
+      titleCount.textContent = `${titleInput.value.length}/100`;
+    });
+
+    // Image preview handler
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          imagePreview.src = e.target.result;
+          imagePreviewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreviewContainer.style.display = 'none';
       }
-      document.getElementById(`step-${step}`).classList.remove("hidden");
-      currentStep = step;
-    }
+    });
 
-    function validateStep(step) {
-      const fields = {
-        1: ['fname', 'lname', 'contact'],
-        2: ['amenity', 'date', 'time', 'attendees'],
-        3: ['purpose', 'type']
-      };
-      
-      const missing = fields[step]?.filter(id => {
-        if (id === 'type') return !document.querySelector('input[name="type"]:checked');
-        return !document.getElementById(id)?.value;
-      });
-      
-      if (missing?.length) {
-        alert(`Please fill in all required fields: ${missing.join(', ')}`);
-        return false;
-      }
-      return true;
-    }
+    // Main announcement posting function
+    async function postAnnouncement() {
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('body').value.trim();
+  const imageInput = document.getElementById('imageInput');
+  const imageFile = imageInput.files[0]; // Get the file if exists
 
-    function updateSummary() {
-      document.getElementById('summary-fname').textContent = document.getElementById('fname').value;
-      document.getElementById('summary-lname').textContent = document.getElementById('lname').value;
-      document.getElementById('summary-contact').textContent = document.getElementById('contact').value;
-      document.getElementById('summary-email').textContent = document.getElementById('email').value || 'Not provided';
-      document.getElementById('summary-amenity').textContent = document.getElementById('amenity').value;
-      document.getElementById('summary-date').textContent = document.getElementById('date').value;
-      document.getElementById('summary-time').textContent = document.getElementById('time').value;
-      document.getElementById('summary-attendees').textContent = document.getElementById('attendees').value;
-      document.getElementById('summary-purpose').textContent = document.getElementById('purpose').value;
-      document.getElementById('summary-type').textContent = document.querySelector('input[name="type"]:checked').value;
-      document.getElementById('summary-notes').textContent = document.getElementById('notes').value || 'None';
-    }
-
-    // Set default date to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = today;
-    document.getElementById('date').min = today;
-    document.getElementById('ddate').value = today;
-    document.getElementById('ddate').min = today;
-    
-    // Set amenity from URL if provided
-    const urlParams = new URLSearchParams(window.location.search);
-    const amenityType = urlParams.get('amenity');
-    if (amenityType) {
-      document.getElementById('amenity').value = amenityType;
-      document.getElementById('damenity').value = amenityType;
-    }
-    
-    // Attach form submissions
-    document.getElementById('mobile-booking-form').addEventListener('submit', handleMobileSubmit);
-    document.getElementById('desktop-booking-form').addEventListener('submit', handleDesktopSubmit);
-    
-    // Make navigation functions global
-    window.nextStep = function() {
-      if (validateStep(currentStep)) {
-        if (currentStep === 3) updateSummary();
-        if (currentStep < totalSteps) showStep(currentStep + 1);
-      }
-    };
-    
-    window.prevStep = function() {
-      if (currentStep > 1) showStep(currentStep - 1);
-    };
-  });
-
-  // Form submission handlers (now outside DOMContentLoaded)
-  async function handleMobileSubmit(event) {
-    event.preventDefault();
-    
-    if (!window.supabase) {
-      console.error('Supabase not initialized');
-      return;
-    }
-
-    // Validate confirmation checkbox
-    if (!document.getElementById('confirm').checked) {
-      alert('Please confirm the booking policies');
-      return;
-    }
-
-    // Prepare form data
-    const formData = {
-      first_name: document.getElementById('fname').value,
-      last_name: document.getElementById('lname').value,
-      contact_number: document.getElementById('contact').value,
-      email: document.getElementById('email').value || null,
-      amenity_type: document.getElementById('amenity').value,
-      booking_date: document.getElementById('date').value,
-      start_time: document.getElementById('time').value + ':00',
-      end_time: document.getElementById('time').value + ':00',
-      purpose: document.getElementById('purpose').value,
-      attendees: parseInt(document.getElementById('attendees').value) || 1,
-      user_type: document.querySelector('input[name="type"]:checked').value,
-      notes: document.getElementById('notes').value || null,
-      status: 'Pending'
-    };
-
-    try {
-      const { data, error } = await window.supabase
-        .from('bookings')
-        .insert([formData])
-        .select();
-
-      if (error) throw error;
-      
-      alert('Booking submitted successfully!');
-      window.location.href = 'amenities.html';
-    } catch (error) {
-      console.error('Error:', error);
-      alert(`Error submitting booking: ${error.message}`);
-    }
+  if (!title || !description) {
+    alert("Please fill out all required fields.");
+    return;
   }
 
-  async function handleDesktopSubmit(event) {
-    event.preventDefault();
+  try {
+    // Show loading state
+    const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Posting...';
+
+    let imageUrl = null;
     
-    if (!window.supabase) {
-      console.error('Supabase not initialized');
-      return;
-    }
+    // Only proceed with upload if a file was selected
+    if (imageFile) {
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
 
-    // Validate confirmation checkbox
-    if (!document.getElementById('dconfirm').checked) {
-      alert('Please confirm the booking policies');
-      return;
-    }
+      // Upload the file
+      const { data: uploadData, error: uploadError } = await window.supabase
+        .storage
+        .from('announcement-images')
+        .upload(fileName, imageFile, {
+          contentType: imageFile.type,
+          upsert: false
+        });
 
-    // Prepare form data
-    const formData = {
-      first_name: document.getElementById('dfname').value,
-      last_name: document.getElementById('dlname').value,
-      contact_number: document.getElementById('dcontact').value,
-      email: document.getElementById('demail').value || null,
-      amenity_type: document.getElementById('damenity').value,
-      booking_date: document.getElementById('ddate').value,
-      start_time: document.getElementById('dtimeFrom').value + ':00',
-      end_time: document.getElementById('dtimeTo').value + ':00',
-      purpose: document.getElementById('dpurpose').value,
-      attendees: parseInt(document.getElementById('dattendees').value) || 1,
-      user_type: document.querySelector('input[name="dtype"]:checked').value,
-      notes: document.getElementById('dnotes').value || null,
-      status: 'Pending'
-    };
-
-    try {
-      const { data, error } = await window.supabase
-        .from('bookings')
-        .insert([formData])
-        .select();
-
-      if (error) throw error;
+      if (uploadError) throw uploadError;
       
-      alert('Booking submitted successfully!');
-      window.location.href = 'amenities.html';
-    } catch (error) {
-      console.error('Error:', error);
-      alert(`Error submitting booking: ${error.message}`);
+      // Get public URL
+      const { data: { publicUrl } } = await window.supabase
+        .storage
+        .from('announcement-images')
+        .getPublicUrl(uploadData.path);
+      
+      imageUrl = publicUrl;
+    }
+
+    // Create announcement record (with or without image)
+    const { error } = await window.supabase
+      .from('announcements')
+      .insert([{
+        title,
+        description,
+        image_url: imageUrl, // This will be null if no image
+        category: 'General',
+        importance: 'Medium',
+        date: new Date().toISOString(),
+        author: 'Admin'
+      }]);
+
+    if (error) throw error;
+
+    alert("Announcement posted successfully!");
+    window.location.href = "announcements.html";
+
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Error creating announcement: " + error.message);
+  } finally {
+    // Reset button state
+    const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Post';
     }
   }
-</script>
+  // Inside postAnnouncement()
+
+try {
+  // Upload image if present
+  let imageUrl = null;
+  if (imageFile) {
+    const fileExt = imageFile.name.split('.').pop();
+    const originalName = imageFile.name.replace(/\s+/g, '-').replace(/^\/+/, '');
+    const fileName = `${Date.now()}-${originalName}`;
+
+    const { data: uploadData, error: uploadError } = await window.supabase
+      .storage
+      .from('announcement-images')
+      .upload(fileName, imageFile);
+
+    if (uploadError) {
+      console.error("Image Upload Error:", uploadError);
+      alert("Image upload failed: " + uploadError.message);
+      return;
+    }
+
+    imageUrl = `${window.supabaseUrl}/storage/v1/object/public/announcement-images/${fileName}`;
+    console.log('✅ Image uploaded successfully:', imageUrl);
+  }
+
+  // Insert announcement
+  const { data, error } = await window.supabase
+    .from('announcements')
+    .insert([{
+      title,
+      description,
+      image_url: imageUrl,
+      category: 'General',
+      importance: 'Medium',
+      date: new Date().toISOString(),
+      author: 'Admin'
+    }]);
+
+  if (error) {
+    console.error("Insert Error:", error);
+    alert("Error inserting announcement: " + error.message);
+    return;
+  }
+
+  alert("Announcement posted successfully!");
+  window.location.href = "../pages/announcements.html";
+
+} catch (err) {
+  console.error("Unexpected Error:", err);
+  alert("Unexpected error: " + err.message);
+}
+
+}
+  </script>
 </body>
 </html>
