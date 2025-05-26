@@ -149,66 +149,132 @@
 
     // Main announcement posting function
     async function postAnnouncement() {
-      const title = document.getElementById('title').value.trim();
-      const description = document.getElementById('body').value.trim();
-      const imageFile = document.getElementById('imageInput').files[0];
+  const title = document.getElementById('title').value.trim();
+  const description = document.getElementById('body').value.trim();
+  const imageInput = document.getElementById('imageInput');
+  const imageFile = imageInput.files[0]; // Get the file if exists
 
-      if (!title || !description) {
-        alert("Please fill out all required fields.");
-        return;
-      }
+  if (!title || !description) {
+    alert("Please fill out all required fields.");
+    return;
+  }
 
-      try {
-        // Show loading state
-        const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Posting...';
+  try {
+    // Show loading state
+    const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Posting...';
 
-        // 1. Upload image if exists
-        let imageUrl = null;
-        if (imageFile) {
-          const fileExt = imageFile.name.split('.').pop();
-          const fileName = `${Math.random()}.${fileExt}`;
-          
-          const { error: uploadError } = await window.supabase
-            .storage
-            .from('announcement-images')
-            .upload(fileName, imageFile);
+    let imageUrl = null;
+    
+    // Only proceed with upload if a file was selected
+    if (imageFile) {
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
 
-          if (uploadError) throw uploadError;
-          imageUrl = `${window.supabaseUrl}/storage/v1/object/public/announcement-images/${fileName}`;
-        }
+      // Upload the file
+      const { data: uploadData, error: uploadError } = await window.supabase
+        .storage
+        .from('announcement-images')
+        .upload(fileName, imageFile, {
+          contentType: imageFile.type,
+          upsert: false
+        });
 
-        // 2. Create announcement record
-        const { error } = await window.supabase
-          .from('announcements')
-          .insert([{
-            title,
-            description,
-            image_url: imageUrl,
-            category: 'General',
-            importance: 'Medium',
-            date: new Date().toISOString(),
-            author: 'Admin'
-          }]);
-
-        if (error) throw error;
-
-        alert("Announcement posted successfully!");
-        window.location.href = "../pages/announcements.html";
-
-      } catch (error) {
-        console.error('Error:', error);
-        alert("Error creating announcement: " + error.message);
-      } finally {
-        // Reset button state
-        const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Post Announcement';
-        }
-      }
+      if (uploadError) throw uploadError;
+      
+      // Get public URL
+      const { data: { publicUrl } } = await window.supabase
+        .storage
+        .from('announcement-images')
+        .getPublicUrl(uploadData.path);
+      
+      imageUrl = publicUrl;
     }
+
+    // Create announcement record (with or without image)
+    const { error } = await window.supabase
+      .from('announcements')
+      .insert([{
+        title,
+        description,
+        image_url: imageUrl, // This will be null if no image
+        category: 'General',
+        importance: 'Medium',
+        date: new Date().toISOString(),
+        author: 'Admin'
+      }]);
+
+    if (error) throw error;
+
+    alert("Announcement posted successfully!");
+    window.location.href = "announcements.html";
+
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Error creating announcement: " + error.message);
+  } finally {
+    // Reset button state
+    const submitBtn = document.querySelector('button[onclick="postAnnouncement()"]');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Post';
+    }
+  }
+  // Inside postAnnouncement()
+
+try {
+  // Upload image if present
+  let imageUrl = null;
+  if (imageFile) {
+    const fileExt = imageFile.name.split('.').pop();
+    const originalName = imageFile.name.replace(/\s+/g, '-').replace(/^\/+/, '');
+    const fileName = `${Date.now()}-${originalName}`;
+
+    const { data: uploadData, error: uploadError } = await window.supabase
+      .storage
+      .from('announcement-images')
+      .upload(fileName, imageFile);
+
+    if (uploadError) {
+      console.error("Image Upload Error:", uploadError);
+      alert("Image upload failed: " + uploadError.message);
+      return;
+    }
+
+    imageUrl = `${window.supabaseUrl}/storage/v1/object/public/announcement-images/${fileName}`;
+    console.log('✅ Image uploaded successfully:', imageUrl);
+  }
+
+  // Insert announcement
+  const { data, error } = await window.supabase
+    .from('announcements')
+    .insert([{
+      title,
+      description,
+      image_url: imageUrl,
+      category: 'General',
+      importance: 'Medium',
+      date: new Date().toISOString(),
+      author: 'Admin'
+    }]);
+
+  if (error) {
+    console.error("Insert Error:", error);
+    alert("Error inserting announcement: " + error.message);
+    return;
+  }
+
+  alert("Announcement posted successfully!");
+  window.location.href = "../pages/announcements.html";
+
+} catch (err) {
+  console.error("Unexpected Error:", err);
+  alert("Unexpected error: " + err.message);
+}
+
+}
   </script>
 </body>
 </html>

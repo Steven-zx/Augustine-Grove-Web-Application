@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<htmlht lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -477,43 +477,210 @@
                 </div>
               </div>
       
-      <script>
-        let currentStep = 1;
-        const totalSteps = 4;
+              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Initialize Supabase client
+  const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+  // Multi-step form functionality
+  let currentStep = 1;
+  const totalSteps = 4;
+
+  function showStep(step) {
+    for (let i = 1; i <= totalSteps; i++) {
+      document.getElementById(`step-${i}`).classList.add("hidden");
+    }
+    document.getElementById(`step-${step}`).classList.remove("hidden");
+    currentStep = step;
+  }
+
+  function validateStep(step) {
+    const fields = {
+      1: ['fname', 'lname', 'contact'],
+      2: ['amenity', 'date', 'time', 'attendees'],
+      3: ['purpose', 'type']
+    };
+    
+    const missing = fields[step]?.filter(id => {
+      if (id === 'type') return !document.querySelector('input[name="type"]:checked');
+      return !document.getElementById(id)?.value;
+    });
+    
+    if (missing?.length) {
+      alert(`Please fill in all required fields: ${missing.join(', ')}`);
+      return false;
+    }
+    return true;
+  }
+
+  function updateSummary() {
+    document.getElementById('summary-fname').textContent = document.getElementById('fname').value;
+    document.getElementById('summary-lname').textContent = document.getElementById('lname').value;
+    document.getElementById('summary-contact').textContent = document.getElementById('contact').value;
+    document.getElementById('summary-email').textContent = document.getElementById('email').value;
+    document.getElementById('summary-amenity').textContent = document.getElementById('amenity').value;
+    document.getElementById('summary-date').textContent = document.getElementById('date').value;
+    document.getElementById('summary-time').textContent = document.getElementById('time').value;
+    document.getElementById('summary-attendees').textContent = document.getElementById('attendees').value;
+    document.getElementById('summary-type').textContent = document.querySelector('input[name="type"]:checked').value;
+    document.getElementById('summary-notes').textContent = document.getElementById('notes').value;
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    
+    // Validate confirmation checkbox
+    if (!document.querySelector('#step-4 input[type="checkbox"]').checked) {
+      alert('Please confirm the booking policies');
+      return;
+    }
+
+    // Prepare form data
+    const formData = {
+      first_name: document.getElementById('fname').value,
+      last_name: document.getElementById('lname').value,
+      contact_number: document.getElementById('contact').value,
+      email: document.getElementById('email').value || null, // Set to null if empty
+      amenity_type: document.getElementById('amenity').value,
+      booking_date: document.getElementById('date').value,
+      start_time: document.getElementById('time').value + ':00', // Add seconds
+      end_time: document.getElementById('time').value + ':00',  // Same as start for mobile
+      purpose: document.getElementById('purpose').value,
+      attendees: parseInt(document.getElementById('attendees').value) || 1,
+      user_type: document.querySelector('input[name="type"]:checked').value,
+      notes: document.getElementById('notes').value || null, // Set to null if empty
+      status: 'Pending'
+    };
+
+    console.log('Submitting data:', formData);
+
+    try {
+      // Insert into Supabase
+      const { data, error } = await supabase
+        .from('bookings')
+        .insert([formData])
+        .select();
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+        throw new Error('No data returned from insert operation');
+      }
+
+      console.log('Successfully inserted:', data);
+      alert('Booking submitted successfully!');
+      window.location.href = 'amenities.html';
+    } catch (error) {
+      console.error('Full error:', error);
+      alert(`Error submitting booking: ${error.message}\nCheck console for details`);
+    }
+  }
+
+  // Initialize when DOM loads
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, Supabase initialized');
+    
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+    document.getElementById('date').min = today;
+    
+    // Set amenity from URL if provided
+    const urlParams = new URLSearchParams(window.location.search);
+    const amenityType = urlParams.get('amenity');
+    if (amenityType) {
+      document.getElementById('amenity').value = amenityType;
+    }
+    
+    // Attach form submission
+    document.getElementById('mobile-booking-form').addEventListener('submit', handleSubmit);
+    
+    // Make navigation functions global
+    window.nextStep = function() {
+      if (validateStep(currentStep)) {
+        if (currentStep === 3) updateSummary();
+        if (currentStep < totalSteps) showStep(currentStep + 1);
+      }
+    };
+    
+    window.prevStep = function() {
+      if (currentStep > 1) showStep(currentStep - 1);
+    };
+    
+    // Add test function
+    window.testSupabaseInsert = async function() {
+      const testData = {
+        first_name: 'Test',
+        last_name: 'User',
+        contact_number: '1234567890',
+        amenity_type: 'Clubhouse',
+        booking_date: today,
+        start_time: '10:00:00',
+        end_time: '12:00:00',
+        purpose: 'Testing',
+        attendees: 2,
+        user_type: 'Resident',
+        status: 'Pending'
+      };
       
-        function showStep(step) {
-          for (let i = 1; i <= totalSteps; i++) {
-            document.getElementById(`step-${i}`).classList.add("hidden");
-          }
-          document.getElementById(`step-${step}`).classList.remove("hidden");
-          currentStep = step;
-        }
-      
-        function nextStep() {
-          if (currentStep === 3) {
-            document.getElementById('summary-fname').innerText = document.getElementById('fname').value;
-            document.getElementById('summary-lname').innerText = document.getElementById('lname').value;
-            document.getElementById('summary-contact').innerText = document.getElementById('contact').value;
-            document.getElementById('summary-email').innerText = document.getElementById('email').value;
-            document.getElementById('summary-amenity').innerText = document.getElementById('amenity').value;
-            document.getElementById('summary-date').innerText = document.getElementById('date').value;
-            document.getElementById('summary-time').innerText = document.getElementById('time').value;
-            document.getElementById('summary-attendees').innerText = document.getElementById('attendees').value;
-      
-            const selectedType = document.querySelector('input[name="type"]:checked');
-            document.getElementById('summary-type').innerText = selectedType ? selectedType.value : '';
-      
-            document.getElementById('summary-notes').innerText = document.getElementById('notes').value;
-          }
-      
-          if (currentStep < totalSteps) showStep(currentStep + 1);
-        }
-      
-        function prevStep() {
-          if (currentStep > 1) showStep(currentStep - 1);
-        }
-      </script>
-      
+      try {
+        const { data, error } = await supabase
+          .from('bookings')
+          .insert([testData])
+          .select();
+        
+        if (error) throw error;
+        console.log('Test insert successful:', data);
+        alert('Test data inserted! Check your Supabase table.');
+      } catch (error) {
+        console.error('Test failed:', error);
+        alert('Test insert failed: ' + error.message);
+      }
+    };
+  });
+</script>
+
+// Add this temporary test function
+async function testSupabaseConnection() {
+  try {
+    const testData = {
+      first_name: 'Test',
+      last_name: 'User',
+      contact_number: '1234567890',
+      amenity_type: 'Clubhouse',
+      booking_date: new Date().toISOString().split('T')[0],
+      start_time: '12:00',
+      end_time: '13:00',
+      status: 'pending'
+    };
+    
+    const { data, error } = await supabase
+      .from('bookings')
+      .insert([testData])
+      .select();
+    
+    if (error) throw error;
+    
+    console.log('Test insert successful:', data);
+    alert('Test insert worked! Check your Supabase dashboard.');
+  } catch (error) {
+    console.error('Test insert failed:', error);
+    alert(`Test failed: ${error.message}`);
+  }
+}
+
+// Call it temporarily
+testSupabaseConnection();
   </body>
   </html>
-  
