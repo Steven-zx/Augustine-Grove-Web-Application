@@ -118,15 +118,61 @@
     </div>
 
     <!-- Title -->
-    <label class="block text-gray-800 font-bold mb-1">
-      * Title
+    <label class="font-bold block text-[#333333] mb-1">
+      <span class="text-red-500">*</span> Title
     </label>
     <input type="text" id="title" maxlength="100"
            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
            placeholder="Type title here.">
     <div class="text-right text-sm text-gray-500 mb-4" id="titleCount">0/100</div>
 
-   
+   <!-- Options: Category, Importance, Visibility -->
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+
+  <!-- Category Dropdown -->
+  <div>
+    <label class="block text-gray-800 font-bold mb-1">
+      <span class="text-red-500">*</span> Category
+    </label>
+    <select id="category" class="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm">
+      <option value="" disabled selected>Select a category</option>
+      <option value="facilities">Facilities</option>
+      <option value="upgrades">Upgrades</option>
+      <option value="general">General</option>
+    </select>
+  </div>
+
+  <!-- Importance Dropdown -->
+  <div>
+    <label class="block text-gray-800 font-bold mb-1">
+      <span class="text-red-500">*</span> Importance
+    </label>
+    <select id="importance" class="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm">
+      <option value="" disabled selected>Select importance</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+    </select>
+  </div>
+
+  <!-- Visibility Toggle -->
+  <div>
+    <label class="block text-gray-800 font-bold mb-1">
+      <span class="text-red-500">*</span> Visibility
+    </label>
+    <div class="flex gap-4 mt-1">
+      <label class="inline-flex items-center space-x-2">
+        <input type="radio" name="visibility" value="public" class="text-green-600 focus:ring-green-500">
+        <span class="text-sm text-gray-700">Public</span>
+      </label>
+      <label class="inline-flex items-center space-x-2">
+        <input type="radio" name="visibility" value="private" class="text-green-600 focus:ring-green-500">
+        <span class="text-sm text-gray-700">Private</span>
+      </label>
+    </div>
+  </div>
+
+</div>
+
       <!-- File Upload -->
 <div class="md:col-span-2 mb-4">
   <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
@@ -146,7 +192,7 @@
     <!-- Body -->
     <!-- Body Section with icons embedded inside the same container -->
 <label class="block text-gray-800 font-bold mb-1">
-    * Body
+    <span class="text-red-500">*</span> Body
   </label>
   
   <div class="relative bg-white border border-gray-300 rounded-lg overflow-hidden mb-4">
