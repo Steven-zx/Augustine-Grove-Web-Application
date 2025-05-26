@@ -6,12 +6,13 @@
 <link href="../../dist/output.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <!-- Load Supabase JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <title>Amenity Booking Form</title>
 </head>
 <body class="bg-[#FAF1E6]">
 
-<!-- Nav BAr -->
+<!-- Nav Bar -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="../index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
@@ -38,7 +39,6 @@
 
   <!-- Mobile Slide-in Menu -->
   <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
-
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
       <button id="close-btn" class="text-[#5F8B4C]">
@@ -64,547 +64,484 @@
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
-
-<!-- Bottom Log Out Button -->
-<div class="w-full text-center mt-20 mb-6">
-  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-    Log Out
-  </button>
+    <!-- Bottom Log Out Button -->
+    <div class="w-full text-center mt-20 mb-6">
+      <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+        Log Out
+      </button>
+    </div>
   </div>
-  
-</div>
 </nav>
 
-       <!-- Header -->
-       <div class="bg-[#E6DCD0] shadow-md p-4 md:mb-10 flex flex-col justify-between">
-        <div class="px-6 py-4">
+<!-- Header -->
+<div class="bg-[#E6DCD0] shadow-md p-4 md:mb-10 flex flex-col justify-between">
+  <div class="px-6 py-4">
     <button onclick="history.back()" class="text-sm flex items-center gap-1 text-[#5F8B4C] hover:underline font-bold">
       <i class="fa-solid fa-chevron-left text-sm"></i>
-    <span>Back</span>
+      <span>Back</span>
     </button>
   </div>
-        <div class="text-center mb-6">
-          <h1 class="text-base md:text-xl font-semibold">Amenity Booking Request</h1>
-          <p class="text-xs md:text-sm text-gray-600">Thank you for your interest in booking at Augustine Grove!</p>
-          <p class="text-xs md:text-sm text-gray-600">Please fill out the form. Our HOA Admin Team will contact you for confirmation.</p>
-        </div>
-      </div>
-   
-    <div class=" max-w-6xl mx-auto p-4 text-sm text-gray-800">    
-
-      <!-- Progress -->
-      <div class="flex items-center justify-center text-center gap-4 mb-8 ">
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">1</div>
-          <span class="mt-1 text-xs text-center">Complete the Booking Form</span>
-        </div>
-        <div class="h-px w-20 bg-gray-300"></div>
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center">2</div>
-          <span class="mt-1 text-xs">Wait for Review</span>
-        </div>
-        <div class="h-px w-20 bg-gray-300"></div>
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center">3</div>
-          <span class="mt-1 text-xs">Confirmation of Booking</span>
-        </div>
-      </div>
- 
-
-      <!-- Form + Info Cards Container -->
-
-      <div class="hidden md:block">
-      <div class="flex md:gap-6">
-       <!-- Booking Form -->
-<form class="bg-[#E6DCD0] flex-1 p-6 rounded-xl shadow-sm grid md:grid-cols-2 gap-4">
-
-  <!-- First Name -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> First Name
-    </label>
-    <input type="text" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
-  <!-- Last Name -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Last Name
-    </label>
-    <input type="text" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
-  <!-- Contact Number -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Contact Number
-    </label>
-    <input type="tel" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
-  <!-- Email Address -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      Email Address
-    </label>
-    <input type="email" class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
-  <!-- Amenity Type -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Amenity Type
-    </label>
-    <select required class="w-full rounded-lg px-4 py-2 focus:outline-none">
-      <option disabled selected>Select an amenity</option>
-      <option>Clubhouse</option>
-      <option>Swimming Pool</option>
-      <option>Basketball Court</option>
-    </select>
-  </div>
-
-  <!-- Select Date -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Select Date
-    </label>
-    <input type="date" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
-  <!-- Purpose of Booking -->
-  <div>
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Purpose of Booking
-    </label>
-    <input type="text" required placeholder="e.g. Birthday, Swim"
-           class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-  </div>
-
- <!-- Time of Use -->
-<div>
-  <label class="font-semibold block text-[#333333] mb-1 text-sm">
-    <span class="text-red-500">*</span> Time of Use
-  </label>
-  <div class="flex gap-2">
-    <!-- Start Time -->
-    <div class="w-1/2">
-      <input type="time" name="timeFrom" required
-             class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-      <p class="text-xs text-gray-500 mt-1">Start Time</p>
-    </div>
-
-    <!-- End Time -->
-    <div class="w-1/2">
-      <input type="time" name="timeTo" required
-             class="w-full rounded-lg px-4 py-2 focus:outline-none" />
-      <p class="text-xs text-gray-500 mt-1">End Time</p>
-    </div>
+  <div class="text-center mb-6">
+    <h1 class="text-base md:text-xl font-semibold">Amenity Booking Request</h1>
+    <p class="text-xs md:text-sm text-gray-600">Thank you for your interest in booking at Augustine Grove!</p>
+    <p class="text-xs md:text-sm text-gray-600">Please fill out the form. Our HOA Admin Team will contact you for confirmation.</p>
   </div>
 </div>
 
-
-  <!-- Number of Attendees -->
-  <div class="md:col-span-2">
-   <div>
-        <label class="font-semibold  block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Number of Visitors</label>
-        <input type="number" min="1" value="1" class="w-full mt-1 p-2 rounded-md border border-gray-300">
-      </div>
-  </div>
-
-
-  
-  <!-- Resident or Guest -->
-  <div class="md:col-span-2">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      <span class="text-red-500">*</span> Are you a Resident or Guest?
-    </label>
-    <div class="flex gap-4 mt-1">
-      <label class="text-sm"><input type="radio" name="type" required /> Resident</label>
-      <label class="text-sm"><input type="radio" name="type" /> Guest</label>
-      <label class="text-sm"><input type="radio" name="type" /> Others</label>
+<div class="max-w-6xl mx-auto p-4 text-sm text-gray-800">    
+  <!-- Progress -->
+  <div class="flex items-center justify-center text-center gap-4 mb-8">
+    <div class="flex flex-col items-center">
+      <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">1</div>
+      <span class="mt-1 text-xs text-center">Complete the Booking Form</span>
+    </div>
+    <div class="h-px w-20 bg-gray-300"></div>
+    <div class="flex flex-col items-center">
+      <div class="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center">2</div>
+      <span class="mt-1 text-xs">Wait for Review</span>
+    </div>
+    <div class="h-px w-20 bg-gray-300"></div>
+    <div class="flex flex-col items-center">
+      <div class="w-8 h-8 rounded-full bg-gray-300 text-white flex items-center justify-center">3</div>
+      <span class="mt-1 text-xs">Confirmation of Booking</span>
     </div>
   </div>
 
-  <!-- Notes -->
-  <div class="md:col-span-2">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm">
-      Notes
-    </label>
-    <textarea rows="4" class="w-full rounded-lg px-4 py-2 focus:outline-none"
-              placeholder="Let us know if you need anything specific..."></textarea>
-    <p class="text-xs italic text-red-500 mt-1">* Indicates required field</p>
-  </div>
-
-  <!-- Confirmation & Submit -->
-  <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-4">
-  <!-- Checkbox + Text -->
-  <label class="text-sm flex items-center">
-    <input type="checkbox" required class="mr-2" />
-    I confirm all information is correct and I’ve read the 
-    <a href="#" class="underline text-green-600 ml-1">booking policies</a>.
-  </label>
-
-  <!-- Submit Button (Smaller Width) -->
-  <button type="submit"
-          class="font-bold bg-[#5F8B4C] text-white px-5 py-2 rounded-full text-sm hover:bg-green-700 w-auto min-w-[120px] text-center">
-    Submit
-  </button>
-</div>
-
-</form>
-
-
-        <!-- Info Cards (Right) -->
-        <div class="flex flex-col gap-4 mt-6 md:mt-0 md:w-1/3">
-          <!-- Admin Office Card -->
-          <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-            <div class="flex items-center gap-1">
-                <img src="/pictures/person_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                <span class="font-semibold">Admin Office</span>
-              </div>
-            <p class="text-sm mt-1">09194506688<br>augustinegrover...@gmail.com<br>Mon–Fri: 10am–6pm</p>
-          </div>
-  
-          <!-- Visit Us Card -->
-          <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-            <div class="flex items-center gap-1">
-                <img src="/pictures/location_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                <span class="font-semibold">Visit us at Sambag, Jaro, Iloilo City, Iloilo 5000 Philippines</span>
-                </div>
-            <a href="#" class="underline text-green-600 text-sm">View on Google Maps</a>
-          </div>
-  
-          <!-- Chat With Us Card -->
-          <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-            <div class="flex items-center gap-1">
-                <img src="/pictures/fb_icon_green.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                <span class="font-semibold">Chat with Us</span>
-                </div>
-            <p class="text-sm mt-1">Augustine Grove Residential Village</p>
-          </div>
+  <!-- Form + Info Cards Container -->
+  <div class="hidden md:block">
+    <div class="flex md:gap-6">
+      <!-- Booking Form -->
+      <form id="desktop-booking-form" class="bg-[#E6DCD0] flex-1 p-6 rounded-xl shadow-sm grid md:grid-cols-2 gap-4">
+        <!-- First Name -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> First Name
+          </label>
+          <input type="text" id="dfname" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
         </div>
-      </div>
-    </div>
-    </div>
 
-    <div class="block md:hidden bg-[#E6DCD0] mx-5 p-6 rounded-xl shadow-sm max-w-lg text-sm text-gray-800 min-h-[500px]">
-        <div class="justify-center text-center w-40px my-4 p-2 rounded-xl bg-[#FFFFFF]">
-            <h3 class="text-base text-[#000000] font-bold">Amenity Booking Form</h3>
+        <!-- Last Name -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Last Name
+          </label>
+          <input type="text" id="dlname" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
         </div>
-        <form id="mobile-booking-form">
-          <!-- Step 1 -->
-          <div id="step-1" class="form-step">
-  <h2 class="text-base font-semibold mb-4">Personal Information</h2>
 
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> First Name
-    </label>
-    <input type="text" id="fname" required class="w-full mt-1 rounded-xl border p-2" />
-  </div>
+        <!-- Contact Number -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Contact Number
+          </label>
+          <input type="tel" id="dcontact" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+        </div>
 
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Last Name
-    </label>
-    <input type="text" id="lname" required class="w-full mt-1 rounded-xl border p-2" />
-  </div>
+        <!-- Email Address -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            Email Address
+          </label>
+          <input type="email" id="demail" class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+        </div>
 
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Contact Number
-    </label>
-    <input type="tel" id="contact" required class="w-full mt-1 rounded-xl border p-2" />
-  </div>
+        <!-- Amenity Type -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Amenity Type
+          </label>
+          <select id="damenity" required class="w-full rounded-lg px-4 py-2 focus:outline-none">
+            <option disabled selected>Select an amenity</option>
+            <option>Clubhouse</option>
+            <option>Swimming Pool</option>
+            <option>Basketball Court</option>
+          </select>
+        </div>
 
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      Email Address
-    </label>
-    <input type="email" id="email" class="w-full mt-1 rounded-xl border p-2" />
-  </div>
+        <!-- Select Date -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Select Date
+          </label>
+          <input type="date" id="ddate" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+        </div>
 
-  <p class="text-xs text-red-500 font-thin">* Indicates required field</p>
+        <!-- Purpose of Booking -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Purpose of Booking
+          </label>
+          <input type="text" id="dpurpose" required placeholder="e.g. Birthday, Swim"
+                class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+        </div>
 
-  <div class="flex justify-end">
-    <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">
-      Next
-    </button>
-  </div>
-</div>
-  
-         <!-- Step 2 -->
-<div id="step-2" class="form-step hidden">
-  <h2 class="text-lg font-semibold mb-4">Booking Details</h2>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Amenity Type
-    </label>
-    <select id="amenity" required class="w-full mt-1 rounded-xl border p-2">
-      <option disabled selected>Select an amenity</option>
-      <option>Clubhouse</option>
-      <option>Swimming Pool</option>
-      <option>Basketball Court</option>
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Select Date
-    </label>
-    <input type="date" id="date" required class="w-full mt-1 rounded-xl border p-2" />
-  </div>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Time of Use
-    </label>
-    <input type="text" id="time" required class="w-full mt-1 rounded-xl border p-2" placeholder="HH:MM AM or PM" />
-  </div>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Number of Attendees
-    </label>
-    <input type="number" id="attendees" required class="w-full mt-1 rounded-xl border p-2" />
-  </div>
-
-  <div class="flex justify-between mt-4">
-    <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
-    <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">Next</button>
-  </div>
-</div>
-
-          <!-- Step 3 -->
-<div id="step-3" class="form-step hidden">
-  <h2 class="text-lg font-semibold mb-4">Step 3: Other Details</h2>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Purpose of Booking
-    </label>
-    <input type="text" id="purpose" required class="w-full mt-1 rounded-xl border p-2" placeholder="e.g. Birthday, Swim" />
-  </div>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      <span class="text-red-500">*</span> Are you a Resident or Guest?
-    </label>
-    <div class="flex gap-4 mt-1">
-      <label class="text-sm"><input type="radio" name="type" value="Resident" required /> Resident</label>
-      <label class="text-sm"><input type="radio" name="type" value="Guest" /> Guest</label>
-      <label class="text-sm"><input type="radio" name="type" value="Others" /> Others</label>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-      Notes
-    </label>
-    <textarea id="notes" rows="4" class="w-full mt-1 rounded-xl border p-2" placeholder="Let us know if you need anything specific..."></textarea>
-  </div>
-
-  <div class="flex justify-between mt-4">
-    <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
-    <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">Next</button>
-  </div>
-</div>
-
-      
-          <!-- Step 4 -->
-          <div id="step-4" class="form-step hidden">
-            <h2 class="text-lg font-semibold mb-4">Step 4: Confirm Details</h2>
-            <div class="space-y-2 text-sm leading-relaxed">
-              <p>First Name: <span class="font-bold" id="summary-fname"></span></p>
-              <p>Last Name: <span class="font-bold" id="summary-lname"></span></p>
-              <p>Contact Number: <span class="font-bold" id="summary-contact"></span></p>
-              <p>Email Address: <span class="font-bold" id="summary-email"></span></p>
-              <p>Amenity Type: <span class="font-bold" id="summary-amenity"></span></p>
-              <p>Time of Use: <span class="font-bold" id="summary-time"></span></p>
-              <p>Date: <span class="font-bold" id="summary-date"></span></p>
-              <p>Number of Attendees: <span class="font-bold" id="summary-attendees"></span></p>
-              <p>Are you a Resident or Guest?: <span class="font-bold" id="summary-type"></span></p>
-              <p>Notes: <span class="font-bold" id="summary-notes"></span></p>
+        <!-- Time of Use -->
+        <div>
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Time of Use
+          </label>
+          <div class="flex gap-2">
+            <!-- Start Time -->
+            <div class="w-1/2">
+              <input type="time" id="dtimeFrom" required
+                    class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+              <p class="text-xs text-gray-500 mt-1">Start Time</p>
             </div>
-      
-            <div class="mt-4">
-              <label class="text-sm flex items-start gap-2">
-                <input type="checkbox" required class="mt-1" />
-                <span>
-                  <span class="text-red-500 font-bold">*</span> I confirm that all information are correct and I have read and understood the booking policies.  
-                  <br />
-                  <a href="#" class="underline text-green-700">read booking policies</a>
-                </span>
-              </label>
-            </div>
-      
-            <div class="flex justify-between mt-6">
-              <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
-              <button type="submit" class="bg-[#5F8B4C] text-white rounded-lg px-6 py-2 font-bold">Submit</button>
+
+            <!-- End Time -->
+            <div class="w-1/2">
+              <input type="time" id="dtimeTo" required
+                    class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+              <p class="text-xs text-gray-500 mt-1">End Time</p>
             </div>
           </div>
-        </form>
+        </div>
+
+        <!-- Number of Attendees -->
+        <div class="md:col-span-2">
+          <div>
+            <label class="font-semibold block text-[#333333] mb-1 text-sm">
+              <span class="text-red-500">*</span> Number of Visitors
+            </label>
+            <input type="number" id="dattendees" min="1" value="1" class="w-full mt-1 p-2 rounded-md border border-gray-300">
+          </div>
+        </div>
+
+        <!-- Resident or Guest -->
+        <div class="md:col-span-2">
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            <span class="text-red-500">*</span> Are you a Resident or Guest?
+          </label>
+          <div class="flex gap-4 mt-1">
+            <label class="text-sm"><input type="radio" name="dtype" value="Resident" required /> Resident</label>
+            <label class="text-sm"><input type="radio" name="dtype" value="Guest" /> Guest</label>
+            <label class="text-sm"><input type="radio" name="dtype" value="Others" /> Others</label>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="md:col-span-2">
+          <label class="font-semibold block text-[#333333] mb-1 text-sm">
+            Notes
+          </label>
+          <textarea id="dnotes" rows="4" class="w-full rounded-lg px-4 py-2 focus:outline-none"
+                    placeholder="Let us know if you need anything specific..."></textarea>
+          <p class="text-xs italic text-red-500 mt-1">* Indicates required field</p>
+        </div>
+
+        <!-- Confirmation & Submit -->
+        <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-4">
+          <!-- Checkbox + Text -->
+          <label class="text-sm flex items-center">
+            <input type="checkbox" id="dconfirm" required class="mr-2" />
+            I confirm all information is correct and I've read the 
+            <a href="#" class="underline text-green-600 ml-1">booking policies</a>.
+          </label>
+
+          <!-- Submit Button -->
+          <button type="submit"
+                  class="font-bold bg-[#5F8B4C] text-white px-5 py-2 rounded-full text-sm hover:bg-green-700 w-auto min-w-[120px] text-center">
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <!-- Info Cards (Right) -->
+      <div class="flex flex-col gap-4 mt-6 md:mt-0 md:w-1/3">
+        <!-- Admin Office Card -->
+        <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+          <div class="flex items-center gap-1">
+            <img src="/pictures/person_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+            <span class="font-semibold">Admin Office</span>
+          </div>
+          <p class="text-sm mt-1">09194506688<br>augustinegrover...@gmail.com<br>Mon–Fri: 10am–6pm</p>
+        </div>
+
+        <!-- Visit Us Card -->
+        <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+          <div class="flex items-center gap-1">
+            <img src="/pictures/location_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+            <span class="font-semibold">Visit us at Sambag, Jaro, Iloilo City, Iloilo 5000 Philippines</span>
+          </div>
+          <a href="#" class="underline text-green-600 text-sm">View on Google Maps</a>
+        </div>
+
+        <!-- Chat With Us Card -->
+        <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+          <div class="flex items-center gap-1">
+            <img src="/pictures/fb_icon_green.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+            <span class="font-semibold">Chat with Us</span>
+          </div>
+          <p class="text-sm mt-1">Augustine Grove Residential Village</p>
+        </div>
       </div>
-              <!-- Info Cards (Right) -->
-              <div class="flex flex-col gap-4 m-10 block md:hidden">
-                <!-- Admin Office Card -->
-                <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-                  <div class="flex items-center gap-1">
-                      <img src="/pictures/person_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                      <span class="font-semibold">Admin Office</span>
-                    </div>
-                  <p class="text-sm mt-1">09194506688<br>augustinegrover...@gmail.com<br>Mon–Fri: 10am–6pm</p>
-                </div>
-        
-                <!-- Visit Us Card -->
-                <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-                  <div class="flex items-center gap-1">
-                      <img src="/pictures/location_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                      <span class="font-semibold">Visit Us</span>
-                      </div>
-                  <p class="text-sm mt-1">Sambag, Jaro, Iloilo City</p>
-                  <a href="#" class="underline text-green-600 text-sm">View on Google Maps</a>
-                </div>
-        
-                <!-- Chat With Us Card -->
-                <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
-                  <div class="flex items-center gap-1">
-                      <img src="/pictures/fb_icon_green.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
-                      <span class="font-semibold">Chat with Us</span>
-                      </div>
-                  <p class="text-sm mt-1">Augustine Grove Residential Village</p>
-                </div>
-              </div>
-      
-              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    </div>
+  </div>
+</div>
 
-              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Mobile Form -->
+<div class="block md:hidden bg-[#E6DCD0] mx-5 p-6 rounded-xl shadow-sm max-w-lg text-sm text-gray-800 min-h-[500px]">
+  <div class="justify-center text-center w-40px my-4 p-2 rounded-xl bg-[#FFFFFF]">
+    <h3 class="text-base text-[#000000] font-bold">Amenity Booking Form</h3>
+  </div>
+  <form id="mobile-booking-form">
+    <!-- Step 1 -->
+    <div id="step-1" class="form-step">
+      <h2 class="text-base font-semibold mb-4">Personal Information</h2>
 
-              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> First Name
+        </label>
+        <input type="text" id="fname" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
 
-              <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Last Name
+        </label>
+        <input type="text" id="lname" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Contact Number
+        </label>
+        <input type="tel" id="contact" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          Email Address
+        </label>
+        <input type="email" id="email" class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <p class="text-xs text-red-500 font-thin">* Indicates required field</p>
+
+      <div class="flex justify-end">
+        <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">
+          Next
+        </button>
+      </div>
+    </div>
+  
+    <!-- Step 2 -->
+    <div id="step-2" class="form-step hidden">
+      <h2 class="text-lg font-semibold mb-4">Booking Details</h2>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Amenity Type
+        </label>
+        <select id="amenity" required class="w-full mt-1 rounded-xl border p-2">
+          <option disabled selected>Select an amenity</option>
+          <option>Clubhouse</option>
+          <option>Swimming Pool</option>
+          <option>Basketball Court</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Select Date
+        </label>
+        <input type="date" id="date" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Time of Use
+        </label>
+        <input type="time" id="time" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Number of Attendees
+        </label>
+        <input type="number" id="attendees" min="1" value="1" required class="w-full mt-1 rounded-xl border p-2" />
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
+        <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step-3" class="form-step hidden">
+      <h2 class="text-lg font-semibold mb-4">Other Details</h2>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Purpose of Booking
+        </label>
+        <input type="text" id="purpose" required class="w-full mt-1 rounded-xl border p-2" placeholder="e.g. Birthday, Swim" />
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          <span class="text-red-500">*</span> Are you a Resident or Guest?
+        </label>
+        <div class="flex gap-4 mt-1">
+          <label class="text-sm"><input type="radio" name="type" value="Resident" required /> Resident</label>
+          <label class="text-sm"><input type="radio" name="type" value="Guest" /> Guest</label>
+          <label class="text-sm"><input type="radio" name="type" value="Others" /> Others</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+          Notes
+        </label>
+        <textarea id="notes" rows="4" class="w-full mt-1 rounded-xl border p-2" placeholder="Let us know if you need anything specific..."></textarea>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
+        <button type="button" onclick="nextStep()" class="w-20 bg-[#FAF1E6] text-[#333333] rounded-xl py-2 mt-4 shadow-md font-bold">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step-4" class="form-step hidden">
+      <h2 class="text-lg font-semibold mb-4">Confirm Details</h2>
+      <div class="space-y-2 text-sm leading-relaxed">
+        <p>First Name: <span class="font-bold" id="summary-fname"></span></p>
+        <p>Last Name: <span class="font-bold" id="summary-lname"></span></p>
+        <p>Contact Number: <span class="font-bold" id="summary-contact"></span></p>
+        <p>Email Address: <span class="font-bold" id="summary-email"></span></p>
+        <p>Amenity Type: <span class="font-bold" id="summary-amenity"></span></p>
+        <p>Date: <span class="font-bold" id="summary-date"></span></p>
+        <p>Time: <span class="font-bold" id="summary-time"></span></p>
+        <p>Number of Attendees: <span class="font-bold" id="summary-attendees"></span></p>
+        <p>Purpose: <span class="font-bold" id="summary-purpose"></span></p>
+        <p>Resident/Guest: <span class="font-bold" id="summary-type"></span></p>
+        <p>Notes: <span class="font-bold" id="summary-notes"></span></p>
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm flex items-start gap-2">
+          <input type="checkbox" id="confirm" required class="mt-1" />
+          <span>
+            <span class="text-red-500 font-bold">*</span> I confirm that all information are correct and I have read and understood the booking policies.  
+            <br />
+            <a href="#" class="underline text-green-700">read booking policies</a>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button type="button" onclick="prevStep()" class="text-[#5F8B4C] underline font-bold">Back</button>
+        <button type="submit" class="bg-[#5F8B4C] text-white rounded-lg px-6 py-2 font-bold">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Mobile Info Cards -->
+<div class="flex flex-col gap-4 m-10 block md:hidden">
+  <!-- Admin Office Card -->
+  <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+    <div class="flex items-center gap-1">
+      <img src="/pictures/person_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+      <span class="font-semibold">Admin Office</span>
+    </div>
+    <p class="text-sm mt-1">09194506688<br>augustinegrover...@gmail.com<br>Mon–Fri: 10am–6pm</p>
+  </div>
+
+  <!-- Visit Us Card -->
+  <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+    <div class="flex items-center gap-1">
+      <img src="/pictures/location_icon.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+      <span class="font-semibold">Visit Us</span>
+    </div>
+    <p class="text-sm mt-1">Sambag, Jaro, Iloilo City</p>
+    <a href="#" class="underline text-green-600 text-sm">View on Google Maps</a>
+  </div>
+
+  <!-- Chat With Us Card -->
+  <div class="bg-[#E6DCD0] shadow-md rounded-xl p-4">
+    <div class="flex items-center gap-1">
+      <img src="/pictures/fb_icon_green.png" alt="Admin" class="h-10 w-10 rounded-lg shadow-md">
+      <span class="font-semibold">Chat with Us</span>
+    </div>
+    <p class="text-sm mt-1">Augustine Grove Residential Village</p>
+  </div>
+</div>
+
 <script>
-  // Initialize Supabase client
-  const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-  // Multi-step form functionality
-  let currentStep = 1;
-  const totalSteps = 4;
-
-  function showStep(step) {
-    for (let i = 1; i <= totalSteps; i++) {
-      document.getElementById(`step-${i}`).classList.add("hidden");
-    }
-    document.getElementById(`step-${step}`).classList.remove("hidden");
-    currentStep = step;
-  }
-
-  function validateStep(step) {
-    const fields = {
-      1: ['fname', 'lname', 'contact'],
-      2: ['amenity', 'date', 'time', 'attendees'],
-      3: ['purpose', 'type']
-    };
-    
-    const missing = fields[step]?.filter(id => {
-      if (id === 'type') return !document.querySelector('input[name="type"]:checked');
-      return !document.getElementById(id)?.value;
-    });
-    
-    if (missing?.length) {
-      alert(`Please fill in all required fields: ${missing.join(', ')}`);
-      return false;
-    }
-    return true;
-  }
-
-  function updateSummary() {
-    document.getElementById('summary-fname').textContent = document.getElementById('fname').value;
-    document.getElementById('summary-lname').textContent = document.getElementById('lname').value;
-    document.getElementById('summary-contact').textContent = document.getElementById('contact').value;
-    document.getElementById('summary-email').textContent = document.getElementById('email').value;
-    document.getElementById('summary-amenity').textContent = document.getElementById('amenity').value;
-    document.getElementById('summary-date').textContent = document.getElementById('date').value;
-    document.getElementById('summary-time').textContent = document.getElementById('time').value;
-    document.getElementById('summary-attendees').textContent = document.getElementById('attendees').value;
-    document.getElementById('summary-type').textContent = document.querySelector('input[name="type"]:checked').value;
-    document.getElementById('summary-notes').textContent = document.getElementById('notes').value;
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    
-    // Validate confirmation checkbox
-    if (!document.querySelector('#step-4 input[type="checkbox"]').checked) {
-      alert('Please confirm the booking policies');
-      return;
-    }
-
-    // Prepare form data
-    const formData = {
-      first_name: document.getElementById('fname').value,
-      last_name: document.getElementById('lname').value,
-      contact_number: document.getElementById('contact').value,
-      email: document.getElementById('email').value || null, // Set to null if empty
-      amenity_type: document.getElementById('amenity').value,
-      booking_date: document.getElementById('date').value,
-      start_time: document.getElementById('time').value + ':00', // Add seconds
-      end_time: document.getElementById('time').value + ':00',  // Same as start for mobile
-      purpose: document.getElementById('purpose').value,
-      attendees: parseInt(document.getElementById('attendees').value) || 1,
-      user_type: document.querySelector('input[name="type"]:checked').value,
-      notes: document.getElementById('notes').value || null, // Set to null if empty
-      status: 'Pending'
-    };
-
-    console.log('Submitting data:', formData);
-
-    try {
-      // Insert into Supabase
-      const { data, error } = await supabase
-        .from('bookings')
-        .insert([formData])
-        .select();
-
-      if (error) {
-        console.error('Supabase error:', error);
-        throw error;
-      }
-
-      if (!data || data.length === 0) {
-        throw new Error('No data returned from insert operation');
-      }
-
-      console.log('Successfully inserted:', data);
-      alert('Booking submitted successfully!');
-      window.location.href = 'amenities.html';
-    } catch (error) {
-      console.error('Full error:', error);
-      alert(`Error submitting booking: ${error.message}\nCheck console for details`);
-    }
-  }
+  // Initialize Supabase client immediately and attach to window
+  (function() {
+    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+  })();
 
   // Initialize when DOM loads
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, Supabase initialized');
-    
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function showStep(step) {
+      for (let i = 1; i <= totalSteps; i++) {
+        document.getElementById(`step-${i}`).classList.add("hidden");
+      }
+      document.getElementById(`step-${step}`).classList.remove("hidden");
+      currentStep = step;
+    }
+
+    function validateStep(step) {
+      const fields = {
+        1: ['fname', 'lname', 'contact'],
+        2: ['amenity', 'date', 'time', 'attendees'],
+        3: ['purpose', 'type']
+      };
+      
+      const missing = fields[step]?.filter(id => {
+        if (id === 'type') return !document.querySelector('input[name="type"]:checked');
+        return !document.getElementById(id)?.value;
+      });
+      
+      if (missing?.length) {
+        alert(`Please fill in all required fields: ${missing.join(', ')}`);
+        return false;
+      }
+      return true;
+    }
+
+    function updateSummary() {
+      document.getElementById('summary-fname').textContent = document.getElementById('fname').value;
+      document.getElementById('summary-lname').textContent = document.getElementById('lname').value;
+      document.getElementById('summary-contact').textContent = document.getElementById('contact').value;
+      document.getElementById('summary-email').textContent = document.getElementById('email').value || 'Not provided';
+      document.getElementById('summary-amenity').textContent = document.getElementById('amenity').value;
+      document.getElementById('summary-date').textContent = document.getElementById('date').value;
+      document.getElementById('summary-time').textContent = document.getElementById('time').value;
+      document.getElementById('summary-attendees').textContent = document.getElementById('attendees').value;
+      document.getElementById('summary-purpose').textContent = document.getElementById('purpose').value;
+      document.getElementById('summary-type').textContent = document.querySelector('input[name="type"]:checked').value;
+      document.getElementById('summary-notes').textContent = document.getElementById('notes').value || 'None';
+    }
+
     // Set default date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').value = today;
     document.getElementById('date').min = today;
+    document.getElementById('ddate').value = today;
+    document.getElementById('ddate').min = today;
     
     // Set amenity from URL if provided
     const urlParams = new URLSearchParams(window.location.search);
     const amenityType = urlParams.get('amenity');
     if (amenityType) {
       document.getElementById('amenity').value = amenityType;
+      document.getElementById('damenity').value = amenityType;
     }
     
-    // Attach form submission
-    document.getElementById('mobile-booking-form').addEventListener('submit', handleSubmit);
+    // Attach form submissions
+    document.getElementById('mobile-booking-form').addEventListener('submit', handleMobileSubmit);
+    document.getElementById('desktop-booking-form').addEventListener('submit', handleDesktopSubmit);
     
     // Make navigation functions global
     window.nextStep = function() {
@@ -617,70 +554,103 @@
     window.prevStep = function() {
       if (currentStep > 1) showStep(currentStep - 1);
     };
-    
-    // Add test function
-    window.testSupabaseInsert = async function() {
-      const testData = {
-        first_name: 'Test',
-        last_name: 'User',
-        contact_number: '1234567890',
-        amenity_type: 'Clubhouse',
-        booking_date: today,
-        start_time: '10:00:00',
-        end_time: '12:00:00',
-        purpose: 'Testing',
-        attendees: 2,
-        user_type: 'Resident',
-        status: 'Pending'
-      };
-      
-      try {
-        const { data, error } = await supabase
-          .from('bookings')
-          .insert([testData])
-          .select();
-        
-        if (error) throw error;
-        console.log('Test insert successful:', data);
-        alert('Test data inserted! Check your Supabase table.');
-      } catch (error) {
-        console.error('Test failed:', error);
-        alert('Test insert failed: ' + error.message);
-      }
-    };
   });
+
+  // Form submission handlers (now outside DOMContentLoaded)
+  async function handleMobileSubmit(event) {
+    event.preventDefault();
+    
+    if (!window.supabase) {
+      console.error('Supabase not initialized');
+      return;
+    }
+
+    // Validate confirmation checkbox
+    if (!document.getElementById('confirm').checked) {
+      alert('Please confirm the booking policies');
+      return;
+    }
+
+    // Prepare form data
+    const formData = {
+      first_name: document.getElementById('fname').value,
+      last_name: document.getElementById('lname').value,
+      contact_number: document.getElementById('contact').value,
+      email: document.getElementById('email').value || null,
+      amenity_type: document.getElementById('amenity').value,
+      booking_date: document.getElementById('date').value,
+      start_time: document.getElementById('time').value + ':00',
+      end_time: document.getElementById('time').value + ':00',
+      purpose: document.getElementById('purpose').value,
+      attendees: parseInt(document.getElementById('attendees').value) || 1,
+      user_type: document.querySelector('input[name="type"]:checked').value,
+      notes: document.getElementById('notes').value || null,
+      status: 'Pending'
+    };
+
+    try {
+      const { data, error } = await window.supabase
+        .from('bookings')
+        .insert([formData])
+        .select();
+
+      if (error) throw error;
+      
+      alert('Booking submitted successfully!');
+      window.location.href = 'amenities.html';
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error submitting booking: ${error.message}`);
+    }
+  }
+
+  async function handleDesktopSubmit(event) {
+    event.preventDefault();
+    
+    if (!window.supabase) {
+      console.error('Supabase not initialized');
+      return;
+    }
+
+    // Validate confirmation checkbox
+    if (!document.getElementById('dconfirm').checked) {
+      alert('Please confirm the booking policies');
+      return;
+    }
+
+    // Prepare form data
+    const formData = {
+      first_name: document.getElementById('dfname').value,
+      last_name: document.getElementById('dlname').value,
+      contact_number: document.getElementById('dcontact').value,
+      email: document.getElementById('demail').value || null,
+      amenity_type: document.getElementById('damenity').value,
+      booking_date: document.getElementById('ddate').value,
+      start_time: document.getElementById('dtimeFrom').value + ':00',
+      end_time: document.getElementById('dtimeTo').value + ':00',
+      purpose: document.getElementById('dpurpose').value,
+      attendees: parseInt(document.getElementById('dattendees').value) || 1,
+      user_type: document.querySelector('input[name="dtype"]:checked').value,
+      notes: document.getElementById('dnotes').value || null,
+      status: 'Pending'
+    };
+
+    try {
+      const { data, error } = await window.supabase
+        .from('bookings')
+        .insert([formData])
+        .select();
+
+      if (error) throw error;
+      
+      alert('Booking submitted successfully!');
+      window.location.href = 'amenities.html';
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error submitting booking: ${error.message}`);
+    }
+  }
 </script>
 
-// Add this temporary test function
-async function testSupabaseConnection() {
-  try {
-    const testData = {
-      first_name: 'Test',
-      last_name: 'User',
-      contact_number: '1234567890',
-      amenity_type: 'Clubhouse',
-      booking_date: new Date().toISOString().split('T')[0],
-      start_time: '12:00',
-      end_time: '13:00',
-      status: 'pending'
-    };
-    
-    const { data, error } = await supabase
-      .from('bookings')
-      .insert([testData])
-      .select();
-    
-    if (error) throw error;
-    
-    console.log('Test insert successful:', data);
-    alert('Test insert worked! Check your Supabase dashboard.');
-  } catch (error) {
-    console.error('Test insert failed:', error);
-    alert(`Test failed: ${error.message}`);
-  }
-}
-
-// Call it temporarily
-testSupabaseConnection();
-  </body>
-  </html>
+</body>
+</html>

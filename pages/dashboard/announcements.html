@@ -399,34 +399,47 @@
   }
 
   function loadAnnouncements(data, page = 1) {
-    announcementsContainer.innerHTML = "";
-    const start = (page - 1) * cardsPerPage;
-    const end = start + cardsPerPage;
-    const paginated = data.slice(start, end);
+  announcementsContainer.innerHTML = "";
+  const start = (page - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+  const paginated = data.slice(start, end);
 
-    if (paginated.length === 0) {
-      announcementsContainer.innerHTML = `
-        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-          No announcements found matching your filters.
-        </div>
-      `;
-      paginationContainer.innerHTML = "";
-      return;
-    }
-
-    paginated.forEach(item => {
-      const clone = template.content.cloneNode(true);
-      clone.querySelector("img").src = item.image;
-      clone.querySelector(".title").textContent = item.title;
-      clone.querySelector(".description").textContent = item.description;
-      clone.querySelector(".date").textContent = item.date;
-      clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
-      clone.firstElementChild.classList.add("animate-fadeSlide");
-      announcementsContainer.appendChild(clone);
-    });
-
-    renderPagination(data.length, page);
+  if (paginated.length === 0) {
+    announcementsContainer.innerHTML = `
+      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+        No announcements found matching your filters.
+      </div>
+    `;
+    paginationContainer.innerHTML = "";
+    return;
   }
+
+  paginated.forEach(item => {
+    const clone = template.content.cloneNode(true);
+    clone.querySelector("img").src = item.image;
+    clone.querySelector(".title").textContent = item.title;
+    
+    // Limit description to 20 words
+    const words = item.description.split(' ');
+    const shortDesc = words.length > 100 
+      ? words.slice(0, 100).join(' ') 
+      : item.description;
+    
+    clone.querySelector(".description").textContent = shortDesc;
+    clone.querySelector(".date").textContent = item.date;
+    clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
+    
+    // Hide "read more" if description is already short
+    if (words.length <= 20) {
+      clone.querySelector(".read-more").style.display = 'none';
+    }
+    
+    clone.firstElementChild.classList.add("animate-fadeSlide");
+    announcementsContainer.appendChild(clone);
+  });
+
+  renderPagination(data.length, page);
+}
 
   function renderPagination(totalItems, currentPage) {
     const totalPages = Math.ceil(totalItems / cardsPerPage);
