@@ -5,65 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amenities</title>
 
-  <!-- Tailwind CSS -->
   <link href="../../dist/output.css" rel="stylesheet">
-
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
-  <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-
-  <style>
-    /* Apply Poppins font to the whole document */
+ <style>
     body {
       font-family: 'Poppins', sans-serif;
     }
-  
-    /* === CALENDAR CONTAINER === */
+
     #calendar {
-      max-width: 300px;             /* Control calendar width */
+      max-width: 300px;
       width: 100%;
-      aspect-ratio: 1 / 1;          /* Makes the calendar perfectly square */
+      aspect-ratio: 1 / 1;
     }
-  
-    /* === REMOVE EVENT VISUALS (DOTS, COLORS, TITLES) === */
-  
-    /* Completely hide the event element’s background/border */
-    .fc .fc-event {
-      background: none !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-  
-    /* Hide additional dot indicators in day cells */
+
+.fc .fc-event:not(.fc-bg-event) {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+
     .fc .fc-event::after,
-    .fc .fc-daygrid-event-dot {
-      display: none !important;
-    }
-  
-    /* Hide event titles and times (just in case FullCalendar tries to display them) */
+    .fc .fc-daygrid-event-dot,
     .fc-event-title,
     .fc-event-time {
       display: none !important;
     }
-  
-    /* === DAY CELL STYLING === */
-  
-    /* Make each day cell square and center content inside */
+
     .fc-daygrid-day-frame {
       aspect-ratio: 1 / 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-  
-    /* Style the numbers inside the cells (day of the month) */
+
     .fc-daygrid-day-number {
       margin: 0;
       display: flex;
@@ -71,51 +52,39 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      font-size: 0.75rem;   /* Smaller digits */
-      font-weight: normal;  /* No bold */
+      font-size: 0.75rem;
+      font-weight: normal;
     }
-  
-    /* Remove the background color highlight for today's date */
+
     .fc .fc-day-today {
       background-color: inherit !important;
       border-radius: 0;
     }
-  
-    /* === NAVIGATION BUTTONS (NEXT / PREV) === */
-  
-    /* Remove default styles from prev/next buttons */
+
     .fc .fc-button {
       background: none !important;
       border: none !important;
       color: #333 !important;
-      font-size: 1rem;         /* Slightly smaller text */
+      font-size: 1rem;
       box-shadow: none !important;
     }
-  
-    /* Optional: subtle hover effect on navigation buttons */
+
     .fc .fc-button:hover {
       background-color: transparent !important;
       color: #666 !important;
     }
-  
-    /* === MONTH-YEAR HEADER === */
-  
-    /* Make the month + year title smaller */
+
     .fc .fc-toolbar-title {
-      font-size: 1rem !important;  /* Adjust this to your preference */
+      font-size: 1rem !important;
       font-weight: 700;
       color: #333;
     }
-  
-    /* === WEEKDAY HEADERS (Sun, Mon, ...) === */
-  
-    /* Make weekday names smaller and non-bold */
+
     .fc .fc-col-header-cell-cushion {
-      font-size: 0.75rem;    /* Tailwind: text-sm */
+      font-size: 0.75rem;
       font-weight: normal;
     }
-  
-    /* === LEGEND DOTS (for custom color indicators) === */
+
     .legend-dot {
       display: inline-block;
       width: 12px;
@@ -123,24 +92,20 @@
       border-radius: 9999px;
       margin-right: 6px;
     }
+
+    .booking-dot {
+      pointer-events: none;
+    }
   </style>
-  
 </head>
 <body class="bg-[#FAF1E6]">
 
 
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="index.html" class="flex items-center gap-2">
+  <a href="../index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
-    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-    <!-- Admin Badge beside logo or user -->
-<div class="gap-2 text-base font-bold">
-  ADMIN
-</div>
-</div>
-
   </a>
 
   <!-- Hamburger Button -->
@@ -152,34 +117,13 @@
 
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
-    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-    </ul>
-
-  
-    <!--profile button-->
-<div class="relative">
-  <button id="profileBtn" class="focus:outline-none">
-    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
-  </button>
-
-  <!-- Modal Dropdown -->
-  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-   <!--
-    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-      Profile
-    </a>  -->
-    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-      Log Out
-    </button>
-  </div>
-</div>
-
+ <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+  <li><a href="announcements.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+  <li><a href="amenities.html" class="text-[#FFDDAB]">Amenities</a></li>
+  <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+  <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+</ul>
+    <img src="/pictures/profile.png" alt="Profile" class="h-8">
   </div>
 
   <!-- Mobile Slide-in Menu -->
@@ -221,18 +165,10 @@
 </div>
 </nav>
 
-<div class="flex justify-between items-center py-6 w-full ">
-  <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Book Community Amenities</h1>
-   <!-- 🔙 Back button -->
-  <div class="px-6 py-2">
-  <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
-    <i class="fa-solid fa-xmark"></i>
-  </button>
-</div>
-</div>
-
-    <div class="bg-[#FAF1E6] min-h-screen    px-10 md:px-20">
-          
+    <div class="bg-[#FAF1E6] min-h-screen py-8 px-10 md:px-20">
+        <!-- Page Title -->
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-8">Book Community Amenities</h2>
+      
         <!-- Amenities Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           
@@ -334,46 +270,204 @@
     
 
 
-  <!-- Calendar Section -->
-  <div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
-    <h2 class="text-lg text-center font-semibold mb-10 border-b-2 border-green-700 pb-5">Amenity Booking Calendar</h2>
-    <div class="flex flex-col md:flex-row justify-between gap-8">
-        <div id="calendar" class="w-[300px] mx-auto"></div>
-  
-      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
-        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
-        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
-        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
-      </div>
-    </div>
+<div class="max-w-4xl mx-auto py-8 px-4 bg-[#e3d6c7] rounded-xl shadow-md">
+  <h2 class="text-xl font-semibold text-center mb-6">Amenity Booking Calendar</h2>
 
-    <p class="mt-8 text-xs text-gray-600 text-center">
-      For booking assistance or questions, please contact the Augustine Grove HOA office at (555) 123-4567
-    </p>
+  <div class="flex justify-center space-x-4 mb-6">
+    <button onclick="switchAmenity('basketball')" id="btn-basketball" class="bg-green-700 text-white text-xs px-4 py-2 rounded-full shadow">Basketball Court</button>
+    <button onclick="switchAmenity('pool')" id="btn-pool" class="bg-green-200 text-green-900 text-xs px-4 py-2 rounded-full shadow">Swimming Pool</button>
+    <button onclick="switchAmenity('clubhouse')" id="btn-clubhouse" class="bg-green-200 text-green-900 text-xs px-4 py-2 rounded-full shadow">Clubhouse</button>
   </div>
 
-<!-- Time Block Modal -->
-<div id="timeBlockModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 hidden">
-  <div class="bg-white w-1/4 h-screen rounded-l-3xl p-4 overflow-y-auto shadow-lg relative">
-    <!-- Close Button -->
-    <button onclick="document.getElementById('timeBlockModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl">&times;</button>
-
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-4">
-      <button class="text-lg">&lt;</button>
-      <h2 id="timeBlockDate" class="text-lg font-semibold text-center flex-1">April 16, 2025</h2>
-      <button class="text-lg">&gt;</button>
+  <div class="flex flex-col md:flex-row gap-20 px-4 md:px-20">
+    <div class="bg-white rounded-xl p-4 shadow-md w-full md:w-[300px]" id="calendar"></div>
+    <div class="flex-1 text-sm">
+      <p class="mb-4">Click a date to view hourly schedule per amenity.</p>
+      <div class="flex items-center space-x-2 mb-2 gap-1">
+        <div class="w-5 h-5 bg-red-400 rounded"></div>
+        <span>Fully booked</span>
+      </div>
+      <div class="flex items-center space-x-2 mb-2 gap-3">
+        <div class="w-3 h-3 bg-orange-400 rounded-2xl"></div>
+        <span>Partially Booked</span>
+      </div>
     </div>
+  </div>
 
-    <!-- Time Blocks -->
-    <div id="timeBlocks" class="space-y-4">
-      <!-- JavaScript inserts blocks here -->
-    </div>
+  <p class="text-xs text-center text-gray-600 mt-6">For assistance, contact HOA at (555) 123-4567</p>
+</div>
+
+<!-- Modal -->
+<div id="slotModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-lg font-bold">&times;</button>
+    <h3 id="timeBlockDate" class="text-lg font-semibold mb-4">Schedule</h3>
+    <div id="timeBlocks" class="space-y-4"></div>
   </div>
 </div>
 
-<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
-  <h2 class="text-lg font-semibold border-b-2 mb-10 border-green-700 pb-2">Booking Terms & Conditions</h2>
+<script>
+  const amenities = {
+    basketball: {
+      booked: {
+        '2025-06-10': [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], // Fully booked
+        '2025-06-12': [11, 15]
+      },
+      color: 'bg-orange-100',
+      dot: 'bg-orange-500'
+    },
+    pool: {
+      booked: {
+        '2025-06-10': [8, 9, 10, 14],
+        '2025-06-11': [13, 16]
+      },
+      color: 'bg-blue-100',
+      dot: 'bg-blue-500'
+    },
+    clubhouse: {
+      booked: {
+        '2025-06-11': [10, 12, 14],
+        '2025-06-15': [15]
+      },
+      color: 'bg-green-100',
+      dot: 'bg-green-500'
+    }
+  };
+
+  let selectedAmenity = 'basketball';
+  let calendar;
+
+  function switchAmenity(amenity) {
+    selectedAmenity = amenity;
+    document.querySelectorAll('button[id^="btn-"]').forEach(btn => {
+      btn.classList.remove('bg-green-700', 'text-white');
+      btn.classList.add('bg-green-200', 'text-green-900');
+    });
+    const activeBtn = document.getElementById(`btn-${amenity}`);
+    activeBtn.classList.add('bg-green-700', 'text-white');
+    activeBtn.classList.remove('bg-green-200', 'text-green-900');
+    renderCalendar();
+  }
+
+function renderCalendar() {
+  if (calendar) calendar.destroy();
+
+  const amenityData = amenities[selectedAmenity];
+  const allBookings = amenityData.booked || {};
+
+  const fullyBookedDates = [];
+  const partiallyBookedDates = [];
+
+  for (const date in allBookings) {
+    const hours = allBookings[date];
+    if (hours.length >= 11) {
+      fullyBookedDates.push(date);
+    } else {
+      partiallyBookedDates.push(date);
+    }
+  }
+
+  const events = [];
+
+  // Fully booked dates as background events
+  fullyBookedDates.forEach(date => {
+    events.push({
+      title: '',
+      start: date,
+      display: 'background',
+      backgroundColor: '#f87171', // Tailwind red-400
+      allDay: true
+    });
+  });
+
+  // Partially booked (dot)
+  partiallyBookedDates.forEach(date => {
+    if (!fullyBookedDates.includes(date)) {
+      events.push({
+        title: '•',
+        start: date,
+        allDay: true,
+        classNames: ['booking-dot']
+      });
+    }
+  });
+
+  calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+    initialView: 'dayGridMonth',
+    headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+    dateClick: function(info) {
+      handleDateClick(info.dateStr);
+    },
+    events: events,
+    eventDisplay: 'auto', // This ensures 'background' display types show up
+    eventContent: function(arg) {
+      if (arg.event.classNames.includes('booking-dot')) {
+        return {
+          html: `<div class="w-2 h-2 ${amenities[selectedAmenity].dot} rounded-full mx-auto mt-1"></div>`
+        };
+      }
+    }
+  });
+
+  calendar.render();
+}
+
+  function handleDateClick(dateStr) {
+    document.getElementById('slotModal').classList.remove('hidden');
+    document.getElementById('timeBlockDate').textContent = `Schedule for ${dateStr}`;
+    renderTimeBlocks(dateStr);
+  }
+
+  function renderTimeBlocks(dateStr) {
+    const container = document.getElementById('timeBlocks');
+    container.innerHTML = '';
+
+    const amenity = amenities[selectedAmenity];
+    const booked = amenity.booked[dateStr] || [];
+
+    for (let hour = 8; hour <= 18; hour++) {
+      const block = document.createElement('div');
+      block.className = 'relative border-t pt-2 pb-4 pl-4';
+
+      const label = document.createElement('div');
+      label.className = 'text-sm text-gray-500';
+      label.textContent = `${hour}:00`;
+
+      block.appendChild(label);
+
+      if (booked.includes(hour)) {
+        const pill = document.createElement('div');
+        pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm font-medium flex items-center gap-2 ${amenity.color}`;
+        pill.innerHTML = `<span class="w-2 h-2 rounded-full ${amenity.dot}"></span> Booked`;
+        block.appendChild(pill);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'mt-1 bg-green-200 hover:bg-green-300 text-sm px-3 py-1 rounded-md';
+        btn.textContent = 'Book this slot';
+        btn.onclick = () => proceedToForm(selectedAmenity, dateStr, `${hour}:00`);
+        block.appendChild(btn);
+      }
+
+      container.appendChild(block);
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('slotModal').classList.add('hidden');
+  }
+
+  function proceedToForm(amenity, date, time) {
+    alert(`Redirecting to form:\nAmenity: ${amenity}\nDate: ${date}\nTime: ${time}`);
+    // window.location.href = `booking-form.html?amenity=${amenity}&date=${date}&time=${encodeURIComponent(time)}`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchAmenity('basketball');
+  });
+</script>
+
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2">Booking Terms & Conditions</h2>
   <ul class="space-y-2 text-sm text-gray-800">
     <li>
       <span class="font-semibold text-green-700">1. Eligibility:</span>
@@ -402,120 +496,6 @@
   </ul>
 </div>
 
-  
-
-  <!-- Calendar Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const calendarEl = document.getElementById('calendar');
-
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-          left: '',
-          center: 'title',
-          right: 'prev,next'
-        },
-        events: [
-          {
-            title: '',
-            start: '2025-05-10',
-            bgColor: '#f97316',
-            extendedProps: {
-              description: '🏀 Basketball Court Booked by HOA 3'
-            }
-          },
-          {
-            title: '',
-            start: '2025-05-12',
-            bgColor: '#22c55e',
-            extendedProps: {
-              description: '🏠 Clubhouse Reserved for a Private Event'
-            }
-          },
-          {
-            title: '',
-            start: '2025-05-15',
-            bgColor: '#ef4444',
-            extendedProps: {
-              description: '🧼 Pool Maintenance Scheduled'
-            }
-          }
-        ],
-        dateClick: function (info) {
-  const date = info.dateStr;
-  document.getElementById('timeBlockDate').textContent = `Schedule for ${new Date(date).toDateString()}`;
-
-  // TODO: Replace with backend fetch later
-  renderTimeBlocks(date);
-
-  // Show modal
-  document.getElementById('timeBlockModal').classList.remove('hidden');
-},
-
-
-        eventDidMount: function (info) {
-          const bgColor = info.event.extendedProps.bgColor || '#e0e0e0';
-          const cell = info.el.closest('.fc-daygrid-day');
-          if (cell) cell.style.backgroundColor = bgColor;
-        }
-      });
-      function renderTimeBlocks(dateStr) {
-  const container = document.getElementById('timeBlocks');
-  container.innerHTML = '';
-
-  // Fake booking data for demo
-  const fakeBookings = [
-    { hour: 10, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-    { hour: 11, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-    { hour: 10, amenity: 'Clubhouse', color: 'bg-green-100', dot: 'bg-green-500' },
-    { hour: 14, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' }
-  ];
-
-  for (let hour = 8; hour <= 18; hour++) {
-    const block = document.createElement('div');
-    block.className = 'relative border-t pt-2 pb-4 pl-4';
-
-    const label = document.createElement('div');
-    label.className = 'text-sm text-gray-500';
-    label.textContent = `${hour}:00`;
-
-    block.appendChild(label);
-
-    const bookings = fakeBookings.filter(b => b.hour === hour);
-
-    bookings.forEach(b => {
-      const pill = document.createElement('div');
-      pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm text-gray-800 font-medium flex items-center gap-2 ${b.color}`;
-      pill.innerHTML = `<span class="w-2 h-2 rounded-full ${b.dot}"></span> ${b.amenity}`;
-      block.appendChild(pill);
-    });
-
-    container.appendChild(block);
-  }
-}
-
-      calendar.render();
-    });
-  </script>
-
-<script>
-    const modal = document.getElementById('bookingModal');
-    const closeBtn = document.getElementById('closeModal');
-  
-  
-    // Close modal
-    closeBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
-  
-    // Optional: Close when clicking outside modal
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.add('hidden');
-      }
-    });
-  </script>
   
 </body>
 </html>
