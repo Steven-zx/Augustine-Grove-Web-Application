@@ -107,10 +107,15 @@
 
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="../index.html" class="flex items-center gap-2">
+  <a href="index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-  </a>
+    <!-- Admin Badge beside logo or user -->
+<div class="gap-2 text-base font-bold">
+  ADMIN
+</div>
+</div>
 
   <!-- Hamburger Button -->
   <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
@@ -169,10 +174,24 @@
 </div>
 </nav>
 
-    <div class="bg-[#FAF1E6] min-h-screen py-8 px-10 md:px-20">
-        <!-- Page Title -->
-        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-8">Book Community Amenities</h2>
-      
+
+
+
+
+
+
+ <div class="flex justify-between items-center py-6 w-full ">
+  <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Book Community Amenities</h1>
+   <!-- 🔙 Back button -->
+  <div class="px-6 py-2">
+  <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
+</div>
+
+    <div class="bg-[#FAF1E6] min-h-screen    px-10 md:px-20">
+          
         <!-- Amenities Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           
@@ -184,9 +203,7 @@
               <p class="text-sm text-gray-700">Perfect for community events, parties, and gatherings.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
                 <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
                 <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
               </ul>
             </div>
              <div class="w-full flex justify-end mt-4">
@@ -204,15 +221,13 @@
       
          <!--swimming pool card-->
           <div class="bg-[#E6DCD0] rounded-t-lg shadow-md p-4 flex flex-col justify-between">
-            <img src="/pictures/pool.png" alt="Clubhouse" class="rounded-t-lg mb-4" />
+            <img src="/pictures/pool7.png" alt="Clubhouse" class="rounded-t-lg mb-4" />
             <div>
               <h3 class="text-lg font-semibold text-gray-800 mb-2">Swimming Pool</h3>
               <p class="text-sm text-gray-700"> Medium-sized pool with separate kids' area.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
-                <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
-                <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
+                <li>Max capacity: 25 people</li>
+                <li>₱150 entrance fee per pax</li>
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
@@ -233,10 +248,8 @@
               <h3 class="text-lg font-semibold text-gray-800 mb-2">Basketball Court</h3>
               <p class="text-sm text-gray-700"> A standard outdoor court with a mounted hoop, ideal for casual games, tournaments, or recreational play.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
-                <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
+                <li>Max capacity: 20 people</li>
                 <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
@@ -262,7 +275,7 @@
       
         <!-- Footer CTA -->
         <div class="mt-10 text-right">
-          <a href="#" class="text-green-700 font-medium hover:underline flex justify-end items-center gap-1">
+          <a href="/pages/dashboard/gallery.html" class="text-green-700 font-medium hover:underline flex justify-end items-center gap-1">
             View Gallery
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
               viewBox="0 0 24 24">
@@ -499,6 +512,75 @@ function renderCalendar() {
     </li>
   </ul>
 </div>
+
+
+ 
+<footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20 mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
+          
+          <!-- Left: Logo and Description -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <img src="/pictures/logo 2.png" alt="Logo" class="h-10">
+              <span class="text-xl font-bold">Augustine Grove</span>
+            </div>
+            <p class="text-sm">
+              Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
+            </p>
+          </div>
+      
+          <!-- Contact Us -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Contact us</h4>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/phone_icon.png" alt="Phone" class="h-4 w-4">
+              <span>(555) 123-4562</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/email_icon.png" alt="Email" class="h-4 w-4">
+              <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/fb_icon.png" alt="Facebook" class="h-4 w-4">
+              <span>Augustine Grove Subdivision</span>
+            </div>
+          </div>
+      
+          <!-- Quick Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Quick links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="index.html" class="hover:underline">Home</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">About Us</a></li>
+              <li><a href="dashboard/amenities.html" class="hover:underline">Amenities</a></li>
+              <li><a href="dashboard/gallery.html" class="hover:underline">Gallery</a></li>
+              <li><a href="dashboard/announcements.html" class="hover:underline">Announcements / News</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">Contact Us</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">FAQs</a></li>
+            </ul>
+          </div>
+      
+          <!-- Office Hours -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Office Hours</h4>
+            <ul class="text-sm space-y-1">
+              <li>Monday - Friday: 9AM - 5PM</li>
+              <li>Saturday: 10AM - 2PM</li>
+              <li>Sunday: Closed</li>
+            </ul>
+          </div>
+      
+        </div>
+      
+        <!-- Bottom -->
+        <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
+          <span>© 2025 Augustine Grove by Aser's Angels</span>
+          <span>|</span>
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" class="hover:underline">Terms and Conditions</a>
+        </div>
+      </footer>
 
   
 </body>

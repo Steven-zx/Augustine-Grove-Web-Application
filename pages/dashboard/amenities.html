@@ -5,43 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amenities</title>
 
+  <link href="../../dist/output.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS -->
-  <link href="../dist/output.css" rel="stylesheet">
-
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
-
-  <!-- FullCalendar JS -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
  <style>
     body {
       font-family: 'Poppins', sans-serif;
     }
-  
-    /* === CALENDAR CONTAINER === */
-    .calendar-container {
-      max-width: 300px;             /* Control calendar width */
+
+    #calendar {
+      max-width: 300px;
       width: 100%;
       aspect-ratio: 1 / 1;
     }
-  
-    /* === REMOVE EVENT VISUALS (DOTS, COLORS, TITLES) === */
-  
-    /* Completely hide the event element's background/border */
-    .fc .fc-event {
-      background: none !important;
-      border: none !important;
-      box-shadow: none !important;
-    }
-  
-    /* Hide additional dot indicators in day cells */
+
+.fc .fc-event:not(.fc-bg-event) {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+
     .fc .fc-event::after,
     .fc .fc-daygrid-event-dot,
     .fc-event-title,
@@ -104,37 +94,6 @@
       margin-right: 6px;
     }
 
-    /* Amenity tabs styling */
-    .amenity-tab {
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem 0.5rem 0 0;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .amenity-tab.active {
-      background-color: #E6DCD0;
-      color: #5F8B4C;
-      font-weight: 600;
-    }
-
-    .amenity-tab:not(.active) {
-      background-color: #d1c7bb;
-      color: #6b7280;
-    }
-
-    .amenity-tab:not(.active):hover {
-      background-color: #dbd2c7;
-    }
-
-    .calendar-content {
-      display: none;
-    }
-
-    .calendar-content.active {
-      display: block;
-    }
-
     .booking-dot {
       pointer-events: none;
     }
@@ -145,16 +104,9 @@
 
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="index.html" class="flex items-center gap-2">
+  <a href="../index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
-    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-    <!-- Admin Badge beside logo or user -->
-<div class="gap-2 text-base font-bold">
-  ADMIN
-</div>
-</div>
-
   </a>
 
   <!-- Hamburger Button -->
@@ -166,15 +118,13 @@
 
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
-    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-    </ul>
-
-  
-    <!--profile button-->
+ <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+  <li><a href="announcements.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+  <li><a href="amenities.html" class="text-[#FFDDAB]">Amenities</a></li>
+  <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+  <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+</ul>
+       <!--profile button-->
 <div class="relative">
   <button id="profileBtn" class="focus:outline-none">
     <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
@@ -182,11 +132,10 @@
 
   <!-- Modal Dropdown -->
   <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-   <!--
-    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
       Profile
-    </a>  -->
+    </a>
     <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
       Log Out
@@ -194,6 +143,7 @@
   </div>
 </div>
 
+  </div>
   </div>
 
   <!-- Mobile Slide-in Menu -->
@@ -235,13 +185,10 @@
 </div>
 </nav>
 
-<div class="flex justify-between items-center py-6 w-full ">
+   <div class="flex justify-between items-center py-6 w-full ">
   <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Book Community Amenities</h1>
    <!-- 🔙 Back button -->
   <div class="px-6 py-2">
-  <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
-    <i class="fa-solid fa-xmark"></i>
-  </button>
 </div>
 </div>
 
@@ -304,7 +251,7 @@
               <p class="text-sm text-gray-700"> A standard outdoor court with a mounted hoop, ideal for casual games, tournaments, or recreational play.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
                 <li>Max capacity: 20 people</li>
-                <li>₱2,000 (half day), ₱3,500 (full day)</li>
+                <li>₱1,000 (half day), ₱2,000 (full day)</li>
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
@@ -341,31 +288,27 @@
       </div>
     
 
-  <!-- Calendar Section -->
-  <div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
-    <h2 class="text-lg text-center font-semibold mb-6 border-b-2 border-green-700 pb-5">Amenity Booking Calendar</h2>
-    
-    <!-- Amenity Tabs -->
-    <div class="flex justify-center gap-1 mb-6">
-      <button class="amenity-tab active" data-amenity="clubhouse">Clubhouse</button>
-      <button class="amenity-tab" data-amenity="pool">Swimming Pool</button>
-      <button class="amenity-tab" data-amenity="court">Basketball Court</button>
-    </div>
-    
-    <div class="flex flex-col md:flex-row justify-between gap-8">
-      <!-- Clubhouse Calendar -->
-      <div id="clubhouse-calendar" class="calendar-container mx-auto calendar-content active"></div>
-      
-      <!-- Swimming Pool Calendar -->
-      <div id="pool-calendar" class="calendar-container mx-auto calendar-content"></div>
-      
-      <!-- Basketball Court Calendar -->
-      <div id="court-calendar" class="calendar-container mx-auto calendar-content"></div>
-  
-      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
-        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
-        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
-        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
+
+<div class="max-w-4xl mx-auto py-8 px-4 bg-[#e3d6c7] rounded-xl shadow-md">
+  <h2 class="text-xl font-semibold text-center mb-6">Amenity Booking Calendar</h2>
+
+  <div class="flex justify-center space-x-4 mb-6">
+    <button id="btn-basketball" class="bg-green-700 text-white text-xs px-4 py-2 rounded-full shadow">Basketball Court</button>
+<button id="btn-pool" class="bg-green-200 text-green-900 text-xs px-4 py-2 rounded-full shadow">Swimming Pool</button>
+<button id="btn-clubhouse" class="bg-green-200 text-green-900 text-xs px-4 py-2 rounded-full shadow">Clubhouse</button>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-20 px-4 md:px-20">
+    <div class="bg-white rounded-xl p-4 shadow-md w-full md:w-[300px]" id="calendar"></div>
+    <div class="flex-1 text-sm">
+      <p class="mb-4">Click a date to view hourly schedule per amenity.</p>
+      <div class="flex items-center space-x-2 mb-2 gap-1">
+        <div class="w-5 h-5 bg-red-400 rounded"></div>
+        <span>Fully booked</span>
+      </div>
+      <div class="flex items-center space-x-2 mb-2 gap-3">
+        <div class="w-3 h-3 bg-orange-400 rounded-2xl"></div>
+        <span>Partially Booked</span>
       </div>
     </div>
   </div>
@@ -382,8 +325,519 @@
   </div>
 </div>
 
-<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
-  <h2 class="text-lg font-semibold border-b-2 mb-10 border-green-700 pb-2">Booking Terms & Conditions</h2>
+<script>
+  // Initialize Supabase (same as announcements.html)
+  (function() {
+    const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  })();
+
+  // DOM Elements
+  const bookingForm = document.getElementById('booking-form'); // Ensure your form has this ID
+  const submitBtn = bookingForm?.querySelector('button[type="submit"]');
+
+  // Form Validation
+  function validateBookingForm(form) {
+    let isValid = true;
+    
+    // Clear previous errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    document.querySelectorAll('.error-highlight').forEach(el => {
+      el.classList.remove('error-highlight');
+    });
+    
+    // Required fields based on your table
+    const requiredFields = ['first_name', 'last_name', 'email', 'contact_number', 
+                          'amenity_type', 'booking_date', 'start_time', 'end_time'];
+    
+    requiredFields.forEach(fieldName => {
+      const field = form.elements[fieldName];
+      if (!field?.value.trim()) {
+        isValid = false;
+        field.classList.add('error-highlight');
+        showError(field, 'This field is required');
+      }
+      else if (fieldName === 'email' && !isValidEmail(field.value)) {
+        isValid = false;
+        field.classList.add('error-highlight');
+        showError(field, 'Please enter a valid email address');
+      }
+      else if (fieldName === 'contact_number' && !isValidPhone(field.value)) {
+        isValid = false;
+        field.classList.add('error-highlight');
+        showError(field, 'Please enter a valid phone number');
+      }
+    });
+    
+    // Validate time sequence
+    const startTime = form.elements['start_time']?.value;
+    const endTime = form.elements['end_time']?.value;
+    if (startTime && endTime && startTime >= endTime) {
+      isValid = false;
+      form.elements['end_time'].classList.add('error-highlight');
+      showError(form.elements['end_time'], 'End time must be after start time');
+    }
+    
+    return isValid;
+  }
+
+  function showError(field, message) {
+    const error = document.createElement('p');
+    error.className = 'error-message text-red-500 text-xs mt-1';
+    error.textContent = message;
+    field.parentNode.appendChild(error);
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidPhone(phone) {
+    return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone);
+  }
+
+  // Form Submission Handler
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      if (!validateBookingForm(this)) return;
+      
+      const formData = new FormData(bookingForm);
+      
+      try {
+        // Disable submit button during processing
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+        
+        // Prepare data for Supabase - matches your bookings table structure
+        const bookingData = {
+          first_name: formData.get('first_name'),
+          last_name: formData.get('last_name'),
+          contact_number: formData.get('contact_number'),
+          email: formData.get('email'),
+          amenity_type: formData.get('amenity_type'),
+          booking_date: formData.get('booking_date'),
+          start_time: formData.get('start_time'),
+          end_time: formData.get('end_time'),
+          purpose: formData.get('purpose'),
+          attendees: formData.get('attendees') || null,
+          user_type: formData.get('user_type') || 'Resident', // Default value
+          notes: formData.get('notes') || null,
+          status: 'Pending' // Default status
+        };
+        
+        // Insert into bookings table
+        const { data, error } = await supabase
+          .from('bookings')
+          .insert([bookingData])
+          .select();
+        
+        if (error) throw error;
+        
+        // Success handling
+        const successDiv = document.createElement('div');
+        successDiv.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4';
+        successDiv.innerHTML = `
+          <strong>Success!</strong> Booking #${data[0].booking_id} submitted.
+          <button class="float-right font-bold" onclick="this.parentElement.remove()">&times;</button>
+        `;
+        bookingForm.parentNode.insertBefore(successDiv, bookingForm);
+        
+        // Reset form
+        bookingForm.reset();
+        
+      } catch (error) {
+        console.error('Booking error:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4';
+        errorDiv.innerHTML = `
+          <strong>Error!</strong> ${error.message}
+          <button class="float-right font-bold" onclick="this.parentElement.remove()">&times;</button>
+        `;
+        bookingForm.parentNode.insertBefore(errorDiv, bookingForm);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Booking';
+      }
+    });
+  }
+
+  // Fetch Existing Bookings (example function)
+  async function fetchBookings() {
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('booking_date', { ascending: true })
+        .order('start_time', { ascending: true });
+      
+      if (error) throw error;
+      
+      console.log('Bookings:', data);
+      return data;
+      
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      return [];
+    }
+  }
+
+  // Check Availability (example function)
+  async function checkAvailability(amenityType, date, startTime, endTime) {
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .eq('amenity_type', amenityType)
+        .eq('booking_date', date)
+        .or(`start_time.lte.${endTime},end_time.gte.${startTime}`)
+        .neq('status', 'Cancelled');
+      
+      if (error) throw error;
+      
+      return data.length === 0; // True if available
+      
+    } catch (error) {
+      console.error('Availability check error:', error);
+      return false;
+    }
+  }
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    // Initialize FullCalendar
+    const calendarEl = document.getElementById('calendar');
+    let currentAmenity = 'Basketball Court'; // Default amenity
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+      height: 'auto',
+      dateClick: (info) => showTimeSlots(info.date, currentAmenity),
+      events: async (fetchInfo, successCallback) => {
+        const events = await fetchBookings(currentAmenity, fetchInfo.start, fetchInfo.end);
+        successCallback(events);
+      }
+    });
+    calendar.render();
+
+    // ========================
+    // CORE FUNCTIONS
+    // ========================
+
+    /**
+     * Fetches bookings from Supabase and converts to FullCalendar events
+     */
+    async function fetchBookings(amenity, start, end) {
+      try {
+        const { data: bookings, error } = await supabase
+          .from('bookings')
+          .select('*')
+          .eq('amenity_type', amenity)
+          .gte('booking_date', start.toISOString().split('T')[0])
+          .lte('booking_date', end.toISOString().split('T')[0])
+          .neq('status', 'Cancelled');
+
+        if (error) throw error;
+        return processBookingsToEvents(bookings);
+      } catch (error) {
+        console.error('Booking fetch error:', error);
+        showToast('Failed to load bookings', 'error');
+        return [];
+      }
+    }
+
+    /**
+     * Converts raw bookings data into calendar events
+     */
+    function processBookingsToEvents(bookings) {
+      const eventsByDate = {};
+
+      // Group bookings by date
+      bookings.forEach(booking => {
+        if (!booking.booking_date) return;
+        if (!eventsByDate[booking.booking_date]) {
+          eventsByDate[booking.booking_date] = [];
+        }
+        eventsByDate[booking.booking_date].push(booking);
+      });
+
+      // Generate calendar events
+      return Object.keys(eventsByDate).map(date => {
+        const dailyBookings = eventsByDate[date];
+        const isFullyBooked = dailyBookings.some(b => 
+          b.status === 'Approved' && 
+          b.start_time === '08:00' && 
+          b.end_time === '20:00'
+        );
+        const isPartiallyBooked = dailyBookings.length > 0 && !isFullyBooked;
+
+        return {
+          start: date,
+          display: 'background',
+          color: isFullyBooked ? '#F87171' : (isPartiallyBooked ? '#FB923C' : 'transparent'),
+          className: 'booking-dot'
+        };
+      });
+    }
+
+    async function showTimeSlots(date, amenity) {
+    try {
+        const dateStr = date.toISOString().split('T')[0];
+        console.log(`[DEBUG] Fetching bookings for ${amenity} on ${dateStr}`);
+
+        // 1. First verify database connection and data exists
+        const { data: testBookings, error: testError } = await supabase
+            .from('bookings')
+            .select('*')
+            .limit(5);
+
+        if (testError) throw testError;
+        console.log('[DEBUG] Sample bookings from database:', testBookings);
+
+        // 2. Fetch bookings for specific date and amenity
+        let { data: bookings, error } = await supabase
+            .from('bookings')
+            .select('*')
+            .eq('amenity_type', amenity)
+            .eq('booking_date', dateStr)
+            .order('start_time', { ascending: true });
+
+        if (error) throw error;
+        console.log('[DEBUG] Filtered bookings:', bookings);
+
+        // 3. If empty, try alternative date formats
+        if (bookings.length === 0) {
+            console.log('[DEBUG] Trying alternative date formats...');
+            const altFormats = [
+                dateStr, // YYYY-MM-DD
+                new Date(date).toLocaleDateString('en-US'), // MM/DD/YYYY
+                new Date(date).toISOString().split('T')[0].replace(/-/g, '/') // YYYY/MM/DD
+            ];
+
+            for (const format of altFormats) {
+                const { data: altBookings } = await supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('amenity_type', amenity)
+                    .eq('booking_date', format);
+
+                if (altBookings?.length > 0) {
+                    console.log(`[DEBUG] Found bookings using format: ${format}`);
+                    bookings = altBookings; // This is now allowed since bookings is declared with let
+                    break;
+                }
+            }
+        }
+
+        const modal = document.getElementById('slotModal');
+        document.getElementById('timeBlockDate').textContent = 
+            `${amenity} - ${date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`;
+        
+        const timeBlocksEl = document.getElementById('timeBlocks');
+        timeBlocksEl.innerHTML = '';
+
+        // 4. Create time slots from 8AM to 10PM
+        const timeSlots = [];
+        for (let hour = 8; hour < 22; hour++) {
+            timeSlots.push({
+                start: `${hour.toString().padStart(2, '0')}:00`,
+                end: `${(hour + 1).toString().padStart(2, '0')}:00`,
+                bookings: []
+            });
+        }
+
+        // 5. Process bookings into time slots
+        bookings.forEach(booking => {
+            if (booking.status === 'rejected') return;
+
+            timeSlots.forEach(slot => {
+                if (isTimeBetween(slot.start, slot.end, booking.start_time, booking.end_time)) {
+                    slot.bookings.push(booking);
+                }
+            });
+        });
+
+        // 6. Display time slots with visual indicators
+        if (bookings.length === 0) {
+            timeBlocksEl.innerHTML = `
+                <div class="bg-blue-50 text-blue-800 p-4 rounded-lg">
+                    <p class="font-bold">No bookings found for ${amenity}</p>
+                    <p class="text-sm">Date: ${dateStr}</p>
+                    <p class="text-sm">Available all day (8AM-10PM)</p>
+                </div>
+            `;
+        } else {
+            timeSlots.forEach(slot => {
+                const slotEl = document.createElement('div');
+                const status = slot.bookings.some(b => b.status === 'approved') ? 'booked' : 
+                             slot.bookings.length > 0 ? 'pending' : 'available';
+                
+                slotEl.className = `p-3 rounded-lg mb-2 ${
+                    status === 'booked' ? 'bg-red-50 border-l-4 border-red-500' :
+                    status === 'pending' ? 'bg-yellow-50 border-l-4 border-yellow-500' :
+                    'bg-green-50 border-l-4 border-green-500'
+                }`;
+
+                let bookingDetails = '';
+                slot.bookings.forEach(booking => {
+                 bookingDetails += `
+    <div class="mt-2 p-2 bg-white rounded">
+        <p><strong>${formatTime(booking.start_time)}-${formatTime(booking.end_time)}</strong></p>
+        
+    </div>
+`;
+                });
+
+                slotEl.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium">${formatTime(slot.start)}-${formatTime(slot.end)}</span>
+                        <span class="text-xs px-2 py-1 rounded-full ${
+                            status === 'booked' ? 'bg-red-100 text-red-800' :
+                            status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                        }">
+                            ${status === 'booked' ? 'Booked' : status === 'pending' ? 'Pending' : 'Available'}
+                        </span>
+                    </div>
+                    ${bookingDetails}
+                `;
+                timeBlocksEl.appendChild(slotEl);
+            });
+        }
+
+        modal.classList.remove('hidden');
+        console.log('[DEBUG] Modal populated successfully');
+
+    } catch (error) {
+        console.error('[ERROR] Failed to load time slots:', error);
+        const timeBlocksEl = document.getElementById('timeBlocks');
+        timeBlocksEl.innerHTML = `
+            <div class="bg-red-50 text-red-800 p-4 rounded-lg">
+                <p class="font-bold">Error loading bookings</p>
+                <p>${error.message}</p>
+                <p class="text-xs mt-2">Check console for details</p>
+            </div>
+        `;
+        document.getElementById('slotModal').classList.remove('hidden');
+    }
+}
+
+// Helper functions (keep these exactly as they are)
+function isTimeBetween(slotStart, slotEnd, bookingStart, bookingEnd) {
+    const toMinutes = time => {
+        const [h, m] = time.split(':');
+        return parseInt(h) * 60 + parseInt(m);
+    };
+    
+    const slotS = toMinutes(slotStart);
+    const slotE = toMinutes(slotEnd);
+    const bookS = toMinutes(bookingStart);
+    const bookE = toMinutes(bookingEnd);
+    
+    return (bookS < slotE && bookE > slotS);
+}
+
+function formatTime(timeStr) {
+    if (!timeStr) return '';
+    const [hours, minutes] = timeStr.split(':');
+    const hourNum = parseInt(hours);
+    const period = hourNum >= 12 ? 'PM' : 'AM';
+    const displayHour = hourNum % 12 || 12;
+    return `${displayHour}:${minutes} ${period}`;
+}
+
+   
+    // ========================
+    // UI HELPERS
+    // ========================
+
+    /** Toggle amenity type */
+    function setupAmenityButtons() {
+      const buttons = {
+        'btn-basketball': 'Basketball Court',
+        'btn-pool': 'Swimming Pool',
+        'btn-clubhouse': 'Clubhouse'
+      };
+
+      Object.entries(buttons).forEach(([id, amenity]) => {
+        document.getElementById(id).addEventListener('click', () => {
+          currentAmenity = amenity;
+          calendar.refetchEvents();
+          updateButtonStyles(id);
+        });
+      });
+    }
+
+    /** Update active button styling */
+    function updateButtonStyles(activeId) {
+      ['btn-basketball', 'btn-pool', 'btn-clubhouse'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (id === activeId) {
+          btn.classList.replace('bg-green-200', 'bg-green-700');
+          btn.classList.replace('text-green-900', 'text-white');
+        } else {
+          btn.classList.replace('bg-green-700', 'bg-green-200');
+          btn.classList.replace('text-white', 'text-green-900');
+        }
+      });
+    }
+
+    /** Close modal */
+    window.closeModal = function() {
+      document.getElementById('slotModal').classList.add('hidden');
+    };
+
+    /** Show toast notifications */
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-md shadow-lg ${
+        type === 'error' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+      }`;
+      toast.innerHTML = `
+        ${message}
+        <button onclick="this.parentElement.remove()" class="ml-2 font-bold">&times;</button>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 5000);
+    }
+
+    // ========================
+    // INITIALIZATION
+    // ========================
+    setupAmenityButtons();
+    updateButtonStyles('btn-basketball'); // Set default active button
+  });
+</script>
+
+
+ <script>
+  const profileBtn = document.getElementById("profileBtn");
+  const profileModal = document.getElementById("profileModal");
+
+  profileBtn.addEventListener("click", () => {
+    profileModal.classList.toggle("hidden");
+  });
+
+  // Optional: Close when clicking outside
+  document.addEventListener("click", (event) => {
+    if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
+      profileModal.classList.add("hidden");
+    }
+  });
+
+  function logout() {
+    // perform logout logic
+    alert("Logging out...");
+    // redirect or clear session, etc.
+  }
+</script>
+
+
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10">
+  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2">Booking Terms & Conditions</h2>
   <ul class="space-y-2 text-sm text-gray-800">
     <li>
       <span class="font-semibold text-green-700">1. Eligibility:</span>
@@ -412,164 +866,73 @@
   </ul>
 </div>
 
-  <!-- Calendar Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Initialize all calendars
-      const clubhouseCalendar = initCalendar('clubhouse-calendar', [
-        {
-          title: '',
-          start: '2025-05-10',
-          bgColor: '#f97316',
-          extendedProps: {
-            description: '🏠 Clubhouse Booked by Resident'
-          }
-        },
-        {
-          title: '',
-          start: '2025-05-12',
-          bgColor: '#22c55e',
-          extendedProps: {
-            description: '🏠 Clubhouse Reserved for Private Event'
-          }
-        }
-      ]);
-
-      const poolCalendar = initCalendar('pool-calendar', [
-        {
-          title: '',
-          start: '2025-05-15',
-          bgColor: '#ef4444',
-          extendedProps: {
-            description: '🏊 Pool Maintenance Scheduled'
-          }
-        },
-        {
-          title: '',
-          start: '2025-05-20',
-          bgColor: '#3b82f6',
-          extendedProps: {
-            description: '🏊 Swimming Pool Reserved'
-          }
-        }
-      ]);
-
-      const courtCalendar = initCalendar('court-calendar', [
-        {
-          title: '',
-          start: '2025-05-08',
-          bgColor: '#8b5cf6',
-          extendedProps: {
-            description: '🏀 Basketball Tournament'
-          }
-        },
-        {
-          title: '',
-          start: '2025-05-22',
-          bgColor: '#ec4899',
-          extendedProps: {
-            description: '🏀 Court Maintenance'
-          }
-        }
-      ]);
-
-      // Tab switching functionality
-      const tabs = document.querySelectorAll('.amenity-tab');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // Remove active class from all tabs and calendars
-          tabs.forEach(t => t.classList.remove('active'));
-          document.querySelectorAll('.calendar-content').forEach(c => c.classList.remove('active'));
+<footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20 mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
           
-          // Add active class to clicked tab and corresponding calendar
-          tab.classList.add('active');
-          const amenity = tab.dataset.amenity;
-          document.getElementById(`${amenity}-calendar`).classList.add('active');
-        });
-      });
+          <!-- Left: Logo and Description -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <img src="/pictures/logo 2.png" alt="Logo" class="h-10">
+              <span class="text-xl font-bold">Augustine Grove</span>
+            </div>
+            <p class="text-sm">
+              Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
+            </p>
+          </div>
+      
+          <!-- Contact Us -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Contact us</h4>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/phone_icon.png" alt="Phone" class="h-4 w-4">
+              <span>(555) 123-4562</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/email_icon.png" alt="Email" class="h-4 w-4">
+              <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="/pictures/fb_icon.png" alt="Facebook" class="h-4 w-4">
+              <span>Augustine Grove Subdivision</span>
+            </div>
+          </div>
+      
+          <!-- Quick Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Quick links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="index.html" class="hover:underline">Home</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">About Us</a></li>
+              <li><a href="dashboard/amenities.html" class="hover:underline">Amenities</a></li>
+              <li><a href="dashboard/gallery.html" class="hover:underline">Gallery</a></li>
+              <li><a href="dashboard/announcements.html" class="hover:underline">Announcements / News</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">Contact Us</a></li>
+              <li><a href="dashboard/aboutpage.html" class="hover:underline">FAQs</a></li>
+            </ul>
+          </div>
+      
+          <!-- Office Hours -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Office Hours</h4>
+            <ul class="text-sm space-y-1">
+              <li>Monday - Friday: 9AM - 5PM</li>
+              <li>Saturday: 10AM - 2PM</li>
+              <li>Sunday: Closed</li>
+            </ul>
+          </div>
+      
+        </div>
+      
+        <!-- Bottom -->
+        <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
+          <span>© 2025 Augustine Grove by Aser's Angels</span>
+          <span>|</span>
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" class="hover:underline">Terms and Conditions</a>
+        </div>
+      </footer>
 
-      function initCalendar(calendarId, events) {
-        const calendarEl = document.getElementById(calendarId);
-        
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          headerToolbar: {
-            left: '',
-            center: 'title',
-            right: 'prev,next'
-          },
-          events: events,
-          dateClick: function (info) {
-            const date = info.dateStr;
-            document.getElementById('timeBlockDate').textContent = `Schedule for ${new Date(date).toDateString()}`;
-            renderTimeBlocks(date);
-            document.getElementById('timeBlockModal').classList.remove('hidden');
-          },
-          eventDidMount: function (info) {
-            const bgColor = info.event.extendedProps.bgColor || '#e0e0e0';
-            const cell = info.el.closest('.fc-daygrid-day');
-            if (cell) cell.style.backgroundColor = bgColor;
-          }
-        });
-        
-        calendar.render();
-        return calendar;
-      }
-
-      function renderTimeBlocks(dateStr) {
-        const container = document.getElementById('timeBlocks');
-        container.innerHTML = '';
-
-        // Fake booking data for demo
-        const fakeBookings = [
-          { hour: 10, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-          { hour: 11, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
-          { hour: 10, amenity: 'Clubhouse', color: 'bg-green-100', dot: 'bg-green-500' },
-          { hour: 14, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' }
-        ];
-
-        for (let hour = 8; hour <= 18; hour++) {
-          const block = document.createElement('div');
-          block.className = 'relative border-t pt-2 pb-4 pl-4';
-
-          const label = document.createElement('div');
-          label.className = 'text-sm text-gray-500';
-          label.textContent = `${hour}:00`;
-
-          block.appendChild(label);
-
-          const bookings = fakeBookings.filter(b => b.hour === hour);
-
-          bookings.forEach(b => {
-            const pill = document.createElement('div');
-            pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm text-gray-800 font-medium flex items-center gap-2 ${b.color}`;
-            pill.innerHTML = `<span class="w-2 h-2 rounded-full ${b.dot}"></span> ${b.amenity}`;
-            block.appendChild(pill);
-          });
-
-          container.appendChild(block);
-        }
-      }
-    });
-  </script>
-
-<script>
-    const modal = document.getElementById('bookingModal');
-    const closeBtn = document.getElementById('closeModal');
-  
-  
-    // Close modal
-    closeBtn.addEventListener('click', () => {
-      modal.classList.add('hidden');
-    });
-  
-    // Optional: Close when clicking outside modal
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.add('hidden');
-      }
-    });
-  </script>
   
 </body>
 </html>

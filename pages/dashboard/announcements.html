@@ -85,7 +85,24 @@
       <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
-    <img src="/pictures/profile.png" alt="Profile" class="h-8">
+        <!--profile button-->
+<div class="relative">
+  <button id="profileBtn" class="focus:outline-none">
+    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+  </button>
+
+  <!-- Modal Dropdown -->
+  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+      Profile
+    </a>
+    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+      Log Out
+    </button>
+  </div>
+</div>
   </div>
 
   <!-- Mobile Slide-in Menu -->
@@ -154,9 +171,18 @@
       <div class="relative">
         <select id="filter-month" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
           <option value="all">All Months</option>
+          <option value="January">January</option>
+          <option value="Februay">February</option>
+          <option value="March">March</option>
           <option value="April">April</option>
           <option value="May">May</option>
           <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
           <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
@@ -174,6 +200,7 @@
           <option value="all">All</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
           <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
@@ -593,6 +620,8 @@
     return publicUrl;
   }
 
+
+
   // Form Submission Handler
   document.getElementById('concerns-form').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -674,6 +703,29 @@
     document.getElementById("filter-importance")?.addEventListener("change", applyFilters);
     document.getElementById("filter-sort")?.addEventListener("change", applyFilters);
   });
+</script>
+
+<!--profile modal-->>
+  <script>
+  const profileBtn = document.getElementById("profileBtn");
+  const profileModal = document.getElementById("profileModal");
+
+  profileBtn.addEventListener("click", () => {
+    profileModal.classList.toggle("hidden");
+  });
+
+  // Optional: Close when clicking outside
+  document.addEventListener("click", (event) => {
+    if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
+      profileModal.classList.add("hidden");
+    }
+  });
+
+  function logout() {
+    // perform logout logic
+    alert("Logging out...");
+    // redirect or clear session, etc.
+  }
 </script>
 
 </body>
