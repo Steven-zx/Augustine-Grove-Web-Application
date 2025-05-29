@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link  href="/dist/output.css" rel="stylesheet">
+<link  href="../dist/output.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <title>Augustine Grove</title>
@@ -30,7 +32,7 @@
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
     <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
       <li><a href="dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
       <li><a href="dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
@@ -167,95 +169,41 @@
       </section>
 
 <!-- Announcements -->
-      <section class="bg-[#ffe5bd] py-12 px-8 md:px-40">
-        <div class="container mx-auto px-4">
-      
-          <!-- Header -->
-          <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
-            <h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2>
-            <a href="dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
-          </div>
-      
-<div class="relative">
-            <!-- Carousel -->
-            <div id="carousel" class="flex overflow-x-auto no-scrollbar scroll-smooth space-x-6 pb-4">
-      
-              <!-- Card 1 (with picture) -->
-              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
-                <img src="/pictures/announcement1.png" alt="New Pool Rules" class="rounded-2xl mb-4 h-44 object-cover">
-                <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg md:text-xl font-bold text-left">New Pool Rules</h3>
-                  <div class="flex items-center gap-1">
-                     <i class="fa-solid fa-user text-[#5F8B4C] text-xs"></i>
-                    <span class="text-gray-500 text-sm text-right">Admin</span>
-                  </div>
-                </div>
-                <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
-                  Please be informed that new pool safety rules are now implemented for everyone's safety and enjoyment this summer season...
-                </p>
-                <div class="flex justify-between items-center mt-auto">
-                  <p class="text-gray-500 text-xs">May 1, 2025</p>
-                  <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
-                </div>
-              </div>
-      
-              <!-- Card 2 (with picture) -->
-              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
-                <img src="/pictures/announcement2.png" alt="Basketball Court" class="rounded-2xl mb-4 h-44 object-cover">
-                <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg md:text-xl font-bold text-left">Basketball Court Renovation</h3>
-                   <div class="flex items-center gap-1">
-                     <i class="fa-solid fa-user text-[#5F8B4C] text-xs"></i>
-                    <span class="text-gray-500 text-sm text-right">Admin</span>
-                  </div>
-                </div>
-                <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
-                  The basketball court will be closed for renovations starting this week. Residents are advised to use alternative facilities temporarily...
-                </p>
-                <div class="flex justify-between items-center mt-auto">
-                  <p class="text-gray-500 text-xs">April 29, 2025</p>
-                  <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
-                </div>
-              </div>
-      
-              <!-- Card 3 (no picture) -->
-              <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
-                <div class="flex justify-between items-center mb-2">
-                  <h3 class="text-lg md:text-xl font-bold text-left">Visitor QR System Launched</h3>
-                   <div class="flex items-center gap-1">
-                     <i class="fa-solid fa-user text-[#5F8B4C] text-xs"></i>
-                    <span class="text-gray-500 text-sm text-right">Admin</span>
-                  </div>
-                </div>
-                <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4">
-                  Homeowners can now generate QR codes for their visitors through the community portal. This new system improves security, allows faster entry at the gate, and keeps records more efficiently. Instructions on generating codes are available on the website and in the latest announcement bulletin...
-                </p>
-                <div class="flex justify-between items-center mt-auto">
-                  <p class="text-gray-500 text-xs">April 25, 2025</p>
-                  <button class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</button>
-                </div>
-              </div>
-      
-            </div>
-     
-            <!-- Buttons -->
-            <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
-               <i class="fa-solid fa-circle-chevron-left text-4xl text-[#5F8B4C]"></i>
-            </button>
-      
-            <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
-              <i class="fa-solid fa-circle-chevron-right text-4xl text-[#5F8B4C]"></i>
-            </button>
-      
-          </div>
-      <!-- Add this somewhere outside the carousel (e.g., bottom of the section) -->
+<section class="bg-[#ffe5bd] py-12 px-8 md:px-40">
+  <div class="container mx-auto px-4">
+  
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
+      <h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2>
+      <a href="dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
+    </div>
+
+    <div class="relative">
+      <!-- Carousel -->
+      <div id="carousel" class="flex overflow-x-auto no-scrollbar scroll-smooth space-x-6 pb-4">
+        <!-- Announcement cards will be inserted here by JavaScript -->
+      </div>
+
+      <!-- Buttons -->
+      <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
+        <i class="fa-solid fa-circle-chevron-left text-4xl text-[#5F8B4C]"></i>
+      </button>
+
+      <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center drop-shadow-md hover:scale-110 transition-transform">
+        <i class="fa-solid fa-circle-chevron-right text-4xl text-[#5F8B4C]"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Announcement Card Template -->
 <template id="announcement-card-template">
   <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
     <img src="" alt="Announcement Image" class="rounded-2xl mb-4 h-44 object-cover announcement-img">
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-lg md:text-xl font-bold text-left announcement-title"></h3>
       <div class="flex items-center gap-1">
-        <img src="/pictures/person_icon.png" class="h-4 w-4" />
+        <i class="fa-solid fa-user text-[#5F8B4C] text-xs"></i>
         <span class="text-gray-500 text-sm text-right announcement-author">Admin</span>
       </div>
     </div>
@@ -327,105 +275,138 @@
 
       </div>
     </div>
-
-    <!-- Bottom Row: 2 Cards -->
-    <div class="flex flex-col md:flex-row gap-8 md:mt-4">
-      <!-- Security -->
-      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
-        <div class="absolute -top-8">
-          <div class="bg-white p-3 rounded-xl shadow-md">
-            <img src="/pictures/security2_icon.png" alt="Security Icon" class="w-12 h-12">
-          </div>
-        </div>
-        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
-        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-        <button onclick="openQRModal()" class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
-  Generate QR
-</button>
-
+ 
+    <!-- Bottom Row: 2 Cards - Now Horizontal -->
+<div class="flex flex-row justify-center gap-8 md:mt-4">
+  <!-- Security Card -->
+  <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+    <div class="absolute -top-8">
+      <div class="bg-white p-3 rounded-xl shadow-md">
+        <img src="/pictures/security2_icon.png" alt="Security Icon" class="w-12 h-12">
       </div>
-     
-      <!-- QR Code Modal -->
-<div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-  <div class="bg-[#E6DCD0] w-[90%] max-w-md p-6 rounded-2xl shadow-lg relative">
-    <!-- Close Button -->
-    <button onclick="closeQRModal()" class="absolute top-4 right-4 text-green-800 text-xl font-bold hover:text-green-600">
-      &times;
+    </div>
+    <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Security</h3>
+    <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+    <button onclick="openQRModal()" class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+      Generate QR
     </button>
+  </div>
 
-    <h2 class="text-xl font-bold mb-4 text-center">Generate Visitor QR Code</h2>
-    
-    <form class="space-y-4 text-left text-sm">
-      <!-- Visitor Name -->
-      <div>
-        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span> Visitor Name</label>
-        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Enter visitor's full name">
+  <!-- Park and Playground Card -->
+  <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
+    <div class="absolute -top-8">
+      <div class="bg-white p-3 rounded-xl shadow-md">
+        <img src="/pictures/park_icon.png" alt="Park Icon" class="w-12 h-12">
       </div>
-
-      <!-- Residence -->
-      <div>
-        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Residence to Visit</label>
-        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Enter house blk and lot number">
-      </div>
-
-      <!-- Visit Date -->
-      <div>
-        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Visit Date</label>
-        <input type="date" class="w-full mt-1 p-2 rounded-md border border-gray-300">
-      </div>
-
-      <!-- Purpose -->
-      <div>
-        <label class="font-semibold block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Purpose of Visit</label>
-        <select class="w-full mt-1 p-2 rounded-md border border-gray-300">
-          <option>Select purpose</option>
-          <option>Delivery</option>
-          <option>Guest</option>
-          <option>Maintenance</option>
-        </select>
-      </div>
-
-      <!-- Vehicle -->
-      <div>
-        <label class="font-semibold">Vehicle (if any)</label>
-        <input type="text" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Vehicle model and plate number">
-      </div>
-
-      <!-- Number of Visitors -->
-      <div>
-        <label class="font-semibold  block text-[#333333] mb-1 text-sm"> <span class="text-red-500">*</span>  Number of Visitors</label>
-        <input type="number" min="1" value="1" class="w-full mt-1 p-2 rounded-md border border-gray-300">
-      </div>
-
-      <!-- Submit Button -->
-      <div class="text-center pt-2">
-        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-full">
-          Generate QR Code
-        </button>
-      </div>
-
-      <p class="text-xs text-red-600 text-center pt-2">* Indicates required field</p>
-    </form>
+    </div>
+    <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Park and Playground</h3>
+    <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
+    <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
+      Coming Soon
+    </button>
   </div>
 </div>
 
-
-      <!-- Park and Playground -->
-      <div class="relative bg-[#E6DCD0] rounded-3xl shadow-md p-8 flex flex-col items-center text-center w-[280px] md:w-[300px]">
-        <div class="absolute -top-8">
-          <div class="bg-white p-3 rounded-xl shadow-md">
-            <img src="/pictures/park_icon.png" alt="Park Icon" class="w-12 h-12">
-          </div>
-        </div>
-        <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Park and Playground</h3>
-        <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-        <button class="bg-white px-4 py-2 rounded-full hover:bg-gray-200 text-sm">
-          Coming Soon
+    
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div class="bg-[#E6DCD0] w-[90%] max-w-md p-6 rounded-2xl shadow-lg relative">
+        <!-- Close Button -->
+        <button onclick="closeQRModal()" class="absolute top-4 right-4 text-green-800 text-xl font-bold hover:text-green-600">
+          &times;
         </button>
-      </div>
-    </div>
 
+        <!-- Form Container (default view) -->
+        <div id="qrFormContainer">
+          <h2 class="text-xl font-bold mb-4 text-center">Generate Visitor QR Code</h2>
+          <div id="qrError" class="text-red-600 text-sm mb-4 hidden"></div>
+          
+          <form id="qrGeneratorForm" class="space-y-4 text-left text-sm">
+            <!-- Resident Name -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Your Name (Resident)
+              </label>
+              <input type="text" name="resident_name" required class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Your full name">
+            </div>
+
+            <!-- Visitor Name -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Visitor Name
+              </label>
+              <input type="text" name="visitor_name" required class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Visitor's full name">
+            </div>
+
+            <!-- Residence -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Residence to Visit
+              </label>
+              <input type="text" name="residence" required class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="House block and lot number">
+            </div>
+
+            <!-- Visit Date -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Visit Date
+              </label>
+              <input type="date" name="visit_date" required class="w-full mt-1 p-2 rounded-md border border-gray-300">
+            </div>
+
+            <!-- Purpose -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Purpose of Visit
+              </label>
+              <select name="purpose" required class="w-full mt-1 p-2 rounded-md border border-gray-300">
+                <option value="">Select purpose</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Guest">Guest</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Vehicle -->
+            <div>
+              <label class="font-semibold">Vehicle (if any)</label>
+              <input type="text" name="vehicle" class="w-full mt-1 p-2 rounded-md border border-gray-300" placeholder="Vehicle model and plate number">
+            </div>
+
+            <!-- Number of Visitors -->
+            <div>
+              <label class="font-semibold block text-[#333333] mb-1 text-sm">
+                <span class="text-red-500">*</span> Number of Visitors
+              </label>
+              <input type="number" name="number_of_visitors" min="1" value="1" required class="w-full mt-1 p-2 rounded-md border border-gray-300">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center pt-2">
+              <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-full">
+                Generate QR Code
+              </button>
+            </div>
+
+            <p class="text-xs text-red-600 text-center pt-2">* Indicates required field</p>
+          </form>
+        </div>
+
+        <!-- QR Display Container (hidden initially) -->
+        <div id="qrDisplayContainer" class="hidden text-center">
+  <h2 class="text-xl font-bold mb-4">Visitor QR Code</h2>
+  <canvas id="qrCanvas" class="mx-auto mb-4 w-48 h-48 bg-white p-2"></canvas>
+  <div id="visitorDetails" class="mb-4 text-left"></div>
+  <div class="flex justify-center gap-4">
+    <button onclick="printQRCode()" class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-full">
+      Print
+    </button>
+    <button onclick="newQRCode()" class="bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded-full">
+      New QR
+    </button>
   </div>
+</div>
 </section>
       
       <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
@@ -557,35 +538,74 @@ closeBtn.addEventListener('click', () => {
 </script>
 
  
- <!--announcement carousel-->
+
 <script>
+  // Announcements Functionality
   const carousel = document.getElementById("carousel");
   const template = document.getElementById("announcement-card-template");
   const next = document.getElementById("next");
   const prev = document.getElementById("prev");
 
-  // 👉 Dynamically Load Announcements
   async function loadLatestAnnouncements() {
     try {
-      const response = await fetch("/api/announcements?limit=5&sort=desc");
-      const announcements = await response.json();
+      const { data, error } = await supabase
+        .from('announcements')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(5);
 
-      announcements.forEach((announcement) => {
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        carousel.innerHTML = `
+          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+            No announcements found.
+          </div>
+        `;
+        return;
+      }
+
+      data.forEach((announcement) => {
         const clone = template.content.cloneNode(true);
-        clone.querySelector(".announcement-img").src = announcement.image || "/pictures/placeholder.png";
+        const img = clone.querySelector(".announcement-img");
+        img.src = announcement.image_url || "/pictures/default-announcement.png";
+        img.alt = announcement.title;
+        
         clone.querySelector(".announcement-title").textContent = announcement.title;
-        clone.querySelector(".announcement-author").textContent = announcement.author || "Admin";
-        clone.querySelector(".announcement-description").textContent = announcement.description.slice(0, 120) + "...";
-        clone.querySelector(".announcement-date").textContent = announcement.date;
-        clone.querySelector(".announcement-readmore").href = `/pages/dashboard/announcement_detail.html?id=${announcement.id}`;
+        clone.querySelector(".announcement-description").textContent = 
+          announcement.description.length > 100 
+            ? announcement.description.substring(0, 100) + "..." 
+            : announcement.description;
+            
+        clone.querySelector(".announcement-date").textContent = 
+          announcement.date ? new Date(announcement.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          }) : 'No date';
+          
+        clone.querySelector(".announcement-readmore").href = 
+          `dashboard/announcement_detail.html?id=${announcement.id}`;
+          
+        // Hide read more if description is short
+        if (announcement.description.length <= 100) {
+          clone.querySelector(".announcement-readmore").style.display = 'none';
+        }
+        
         carousel.appendChild(clone);
       });
+
     } catch (err) {
       console.error("Error loading announcements:", err);
+      carousel.innerHTML = `
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load announcements. Please try again later.
+        </div>
+      `;
     }
   }
 
-  // 👉 Carousel Scroll Function
+  // Carousel Scroll Function
   next.addEventListener("click", () => {
     carousel.scrollBy({ left: 350, behavior: "smooth" });
   });
@@ -594,28 +614,204 @@ closeBtn.addEventListener('click', () => {
     carousel.scrollBy({ left: -350, behavior: "smooth" });
   });
 
-  // 🚀 Load on page ready
-  loadLatestAnnouncements();
+  // Load announcements when page is ready
+  document.addEventListener('DOMContentLoaded', loadLatestAnnouncements);
 </script>
 
-<!--qr modal-->
-<script>
-  function openQRModal() {
-    document.getElementById('qrModal').classList.remove('hidden');
+<!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    // Initialize Supabase
+    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+
+    // QR Code Functions
+    let currentQRCodeData = null;
+
+    function openQRModal() {
+      document.getElementById('qrModal').classList.remove('hidden');
+      document.getElementById('qrFormContainer').classList.remove('hidden');
+      document.getElementById('qrDisplayContainer').classList.add('hidden');
+      document.getElementById('qrError').classList.add('hidden');
+      
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.querySelector('input[name="visit_date"]').min = today;
+    }
+
+    function closeQRModal() {
+      document.getElementById('qrModal').classList.add('hidden');
+    }
+
+    async function generateQRCode(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const formData = new FormData(form);
+  const visitorData = Object.fromEntries(formData.entries());
+  
+  // Validate date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const visitDate = new Date(visitorData.visit_date);
+  
+  if (visitDate < today) {
+    showQRError("Visit date cannot be in the past");
+    return;
   }
 
-  function closeQRModal() {
-    document.getElementById('qrModal').classList.add('hidden');
+  try {
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating...';
+    
+    // Prepare visitor data
+    currentQRCodeData = {
+      resident: visitorData.resident_name,
+      visitor: visitorData.visitor_name,
+      residence: visitorData.residence,
+      date: visitorData.visit_date,
+      purpose: visitorData.purpose,
+      vehicle: visitorData.vehicle || null,
+      visitors: visitorData.number_of_visitors,
+      code: `visitor-${Math.random().toString(36).substring(2, 15)}`,
+      generated_at: new Date().toISOString(),
+      community: "Augustine Grove"
+    };
+
+    // Generate QR code - FIXED VERSION
+    const canvas = document.getElementById('qrCanvas');
+    canvas.width = 200;
+    canvas.height = 200;
+    
+    // Clear previous QR code
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    await QRCode.toCanvas(canvas, JSON.stringify(currentQRCodeData), {
+      width: 200,
+      errorCorrectionLevel: 'H',
+      margin: 1,
+      color: {
+        dark: '#5F8B4C',
+        light: '#FAF1E6'
+      }
+    });
+
+    // Save to database
+    const { data, error } = await window.supabase
+      .from('visitors')
+      .insert([{
+        resident_name: visitorData.resident_name.trim(),
+        full_name: visitorData.visitor_name.trim(),
+        residence_to_visit: visitorData.residence.trim(),
+        visit_date: visitorData.visit_date,
+        purpose: visitorData.purpose,
+        vehicle_info: visitorData.vehicle?.trim() || null,
+        number_of_visitors: visitorData.number_of_visitors,
+        qr_code: currentQRCodeData.code,
+        qr_data: currentQRCodeData,
+        is_active: true
+      }])
+      .select();
+
+    if (error) throw error;
+
+    // Show success UI
+    document.getElementById('visitorDetails').innerHTML = `
+      <div class="bg-white/80 p-4 rounded-lg">
+        <p class="font-semibold text-[#5F8B4C] mb-2">Visitor Information</p>
+        <p><span class="font-medium">Name:</span> ${visitorData.visitor_name}</p>
+        <p><span class="font-medium">Resident:</span> ${visitorData.resident_name}</p>
+        <p><span class="font-medium">Residence:</span> ${visitorData.residence}</p>
+        <p><span class="font-medium">Visit Date:</span> ${new Date(visitorData.visit_date).toLocaleDateString()}</p>
+        <p><span class="font-medium">Purpose:</span> ${visitorData.purpose}</p>
+        ${visitorData.vehicle ? `<p><span class="font-medium">Vehicle:</span> ${visitorData.vehicle}</p>` : ''}
+        <p><span class="font-medium">Visitors:</span> ${visitorData.number_of_visitors}</p>
+      </div>
+    `;
+
+    document.getElementById('qrFormContainer').classList.add('hidden');
+    document.getElementById('qrDisplayContainer').classList.remove('hidden');
+    hideQRError();
+
+  } catch (error) {
+    console.error('QR generation failed:', error);
+    showQRError('Failed to generate QR code. Please try again.');
+    
+    // Clean up any partial QR code
+    const canvas = document.getElementById('qrCanvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  } finally {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Generate QR Code';
+    }
   }
-</script>
+}
 
 
-<!-- AOS (Animate on Scroll) JS -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
+    function showQRError(message) {
+      const errorElement = document.getElementById('qrError');
+      errorElement.textContent = message;
+      errorElement.classList.remove('hidden');
+    }
 
+    function hideQRError() {
+      const errorElement = document.getElementById('qrError');
+      errorElement.classList.add('hidden');
+    }
+
+   function printQRCode() {
+  if (!currentQRCodeData) return;
+  const canvas = document.getElementById('qrCanvas');
+  if (!canvas) return;
+  
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <html><head><title>Visitor Pass</title></head>
+    <body style="font-family: Arial; text-align: center;">
+      <h2>Augustine Grove Visitor Pass</h2>
+      <img src="${canvas.toDataURL()}" 
+           style="width: 200px; height: 200px;">
+      <div style="text-align: left; margin: 20px auto; width: 80%;">
+        <p><strong>Visitor:</strong> ${currentQRCodeData.visitor}</p>
+        <p><strong>Resident:</strong> ${currentQRCodeData.resident}</p>
+        <p><strong>Valid:</strong> ${new Date(currentQRCodeData.date).toLocaleDateString()}</p>
+      </div>
+    </body></html>
+  `);
+  printWindow.document.close();
+  setTimeout(() => printWindow.print(), 300);
+};
+
+    function newQRCode() {
+      document.getElementById('qrGeneratorForm').reset();
+      document.getElementById('qrDisplayContainer').classList.add('hidden');
+      document.getElementById('qrFormContainer').classList.remove('hidden');
+      currentQRCodeData = null;
+    };
+
+    // Initialize form submission
+    document.addEventListener('DOMContentLoaded', function() {
+      const qrForm = document.getElementById('qrGeneratorForm');
+      if (qrForm) {
+        qrForm.addEventListener('submit', generateQRCode);
+      }
+    });
+
+    // Initialize AOS
+    AOS.init();
+  </script>
 
   </body>
   
