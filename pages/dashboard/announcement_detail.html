@@ -8,12 +8,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Add Supabase client library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
 
-
-
-<!-- Nav BAr -->
+<!-- Nav Bar -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="../index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
@@ -40,7 +40,6 @@
 
   <!-- Mobile Slide-in Menu -->
   <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
-
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
       <button id="close-btn" class="text-[#5F8B4C]">
@@ -66,92 +65,112 @@
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
-
-<!-- Bottom Log Out Button -->
-<div class="w-full text-center mt-20 mb-6">
-  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-    Log Out
-  </button>
+    <!-- Bottom Log Out Button -->
+    <div class="w-full text-center mt-20 mb-6">
+      <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+        Log Out
+      </button>
+    </div>
   </div>
-  
-</div>
 </nav>
 
-  <!-- 🔙 Back button -->
-  <div class="px-6 py-4">
+<!-- Back button -->
+<div class="px-6 py-4">
   <button onclick="history.back()" class="text-sm flex items-center gap-2 text-[#5F8B4C] hover:underline font-bold">
     <i class="fa-solid fa-chevron-left text-sm"></i>
     <span>Back</span>
   </button>
 </div>
 
+<!-- Content Section -->
+<section class="max-w-3xl mx-auto px-6 pb-10 space-y-4" id="announcement-detail">
+  <!-- JS will inject content here -->
+</section>
 
-  <!-- 📄 Content Section -->
-  <section class="max-w-3xl mx-auto px-6 pb-10 space-y-4" id="announcement-detail">
-    <!-- JS will inject content here -->
-  </section>
-
-  <!-- 🧩 Template for JS rendering -->
-  <template id="detail-template">
-    <h1 class="text-2xl font-bold title"></h1>
-    <div class="flex gap-4 text-sm text-gray-500 items-center">
-      <div class="flex items-center gap-1">
-        <i class="fa-solid fa-user text-[#5F8B4C] text-base"></i>
-        <span class="author">Admin</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-base"></i>
-        <span class="date"></span>
-      </div>
+<!-- Template for JS rendering -->
+<template id="detail-template">
+  <h1 class="text-2xl font-bold title"></h1>
+  <div class="flex gap-4 text-sm text-gray-500 items-center">
+    <div class="flex items-center gap-1">
+      <i class="fa-solid fa-user text-[#5F8B4C] text-base"></i>
+      <span class="author">Admin</span>
     </div>
-    <hr class="border-t border-[#5F8B4C]/30 my-4">
-    <img src="" alt="Banner Image" class="w-full max-h-[400px] object-cover rounded-xl image">
-    <p class="mt-6 text-gray-700 leading-relaxed content"></p>
-  </template>
+    <div class="flex items-center gap-1">
+      <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-base"></i>
+      <span class="date"></span>
+    </div>
+  </div>
+  <hr class="border-t border-[#5F8B4C]/30 my-4">
+  <img src="" alt="Banner Image" class="w-full max-h-[400px] object-cover rounded-xl image">
+  <p class="mt-6 text-gray-700 leading-relaxed content"></p>
+</template>
 
-  <!-- ✅ Script Section -->
-  <script>
-    // 🟡 Dummy announcement data
-    const announcementsData = [
-      {
-        id: "1",
-        title: "Community Pool Closing Schedule",
-        image: "pictures/pool.jpg",
-        date: "April 7, 2025",
-        content: `Due to scheduled maintenance, the community pool will be closed from April 10 to April 20. We appreciate your understanding!`
-      },
-      {
-        id: "2",
-        title: "New Playground Installation",
-        image: "pictures/playground.jpg",
-        date: "April 15, 2025",
-        content: `We're thrilled to announce that a brand new playground is being installed at the park. Completion is expected by May 15!`
-      }
-    ];
+<script>
+  // Initialize Supabase
+  (function () {
+    const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  })();
 
-    // 🔍 Get ID from URL
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+  // Get ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
 
-    // 🎯 Find announcement by ID
-    const announcement = announcementsData.find(a => a.id === id);
+  // DOM elements
+  const detailSection = document.getElementById('announcement-detail');
+  const template = document.getElementById('detail-template');
 
-    // 🧱 Inject into template if found
-    const detailSection = document.getElementById('announcement-detail');
-    const template = document.getElementById('detail-template');
-
-    if (announcement) {
-      const clone = template.content.cloneNode(true);
-      clone.querySelector('.title').textContent = announcement.title;
-      clone.querySelector('.date').textContent = announcement.date;
-      clone.querySelector('.image').src = announcement.image;
-      clone.querySelector('.image').alt = announcement.title;
-      clone.querySelector('.content').textContent = announcement.content;
-      detailSection.appendChild(clone);
-    } else {
-      detailSection.innerHTML = `<p class="text-center text-red-500">Announcement not found.</p>`;
+  async function fetchAnnouncementDetails() {
+    if (!id) {
+      detailSection.innerHTML = `<p class="text-center text-red-500">No announcement ID provided.</p>`;
+      return;
     }
-  </script>
+
+    try {
+      const { data, error } = await supabase
+        .from('announcements')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      if (!data) throw new Error('Announcement not found');
+
+      renderAnnouncement(data);
+    } catch (error) {
+      console.error('Error fetching announcement:', error);
+      detailSection.innerHTML = `
+        <p class="text-center text-red-500">
+          Failed to load announcement. ${error.message}
+        </p>
+      `;
+    }
+  }
+
+  function renderAnnouncement(announcement) {
+    const clone = template.content.cloneNode(true);
+    
+    // Format the date nicely
+    const formattedDate = announcement.date 
+      ? new Date(announcement.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      : 'No date specified';
+
+    clone.querySelector('.title').textContent = announcement.title;
+    clone.querySelector('.date').textContent = formattedDate;
+    clone.querySelector('.image').src = announcement.image_url || '/pictures/default-announcement.png';
+    clone.querySelector('.image').alt = announcement.title;
+    clone.querySelector('.content').textContent = announcement.content || announcement.description;
+    
+    detailSection.appendChild(clone);
+  }
+
+  document.addEventListener('DOMContentLoaded', fetchAnnouncementDetails);
+</script>
 
 </body>
 </html>

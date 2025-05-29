@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Announcements</title>
+  <link href="../../dist/output.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .page-btn {
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.75rem;
+      border: 1px solid #5F8B4C;
+      background-color: #E6DCD0;
+      transition: background-color 0.2s ease;
+      font-weight: 600;
+      color: #5F8B4C;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      background-color: #c6baa8;
+    }
+
+    .page-btn.active {
+      background-color: #5F8B4C;
+      color: white;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fadeSlide: 'fadeSlide 0.3s ease-out'
+          },
+          keyframes: {
+            fadeSlide: {
+              '0%': { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Add Supabase client library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
+
+<!-- Nav Bar -->
+<nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
+  <a href="index.html" class="flex items-center gap-2">
+    <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <div class="flex-row items-start">
+      <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+      <!-- Admin Badge beside logo or user -->
+      <div class="gap-2 text-base font-bold">
+        ADMIN
+      </div>
+    </div>
+  </a>
+
+  <!-- Hamburger Button -->
+  <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Desktop Menu -->
+  <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
+    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+
+    <!--profile button-->
+    <div class="relative">
+      <button id="profileBtn" class="focus:outline-none">
+        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+      </button>
+
+      <!-- Modal Dropdown -->
+      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+        <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+          Log Out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Slide-in Menu -->
+  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
+    <div class="flex items-center justify-between p-4 border-b border-gray-300">
+      <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
+      <button id="close-btn" class="text-[#5F8B4C]">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+      <div class="text-left">
+        <p class="font-semibold text-[#5F8B4C]">John Smith</p>
+      </div>
+    </div>
+
+    <!-- Nav Links -->
+    <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    
+    <!-- Bottom Log Out Button -->
+    <div class="w-full text-center mt-20 mb-6">
+      <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+        Log Out
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!--announcements-->
+<div class="flex justify-between items-center py-6 w-full">
+  <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Community Announcements</h1>
+  <!-- 🔙 Back button -->
+  <div class="px-6 py-2">
+    <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Admin Only Buttons -->
+<div id="admin-buttons" class="flex justify-start gap-4 md:px-20 mb-4">
+  <a href="create_announcement.html" class="text-[#5F8B4C] font-bold px-5 py-3 rounded-3xl text-base border-[#5F8B4C] border-2 hover:bg-[#5F8B4C]/20">
+    + Create Announcement
+  </a>
+  <a href="concerns.html" class="text-[#5F8B4C] font-bold px-5 py-3 rounded-3xl text-base border-[#5F8B4C] border-2 hover:bg-[#5F8B4C]/20">
+    View Concerns
+  </a>
+</div>
+
+<!-- Filter Container -->
+<section class="px-6">
+  <div class="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 md:gap-4">
+    <!-- Filters (Category, Month, Importance, Sort By) -->
+    <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+      <label class="block text-base font-bold text-[#2E4C2C]">Category</label>
+      <div class="relative">
+        <select id="filter-category" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+          <option value="all">All Categories</option>
+          <option value="General">General</option>
+          <option value="Facilities">Facilities</option>
+          <option value="Upgrades">Upgrades</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+          <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+            <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+      <label class="block text-base font-bold text-[#2E4C2C]">Month</label>
+      <div class="relative">
+        <select id="filter-month" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+          <option value="all">All Months</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+          <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+            <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+      <label class="block text-base font-bold text-[#2E4C2C]">Importance</label>
+      <div class="relative">
+        <select id="filter-importance" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+          <option value="all">All</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+          <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+            <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
+      <label class="block text-base font-bold text-[#2E4C2C]">Sort By</label>
+      <div class="relative">
+        <select id="filter-sort" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
+          <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+            <path d="M5.516 7.548l4.497 4.498 4.497-4.498L16 8.53l-6 6-6-6z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Announcements Section -->
+<section id="announcements" class="max-w-4xl mx-auto mt-8 px-4 space-y-6">
+  <!-- The announcement cards will be inserted here by JavaScript -->
+</section>
+
+<!-- Template Announcement Card -->
+<template id="announcement-template">
+  <!-- Outer Card Container -->
+  <div class="bg-[#FAF1E6] rounded-xl border border-[#5F8B4C] px-4 py-4 flex flex-col md:flex-row items-start gap-6 shadow-md h-full">
+    <!-- Left Image -->
+    <img class="w-full md:w-48 h-40 object-cover rounded-lg" src="" alt="Announcement Image">
+    
+    <!-- Right Side Content -->
+    <div class="flex-1 flex flex-col justify-between min-h-[10rem]">
+      <div>
+        <!-- Announcement Title -->
+        <h3 class="text-lg md:text-xl font-bold mb-2 title"></h3>
+
+        <!-- Description with Read More -->
+        <p class="text-gray-700 text-sm md:text-base mb-4">
+          <span class="description"></span>
+          <a href="#" class="read-more text-green-700 hover:underline">...read more</a>
+        </p>
+      </div>
+
+      <!-- Date & Author -->
+      <div class="flex justify-between items-center text-sm text-gray-500 pt-4 mt-auto">
+        <div class="flex items-center gap-1">
+          <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-lg"></i>
+          <span class="date"></span>
+        </div>
+        <div class="flex items-center gap-1">
+          <i class="fa-solid fa-user text-[#5F8B4C] text-base"></i>
+          <span class="author">Admin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Pagination -->
+<div id="pagination" class="flex justify-end gap-3 px-10 mt-10 mb-16"></div>
+
+<script>
+  // 1. Initialize Supabase
+  (function () {
+    const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  })();
+
+  const announcementsContainer = document.getElementById("announcements");
+  const template = document.getElementById("announcement-template");
+  const paginationContainer = document.getElementById("pagination");
+
+  const cardsPerPage = 3;
+  let currentPage = 1;
+  let filteredData = [];
+  let allAnnouncements = [];
+
+  async function fetchAnnouncements() {
+    try {
+      const { data, error } = await supabase
+        .from('announcements')
+        .select('*')
+        .order('date', { ascending: false });
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        announcementsContainer.innerHTML = `
+          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+            No announcements found in the database.
+          </div>
+        `;
+        return;
+      }
+
+      allAnnouncements = data.map(item => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        date: item.date ? new Date(item.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }) : 'No date',
+        image: item.image_url || '/pictures/default-announcement.png',
+        category: item.category || 'General',
+        month: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'long' }) : 'Unknown',
+        importance: item.importance || 'Medium'
+      }));
+
+      filteredData = [...allAnnouncements];
+      loadAnnouncements(filteredData, currentPage);
+    } catch (error) {
+      console.error('Error fetching announcements:', error);
+      announcementsContainer.innerHTML = `
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load announcements. Error: ${error.message}
+        </div>
+      `;
+    }
+  }
+
+  function loadAnnouncements(data, page = 1) {
+    announcementsContainer.innerHTML = "";
+    const start = (page - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    const paginated = data.slice(start, end);
+
+    if (paginated.length === 0) {
+      announcementsContainer.innerHTML = `
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          No announcements found matching your filters.
+        </div>
+      `;
+      paginationContainer.innerHTML = "";
+      return;
+    }
+
+    paginated.forEach(item => {
+      const clone = template.content.cloneNode(true);
+      clone.querySelector("img").src = item.image;
+      clone.querySelector(".title").textContent = item.title;
+      clone.querySelector(".description").textContent = item.description;
+      clone.querySelector(".date").textContent = item.date;
+      clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
+      clone.firstElementChild.classList.add("animate-fadeSlide");
+      announcementsContainer.appendChild(clone);
+    });
+
+    renderPagination(data.length, page);
+  }
+
+  function renderPagination(totalItems, currentPage) {
+    const totalPages = Math.ceil(totalItems / cardsPerPage);
+    paginationContainer.innerHTML = "";
+
+    const prevButton = createPageButton("←", currentPage - 1, currentPage === 1);
+    paginationContainer.appendChild(prevButton);
+
+    const maxVisiblePages = 3;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      paginationContainer.appendChild(
+        createPageButton(i, i, false, i === currentPage)
+      );
+    }
+
+    const nextButton = createPageButton("→", currentPage + 1, currentPage === totalPages);
+    paginationContainer.appendChild(nextButton);
+  }
+
+  function createPageButton(text, page, disabled = false, isActive = false) {
+    const btn = document.createElement("button");
+    btn.textContent = text;
+    btn.className = "page-btn" + (isActive ? " active" : "");
+    btn.disabled = disabled;
+    btn.onclick = () => {
+      currentPage = page;
+      loadAnnouncements(filteredData, currentPage);
+    };
+    return btn;
+  }
+
+  function applyFilters() {
+    const category = document.getElementById("filter-category")?.value || "all";
+    const month = document.getElementById("filter-month")?.value || "all";
+    const importance = document.getElementById("filter-importance")?.value || "all";
+    const sort = document.getElementById("filter-sort")?.value || "newest";
+
+    filteredData = allAnnouncements.filter(item => {
+      const matchCategory = category === "all" || item.category === category;
+      const matchMonth = month === "all" || item.month === month;
+      const matchImportance = importance === "all" || item.importance === importance;
+      return matchCategory && matchMonth && matchImportance;
+    });
+
+    if (sort === "newest") {
+      filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    currentPage = 1;
+    loadAnnouncements(filteredData, currentPage);
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await fetchAnnouncements();
+    document.getElementById("filter-category")?.addEventListener("change", applyFilters);
+    document.getElementById("filter-month")?.addEventListener("change", applyFilters);
+    document.getElementById("filter-importance")?.addEventListener("change", applyFilters);
+    document.getElementById("filter-sort")?.addEventListener("change", applyFilters);
+  });
+
+  // Profile dropdown functionality
+  document.getElementById('profileBtn')?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const modal = document.getElementById('profileModal');
+    modal.classList.toggle('hidden');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function() {
+    const modal = document.getElementById('profileModal');
+    if (!modal.classList.contains('hidden')) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  // Mobile menu functionality
+  document.getElementById('menu-btn')?.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.remove('translate-x-full', 'pointer-events-none');
+    document.getElementById('sidebar').classList.add('translate-x-0', 'pointer-events-auto');
+  });
+
+  document.getElementById('close-btn')?.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.add('translate-x-full', 'pointer-events-none');
+    document.getElementById('sidebar').classList.remove('translate-x-0', 'pointer-events-auto');
+  });
+
+  function logout() {
+    // Implement logout functionality here
+    window.location.href = 'login.html';
+  }
+</script>
+</body>
+</html>
