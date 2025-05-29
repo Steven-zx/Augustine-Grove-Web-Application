@@ -76,7 +76,8 @@
   </div>
 
   <!-- Mobile Slide-in Menu -->
-<div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
+ <div id="sidebar"
+  class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden hidden">
 
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
@@ -508,21 +509,26 @@
 
 
   
-  <script>
-    const menuBtn = document.getElementById('menu-btn');
-  const sidebar = document.getElementById('sidebar');
-  const closeBtn = document.getElementById('close-btn');
+ <script>
+ const menuBtn = document.getElementById("menu-btn");
+const closeBtn = document.getElementById("close-btn");
+const sidebar = document.getElementById("sidebar");
 
-  menuBtn.addEventListener('click', () => {
-  sidebar.classList.remove('translate-x-full', 'pointer-events-none');
-  sidebar.classList.add('translate-x-0');
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.remove("translate-x-full", "hidden");
+  sidebar.classList.add("translate-x-0");
 });
 
-closeBtn.addEventListener('click', () => {
-  sidebar.classList.remove('translate-x-0');
-  sidebar.classList.add('translate-x-full', 'pointer-events-none');
+closeBtn.addEventListener("click", () => {
+  sidebar.classList.remove("translate-x-0");
+  sidebar.classList.add("translate-x-full");
+
+  // Wait for transition to end before hiding completely
+  setTimeout(() => {
+    sidebar.classList.add("hidden");
+  }, 300); // matches the Tailwind transition duration
 });
-  </script>  
+</script> 
 
 <!--profile modal-->
   <script>
