@@ -10,7 +10,7 @@ module.exports = {
     './concerns.html',
     './profile.html',
     './announcement_detail.html',
-    './create_announcement.html',
+    './admin/create_announcement.html',
     './about.html',
     './gallery.html',
     './cal.html',

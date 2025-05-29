@@ -5,32 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amenities</title>
 
-  <link href="../../dist/output.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <link href="../dist/output.css" rel="stylesheet">
 
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
  <style>
     body {
       font-family: 'Poppins', sans-serif;
     }
-
-    #calendar {
-      max-width: 300px;
+  
+    /* === CALENDAR CONTAINER === */
+    .calendar-container {
+      max-width: 300px;             /* Control calendar width */
       width: 100%;
       aspect-ratio: 1 / 1;
     }
-
-.fc .fc-event:not(.fc-bg-event) {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-
+  
+    /* === REMOVE EVENT VISUALS (DOTS, COLORS, TITLES) === */
+  
+    /* Completely hide the event element's background/border */
+    .fc .fc-event {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  
+    /* Hide additional dot indicators in day cells */
     .fc .fc-event::after,
     .fc .fc-daygrid-event-dot,
     .fc-event-title,
@@ -93,6 +104,37 @@
       margin-right: 6px;
     }
 
+    /* Amenity tabs styling */
+    .amenity-tab {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem 0.5rem 0 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .amenity-tab.active {
+      background-color: #E6DCD0;
+      color: #5F8B4C;
+      font-weight: 600;
+    }
+
+    .amenity-tab:not(.active) {
+      background-color: #d1c7bb;
+      color: #6b7280;
+    }
+
+    .amenity-tab:not(.active):hover {
+      background-color: #dbd2c7;
+    }
+
+    .calendar-content {
+      display: none;
+    }
+
+    .calendar-content.active {
+      display: block;
+    }
+
     .booking-dot {
       pointer-events: none;
     }
@@ -103,9 +145,16 @@
 
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="../index.html" class="flex items-center gap-2">
+  <a href="index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
+    <!-- Admin Badge beside logo or user -->
+<div class="gap-2 text-base font-bold">
+  ADMIN
+</div>
+</div>
+
   </a>
 
   <!-- Hamburger Button -->
@@ -117,13 +166,34 @@
 
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
- <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-  <li><a href="announcements.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-  <li><a href="amenities.html" class="text-[#FFDDAB]">Amenities</a></li>
-  <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-  <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-</ul>
-    <img src="/pictures/profile.png" alt="Profile" class="h-8">
+    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+
+  
+    <!--profile button-->
+<div class="relative">
+  <button id="profileBtn" class="focus:outline-none">
+    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+  </button>
+
+  <!-- Modal Dropdown -->
+  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+   <!--
+    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+      Profile
+    </a>  -->
+    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+      Log Out
+    </button>
+  </div>
+</div>
+
   </div>
 
   <!-- Mobile Slide-in Menu -->
@@ -165,10 +235,18 @@
 </div>
 </nav>
 
-    <div class="bg-[#FAF1E6] min-h-screen py-8 px-10 md:px-20">
-        <!-- Page Title -->
-        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-8">Book Community Amenities</h2>
-      
+<div class="flex justify-between items-center py-6 w-full ">
+  <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Book Community Amenities</h1>
+   <!-- 🔙 Back button -->
+  <div class="px-6 py-2">
+  <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
+</div>
+
+    <div class="bg-[#FAF1E6] min-h-screen    px-10 md:px-20">
+          
         <!-- Amenities Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           
@@ -185,11 +263,11 @@
             </div>
              <div class="w-full flex justify-end mt-4">
                 <div class="w-full flex justify-end mt-4">
-               <a href="booking_form.html">
-                <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
-                  Book now
-                </button>
-               </a>
+              <a href="booking_form.html?amenity=Clubhouse">
+  <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
+    Book now
+  </button>
+</a>
               </div>
               </div>
               
@@ -209,11 +287,11 @@
             </div>
             <div class="w-full flex justify-end mt-4">
                 <div class="w-full flex justify-end mt-4">
-               <a href="booking_form.html">
-                <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
-                  Book now
-                </button>
-               </a>
+              <a href="booking_form.html?amenity=Swimming Pool">
+  <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
+    Book now
+  </button>
+</a>
               </div>
               </div>
             <p class="text-xs text-gray-600 p-2">Note: Bookings must be made at least 7 days in advance and approved by the HOA.</p>
@@ -230,11 +308,11 @@
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
-               <a href="booking_form.html">
-                <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
-                  Book now
-                </button>
-               </a>
+               <a href="booking_form.html?amenity=Basketball Court">
+  <button class="bg-[#FAF1E6] text-gray-800 text-sm px-4 py-3 rounded-full shadow hover:bg-gray-100">
+    Book now
+  </button>
+</a>
               </div>
             <p class="text-xs text-gray-600 p-2">Note: Bookings must be made at least 7 days in advance and approved by the HOA.</p>
           </div>
@@ -263,36 +341,31 @@
       </div>
     
 
-
-<div class="max-w-4xl mx-auto py-8 px-4 bg-[#e3d6c7] rounded-xl shadow-md">
-  <h2 class="text-xl font-semibold text-center mb-6">Amenity Booking Calendar</h2>
-
-  <div class="flex justify-center space-x-4 mb-6">
-    <button onclick="switchAmenity('basketball')" id="btn-basketball"
-      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#5F8B4C]">
-      Basketball Court
-    </button>
-    <button onclick="switchAmenity('pool')" id="btn-pool"
-      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#5F8B4C]">
-      Swimming Pool
-    </button>
-    <button onclick="switchAmenity('clubhouse')" id="btn-clubhouse"
-      class="bg-[#FAF1E6] text-gray-800 text-xs px-4 py-2 rounded-full shadow hover:bg-[#5F8B4C]">
-      Clubhouse
-    </button>
-  </div>
-
-  <div class="flex flex-col md:flex-row gap-20 px-4 md:px-20">
-    <div class="bg-white rounded-xl p-4 shadow-md w-full md:w-[300px]" id="calendar"></div>
-    <div class="flex-1 text-sm">
-      <p class="mb-4">Click a date to view hourly schedule per amenity.</p>
-      <div class="flex items-center space-x-2 mb-2 gap-1">
-        <div class="w-5 h-5 bg-red-400 rounded"></div>
-        <span>Fully booked</span>
-      </div>
-      <div class="flex items-center space-x-2 mb-2 gap-3">
-        <div class="w-3 h-3 bg-orange-400 rounded-2xl"></div>
-        <span>Partially Booked</span>
+  <!-- Calendar Section -->
+  <div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
+    <h2 class="text-lg text-center font-semibold mb-6 border-b-2 border-green-700 pb-5">Amenity Booking Calendar</h2>
+    
+    <!-- Amenity Tabs -->
+    <div class="flex justify-center gap-1 mb-6">
+      <button class="amenity-tab active" data-amenity="clubhouse">Clubhouse</button>
+      <button class="amenity-tab" data-amenity="pool">Swimming Pool</button>
+      <button class="amenity-tab" data-amenity="court">Basketball Court</button>
+    </div>
+    
+    <div class="flex flex-col md:flex-row justify-between gap-8">
+      <!-- Clubhouse Calendar -->
+      <div id="clubhouse-calendar" class="calendar-container mx-auto calendar-content active"></div>
+      
+      <!-- Swimming Pool Calendar -->
+      <div id="pool-calendar" class="calendar-container mx-auto calendar-content"></div>
+      
+      <!-- Basketball Court Calendar -->
+      <div id="court-calendar" class="calendar-container mx-auto calendar-content"></div>
+  
+      <div class="text-sm text-gray-700 space-y-3 md:w-1/2">
+        <p class="text-base font-medium mb-2">Click dates to see available time slots.</p>
+        <p><span class="legend-dot" style="background-color: #ea580c;"></span> Fully booked</p>
+        <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
       </div>
     </div>
   </div>
@@ -309,168 +382,8 @@
   </div>
 </div>
 
-<script>
-  const amenities = {
-    basketball: {
-      booked: {
-        '2025-06-10': [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], // Fully booked
-        '2025-06-12': [11, 15]
-      },
-      color: 'bg-orange-100',
-      dot: 'bg-orange-500'
-    },
-    pool: {
-      booked: {
-        '2025-06-10': [8, 9, 10, 14],
-        '2025-06-11': [13, 16]
-      },
-      color: 'bg-blue-100',
-      dot: 'bg-blue-500'
-    },
-    clubhouse: {
-      booked: {
-        '2025-06-11': [10, 12, 14],
-        '2025-06-15': [15]
-      },
-      color: 'bg-green-100',
-      dot: 'bg-green-500'
-    }
-  };
-
-  let selectedAmenity = 'basketball';
-  let calendar;
-
-  function switchAmenity(amenity) {
-    selectedAmenity = amenity;
-    document.querySelectorAll('button[id^="btn-"]').forEach(btn => {
-      btn.classList.remove('bg-green-700', 'text-white');
-      btn.classList.add('bg-green-200', 'text-green-900');
-    });
-    const activeBtn = document.getElementById(`btn-${amenity}`);
-    activeBtn.classList.add('bg-green-700', 'text-white');
-    activeBtn.classList.remove('bg-green-200', 'text-green-900');
-    renderCalendar();
-  }
-
-function renderCalendar() {
-  if (calendar) calendar.destroy();
-
-  const amenityData = amenities[selectedAmenity];
-  const allBookings = amenityData.booked || {};
-
-  const fullyBookedDates = [];
-  const partiallyBookedDates = [];
-
-  for (const date in allBookings) {
-    const hours = allBookings[date];
-    if (hours.length >= 11) {
-      fullyBookedDates.push(date);
-    } else {
-      partiallyBookedDates.push(date);
-    }
-  }
-
-  const events = [];
-
-  // Fully booked dates as background events
-  fullyBookedDates.forEach(date => {
-    events.push({
-      title: '',
-      start: date,
-      display: 'background',
-      backgroundColor: '#f87171', // Tailwind red-400
-      allDay: true
-    });
-  });
-
-  // Partially booked (dot)
-  partiallyBookedDates.forEach(date => {
-    if (!fullyBookedDates.includes(date)) {
-      events.push({
-        title: '•',
-        start: date,
-        allDay: true,
-        classNames: ['booking-dot']
-      });
-    }
-  });
-
-  calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
-    initialView: 'dayGridMonth',
-    headerToolbar: { left: 'prev', center: 'title', right: 'next' },
-    dateClick: function(info) {
-      handleDateClick(info.dateStr);
-    },
-    events: events,
-    eventDisplay: 'auto', // This ensures 'background' display types show up
-    eventContent: function(arg) {
-      if (arg.event.classNames.includes('booking-dot')) {
-        return {
-          html: `<div class="w-2 h-2 ${amenities[selectedAmenity].dot} rounded-full mx-auto mt-1"></div>`
-        };
-      }
-    }
-  });
-
-  calendar.render();
-}
-
-  function handleDateClick(dateStr) {
-    document.getElementById('slotModal').classList.remove('hidden');
-    document.getElementById('timeBlockDate').textContent = `Schedule for ${dateStr}`;
-    renderTimeBlocks(dateStr);
-  }
-
-  function renderTimeBlocks(dateStr) {
-    const container = document.getElementById('timeBlocks');
-    container.innerHTML = '';
-
-    const amenity = amenities[selectedAmenity];
-    const booked = amenity.booked[dateStr] || [];
-
-    for (let hour = 8; hour <= 18; hour++) {
-      const block = document.createElement('div');
-      block.className = 'relative border-t pt-2 pb-4 pl-4';
-
-      const label = document.createElement('div');
-      label.className = 'text-sm text-gray-500';
-      label.textContent = `${hour}:00`;
-
-      block.appendChild(label);
-
-      if (booked.includes(hour)) {
-        const pill = document.createElement('div');
-        pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm font-medium flex items-center gap-2 ${amenity.color}`;
-        pill.innerHTML = `<span class="w-2 h-2 rounded-full ${amenity.dot}"></span> Booked`;
-        block.appendChild(pill);
-      } else {
-        const btn = document.createElement('button');
-        btn.className = 'mt-1 bg-green-200 hover:bg-green-300 text-sm px-3 py-1 rounded-md';
-        btn.textContent = 'Book this slot';
-        btn.onclick = () => proceedToForm(selectedAmenity, dateStr, `${hour}:00`);
-        block.appendChild(btn);
-      }
-
-      container.appendChild(block);
-    }
-  }
-
-  function closeModal() {
-    document.getElementById('slotModal').classList.add('hidden');
-  }
-
-  function proceedToForm(amenity, date, time) {
-    alert(`Redirecting to form:\nAmenity: ${amenity}\nDate: ${date}\nTime: ${time}`);
-    // window.location.href = `booking-form.html?amenity=${amenity}&date=${date}&time=${encodeURIComponent(time)}`;
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    switchAmenity('basketball');
-  });
-</script>
- 
-<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-5xl mx-auto mt-10 mb-36">
-  <h2 class="text-lg font-semibold mb-4 border-b-2 border-[#5F8B4C] pb-2">Booking Terms & Conditions</h2>
+<div class="bg-[#E6DCD0] py-10 px-4 rounded-lg shadow-lg max-w-7xl mx-auto mt-10">
+  <h2 class="text-lg font-semibold border-b-2 mb-10 border-green-700 pb-2">Booking Terms & Conditions</h2>
   <ul class="space-y-2 text-sm text-gray-800">
     <li>
       <span class="font-semibold text-green-700">1. Eligibility:</span>
@@ -499,73 +412,164 @@ function renderCalendar() {
   </ul>
 </div>
 
-<footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
-          
-          <!-- Left: Logo and Description -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-2">
-              <img src="/pictures/logo 2.png" alt="Logo" class="h-10">
-              <span class="text-xl font-bold">Augustine Grove</span>
-            </div>
-            <p class="text-sm">
-              Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
-            </p>
-          </div>
-      
-          <!-- Contact Us -->
-          <div class="space-y-4">
-            <h4 class="font-bold mb-2">Contact us</h4>
-            <div class="flex items-center gap-2 text-sm">
-              <img src="/pictures/phone_icon.png" alt="Phone" class="h-4 w-4">
-              <span>(555) 123-4562</span>
-            </div>
-            <div class="flex items-center gap-2 text-sm">
-              <img src="/pictures/email_icon.png" alt="Email" class="h-4 w-4">
-              <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
-            </div>
-            <div class="flex items-center gap-2 text-sm">
-              <img src="/pictures/fb_icon.png" alt="Facebook" class="h-4 w-4">
-              <span>Augustine Grove Subdivision</span>
-            </div>
-          </div>
-      
-          <!-- Quick Links -->
-          <div class="space-y-4">
-            <h4 class="font-bold mb-2">Quick links</h4>
-            <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="hover:underline">Home</a></li>
-              <li><a href="dashboard/aboutpage.html" class="hover:underline">About Us</a></li>
-              <li><a href="dashboard/amenities.html" class="hover:underline">Amenities</a></li>
-              <li><a href="dashboard/gallery.html" class="hover:underline">Gallery</a></li>
-              <li><a href="dashboard/announcements.html" class="hover:underline">Announcements / News</a></li>
-              <li><a href="#" class="hover:underline">Contact Us</a></li>
-              <li><a href="#" class="hover:underline">FAQs</a></li>
-            </ul>
-          </div>
-      
-          <!-- Office Hours -->
-          <div class="space-y-4">
-            <h4 class="font-bold mb-2">Office Hours</h4>
-            <ul class="text-sm space-y-1">
-              <li>Monday - Friday: 9AM - 5PM</li>
-              <li>Saturday: 10AM - 2PM</li>
-              <li>Sunday: Closed</li>
-            </ul>
-          </div>
-      
-        </div>
-      
-        <!-- Bottom -->
-        <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
-          <span>© 2025 Augustine Grove by Aser's Angels</span>
-          <span>|</span>
-          <a href="#" class="hover:underline">Privacy Policy</a>
-          <span>|</span>
-          <a href="#" class="hover:underline">Terms and Conditions</a>
-        </div>
-      </footer>
+  <!-- Calendar Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize all calendars
+      const clubhouseCalendar = initCalendar('clubhouse-calendar', [
+        {
+          title: '',
+          start: '2025-05-10',
+          bgColor: '#f97316',
+          extendedProps: {
+            description: '🏠 Clubhouse Booked by Resident'
+          }
+        },
+        {
+          title: '',
+          start: '2025-05-12',
+          bgColor: '#22c55e',
+          extendedProps: {
+            description: '🏠 Clubhouse Reserved for Private Event'
+          }
+        }
+      ]);
 
+      const poolCalendar = initCalendar('pool-calendar', [
+        {
+          title: '',
+          start: '2025-05-15',
+          bgColor: '#ef4444',
+          extendedProps: {
+            description: '🏊 Pool Maintenance Scheduled'
+          }
+        },
+        {
+          title: '',
+          start: '2025-05-20',
+          bgColor: '#3b82f6',
+          extendedProps: {
+            description: '🏊 Swimming Pool Reserved'
+          }
+        }
+      ]);
+
+      const courtCalendar = initCalendar('court-calendar', [
+        {
+          title: '',
+          start: '2025-05-08',
+          bgColor: '#8b5cf6',
+          extendedProps: {
+            description: '🏀 Basketball Tournament'
+          }
+        },
+        {
+          title: '',
+          start: '2025-05-22',
+          bgColor: '#ec4899',
+          extendedProps: {
+            description: '🏀 Court Maintenance'
+          }
+        }
+      ]);
+
+      // Tab switching functionality
+      const tabs = document.querySelectorAll('.amenity-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class from all tabs and calendars
+          tabs.forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.calendar-content').forEach(c => c.classList.remove('active'));
+          
+          // Add active class to clicked tab and corresponding calendar
+          tab.classList.add('active');
+          const amenity = tab.dataset.amenity;
+          document.getElementById(`${amenity}-calendar`).classList.add('active');
+        });
+      });
+
+      function initCalendar(calendarId, events) {
+        const calendarEl = document.getElementById(calendarId);
+        
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+            left: '',
+            center: 'title',
+            right: 'prev,next'
+          },
+          events: events,
+          dateClick: function (info) {
+            const date = info.dateStr;
+            document.getElementById('timeBlockDate').textContent = `Schedule for ${new Date(date).toDateString()}`;
+            renderTimeBlocks(date);
+            document.getElementById('timeBlockModal').classList.remove('hidden');
+          },
+          eventDidMount: function (info) {
+            const bgColor = info.event.extendedProps.bgColor || '#e0e0e0';
+            const cell = info.el.closest('.fc-daygrid-day');
+            if (cell) cell.style.backgroundColor = bgColor;
+          }
+        });
+        
+        calendar.render();
+        return calendar;
+      }
+
+      function renderTimeBlocks(dateStr) {
+        const container = document.getElementById('timeBlocks');
+        container.innerHTML = '';
+
+        // Fake booking data for demo
+        const fakeBookings = [
+          { hour: 10, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
+          { hour: 11, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' },
+          { hour: 10, amenity: 'Clubhouse', color: 'bg-green-100', dot: 'bg-green-500' },
+          { hour: 14, amenity: 'Swimming Pool', color: 'bg-blue-100', dot: 'bg-blue-500' }
+        ];
+
+        for (let hour = 8; hour <= 18; hour++) {
+          const block = document.createElement('div');
+          block.className = 'relative border-t pt-2 pb-4 pl-4';
+
+          const label = document.createElement('div');
+          label.className = 'text-sm text-gray-500';
+          label.textContent = `${hour}:00`;
+
+          block.appendChild(label);
+
+          const bookings = fakeBookings.filter(b => b.hour === hour);
+
+          bookings.forEach(b => {
+            const pill = document.createElement('div');
+            pill.className = `mt-1 p-2 pl-3 pr-4 rounded-xl text-sm text-gray-800 font-medium flex items-center gap-2 ${b.color}`;
+            pill.innerHTML = `<span class="w-2 h-2 rounded-full ${b.dot}"></span> ${b.amenity}`;
+            block.appendChild(pill);
+          });
+
+          container.appendChild(block);
+        }
+      }
+    });
+  </script>
+
+<script>
+    const modal = document.getElementById('bookingModal');
+    const closeBtn = document.getElementById('closeModal');
+  
+  
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+  
+    // Optional: Close when clicking outside modal
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  </script>
   
 </body>
 </html>
