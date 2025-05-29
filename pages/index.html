@@ -479,8 +479,22 @@
  <!-- Scripts -->
  
  <!--sidebar-->>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
  <script>
-  const menuBtn = document.getElementById('menu-btn');
+  // Initialize Supabase
+    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+  
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
   const sidebar = document.getElementById('sidebar');
   const closeBtn = document.getElementById('close-btn');
 
@@ -493,7 +507,7 @@ closeBtn.addEventListener('click', () => {
   sidebar.classList.remove('translate-x-0');
   sidebar.classList.add('translate-x-full', 'pointer-events-none');
 });
-</script>
+  </script>  
 
 <!--profile modal-->>
   <script>
@@ -619,15 +633,8 @@ closeBtn.addEventListener('click', () => {
 </script>
 
 <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
-    // Initialize Supabase
-    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
 
     // QR Code Functions
     let currentQRCodeData = null;
