@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../dist/output.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="../dist/output.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
     <title>About Augustine Grove</title>
 </head>
 <body class="bg-[#FAF1E6] font-poppins">
 
- <!-- Nav BAr -->
+<!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="main.html" class="flex items-center gap-2">
-    <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+  <a href="../index.html" class="flex items-center gap-2">
+    <img src="pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
+    <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
-  </a>
+    <!-- Admin Badge beside logo or user -->
+<div class="gap-2 text-base font-bold">
+  ADMIN
+</div>
+</div>
+
 
   <!-- Hamburger Button -->
   <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
@@ -29,10 +37,11 @@
       <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
       <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
       <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="aboutpage.html" class="text-[#FFDDAB] ">About</a></li>
     </ul>
-    <img src="/pictures/profile.png" alt="Profile" class="h-8">
-  </div>
+  
+
+  
 
   <!-- Mobile Slide-in Menu -->
   <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
@@ -48,7 +57,7 @@
 
     <!-- Profile Card -->
     <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
-      <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+      <img src="pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
       <div class="text-left">
         <p class="font-semibold text-[#5F8B4C]">John Smith</p>
       </div>
@@ -74,7 +83,7 @@
 </nav>
 
 
-    <main class="min-h-screen">
+ <main class="min-h-screen">
         <section class="relative h-screen bg-cover bg-center flex flex-col items-center justify-center" style="background-image: url('pictures/About Page.png');">
             <div class="absolute inset-0 bg-black opacity-30"></div> 
             <div class="relative text-center z-10">
@@ -84,17 +93,18 @@
         </section>
 
 
+
         <section class="bg-[#FAF1E6]">
             <div class="container mx-auto py-12">
                 <h2 class="font-bold text-1xl md:text-3xl text-black mb-6 text-center">Augustine Grove Community</h2>
-                <p class="text-gray-700 text-lg md:text-xl mb-12 px-4">
+                <p class="text-gray-700 text-base md:text-lg mb-12 px-20 text-justify">
                     Augustine Grove stands as a distinguished residential village in the heart of Iloilo City, Western Visayas, 
                     Philippines, renowned for its commitment to providing quality and elegant living spaces. Meticulously designed 
                     for comfort, refinement, and convenience, the village offers residents an atmosphere of tranquility and 
                     exclusivity. Its thoughtfully crafted master plan integrates modern amenities with the natural beauty of its 
                     surroundings, providing access to a multi-purpose hall for events, a basketball court for recreation, and a 
                     refreshing swimming pool, fostering community engagement and well-being.
-                    <br> <br> 
+                    <br> <br>
 
                     Beyond the village's serene environment, Augustine Grove's strategic location in Iloilo City offers 
                     unparalleled convenience. Its prime setting ensures that everyday necessities and leisure pursuits are 
@@ -107,8 +117,8 @@
         
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <div class="bg-white rounded-3xl shadow-md p-8 flex flex-col items-center">
-                        <div class="bg-[#E6DCD0] rounded-full p-3 mb-4">
-                            <img src="pictures/material-symbols_security-rounded 1.png" alt="Secure Icon" class="w-12 h-12">
+                        <div class="p-3 mb-4">
+                             <i class="text-[#5F8B4C] text-5xl fa-solid fa-shield-halved"></i>
                         </div>
                         <h3 class="font-bold text-2xl mb-2">SECURE</h3>
                         <p class="text-gray-700 text-md text-center">
@@ -118,8 +128,8 @@
                     </div>
                 
                     <div class="bg-white rounded-3xl shadow-md p-8 flex flex-col items-center">
-                        <div class="bg-[#E6DCD0] rounded-full p-3 mb-4">
-                            <img src="pictures/iconoir_neighbourhood 1.png" alt="Peaceful Icon" class="w-12 h-12">
+                        <div class="p-3 mb-4">
+                           <i class="text-[#5F8B4C] text-5xl fa-solid fa-place-of-worship"></i>
                         </div>
                         <h3 class="font-bold text-2xl mb-2">PEACEFUL</h3>
                         <p class="text-gray-700 text-md text-center">
@@ -129,8 +139,8 @@
                     </div>
                 
                     <div class="bg-white rounded-3xl shadow-md p-8 flex flex-col items-center">
-                        <div class="bg-[#E6DCD0] rounded-full p-3 mb-4">
-                            <img src="pictures/fluent_location-16-filled 1.png" alt="Convenient Icon" class="w-12 h-12">
+                        <div class=" p-3 mb-4">
+                            <i class="text-[#5F8B4C] text-5xl fa-solid fa-location-dot"></i>
                         </div>
                         <h3 class="font-bold text-2xl mb-2">CONVENIENT</h3>
                         <p class="text-gray-700 text-md text-center">
@@ -147,55 +157,207 @@
 
 
 
-        <section class="bg-[#E6DCD0] py-12 px-12 md:px-20">
-            <div class="container mx-auto">
-                <h2 class="font-bold text-2xl md:text-3xl text-[#333333] mb-8 text-center">House Rules and Security Regulations</h2>
-        
-                <div class="bg-white rounded-3xl shadow-md p-6 mb-8">
+<section class="bg-[#E6DCD0] py-12 px-12 md:px-20">
+  <div class="container mx-auto">
+    <h2 class="font-bold text-2xl md:text-3xl text-[#333333] mb-8 text-center">
+      House Rules and Security Regulations
+    </h2>
 
-                    <div class="flex justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 text-sm md:text-base">
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Registration</button>
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Vehicle and Parking</button>
-                        <button class="py-2 px-4 rounded-full bg-[#5F8B4C] text-white font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Entry of Vehicles</button>
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Entry of Persons</button>
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Pets</button>
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Waste</button>
-                        <button class="py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Noise and Party</button>
-                    </div>
-                    
-                </div>
-        
-                <div class="bg-white rounded-3xl shadow-md p-8">
-                    <h3 class="font-bold text-xl text-[#333333] mb-4">Entry of Vehicles</h3>
-                    <ol class="list-decimal list-inside text-gray-700 space-y-2">
-                        <li>Only one side of the gate will be open, except in times of emergency.</li>
-                        <li>Incoming vehicles will be given priority.</li>
-                        <li>Drivers must observe the compulsory 20 kph speed limit that applies throughout the subdivision.</li>
-                        <li>During nighttime, drivers are required to switch on the vehicle passenger's light.</li>
-                        <li>Only those with valid car stickers will be allowed entry.</li>
-                        <li>For those without a valid car sticker or who have an expired sticker:
-                            <ul class="list-[lower-alpha] list-inside space-y-1 mt-2">
-                                <li>No ID, No Entry. The driver must surrender his/her driver's license or any valid ID.</li>
-                                <li>The guard on duty will record the driver's name, plate number, and name of the owner.</li>
-                                <li>The guard on duty will report to the office the list of names of the owner/driver and plate number of all vehicles that are expired and without stickers.</li>
-                            </ul>
-                        </li>
-                        <li>For Visitors/Outsiders/Non-residents:
-                            <ul class="list-[lower-alpha] list-inside space-y-1 mt-2">
-                                <li>Vehicles will be inspected at the entry.</li>
-                                <li>No ID, No Entry. The driver must surrender his/her driver's license or any valid ID.</li>
-                                <li>The guard on duty will record the time in and out, the driver's name, the vehicle's plate number, the destination, and the number of passengers on board.</li>
-                            </ul>
-                        </li>
-                        <li>The guard should not leave their post to call a PUV from the road, except during emergencies.</li>
-                    </ol>
-                </div>
-        
-                <div class="mt-8 text-center">
-                    <button class="py-2 px-4 rounded-full bg-[#FAF1E6] text-[#4A5568] font-poppins text-sm" style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">Download a copy</button>
-                </div>
-            </div>
-        </section>
+    <!-- Button Group -->
+    <div class="bg-white rounded-3xl shadow-md p-6 mb-8">
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 text-sm md:text-base">
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="registration">Registration</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="vehicle-parking">Vehicle and Parking</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#5F8B4C] text-white font-poppins text-sm"
+          data-target="entry-vehicles">Entry of Vehicles</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="entry-persons">Entry of Persons</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="pets">Pets</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="waste">Waste</button>
+        <button class="rule-btn py-2 px-4 rounded-full bg-[#E6DCD0] text-[#4A5568] font-poppins text-sm"
+          data-target="noise-party">Noise and Party</button>
+      </div>
+    </div>
+
+    <!-- RULE SECTIONS -->
+
+    <!-- Entry of Vehicles (default visible) -->
+    <div id="entry-vehicles" class="rule-section bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Entry of Vehicles</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Only one side of the gate will be open, except in times of emergency.</li>
+        <li>Incoming vehicles will be given priority.</li>
+        <li>Drivers must observe the compulsory 20 kph speed limit that applies throughout the subdivision.</li>
+        <li>During nighttime, drivers are required to switch on the vehicle passenger's light.</li>
+        <li>Only those with valid car stickers will be allowed entry.</li>
+        <li>For those without a valid car sticker or who have an expired sticker:
+
+          <ul class="list-[lower-alpha] list-inside space-y-1 mt-2 pl-5">
+            <li>No ID, No Entry. The driver must surrender his/her driver's license or any valid ID.</li>
+            <li>The guard on duty will record the driver's name, plate number, and name of the owner.</li>
+            <li>The guard on duty will report to the office the list of names of the owner/driver and plate number of all vehicles that are expired and without stickers.</li>
+          </ul>
+        </li>
+        <li>For Visitors/Outsiders/Non-residents:
+
+          <ul class="list-[lower-alpha] list-inside space-y-1 mt-2 pl-5">
+            <li>Vehicles will be inspected at the entry.</li>
+            <li>No ID, No Entry. The driver must surrender his/her driver's license or any valid ID.</li>
+            <li>The guard on duty will record the time in and out, the driver's name, the vehicle's plate number, the destination, and the number of passengers on board.</li>
+          </ul>
+        </li>
+        <li>The guard should not leave their post to call a PUV from the road, except during emergencies.</li>
+      </ol>
+    </div>
+
+    <!-- Other rule sections (hidden for now) -->
+    <div id="registration" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Registration</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Homeowners and Long-term lessees are required to register their household members and vehicles on our online database.</li>
+        <li>Tenants are to be registered in the security logbook.</li>
+      </ol>
+    </div>
+
+
+
+
+
+    <div id="vehicle-parking" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Vehicle and Parking</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Homeowner’s vehicles have to be parked properly, preferably in the garage.</li>
+        <li>Vehicles parked in driveways must be parked in a manner that does not impede sidewalks or extend beyond driveways.</li>
+        <li>No Double Parking at all times</li>
+        <li>Street parking will be allowed only if it is on the owner's front gate/lot and does not protrude to the immediate neighbor on either side.</li>
+        <li>No parking across one’s property.</li>
+        <li>Commercial vehicles are not allowed to park within the subdivision for more than five (5) hours (taxis, delivery vans, service vehicles that provide utilities, etc.). They are only allowed if such is in the act of rendering service.</li>
+        <li>Deliver riders, produce vendors, and PUVs are required to surrender their driver’s license or any valid ID with a picture.</li>
+        <li>No parking from the gate to the entrance except for vehicles with stickers</li>
+        <li>AGRVHOAI has designated parking and no parking zones. Signs and markings will be installed.</li>
+      </ol>
+    </div>
+
+
+
+
+
+
+
+
+    <div id="entry-persons" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Entry of Persons</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Vistors of Homeowners
+          <ul class="list-[lower-alpha] list-inside space-y-1 mt-2 pl-5">
+            <li>Homeowners are encouraged to register their visitors’ names, the number of their expected visitors, and the time of visit.</li>
+            <li>Homeowners are urged to call and register in advance at the guardhouse before a visit to avoid inconvenience to visitors, especially during a scheduled party at their residence.</li>
+          </ul>
+        </li>
+
+        <li>Laborers (plumbers, carpenters, etc.), collectors, and salesmen, among others.
+          <ul class="list-[lower-alpha] list-inside space-y-1 mt-2 pl-5">
+            <li>Homeowners are requested to register the names of expected laborers, collectors, staff, and salesmen, among others, the frequency of visits, and a note to the guard on whether the visitor will be allowed entry.</li>
+            <li>Without the consent of the homeowners concerned, they will not be allowed entry.</li>
+          </ul>
+        </li>
+
+        <li>If no advice was given, the guard would try to contact the homeowner to confirm the visitor's entry before allowing them to enter.</li>
+        <li>Scrappers are not allowed to get inside the subdivision.</li>
+      </ol>
+    </div>
+
+
+
+
+
+
+
+
+    <div id="pets" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Pets</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Pets must be inside the owner's property</li>
+        <li>Pets on walks must be on a leash</li>
+        <li>The owner must clean up/pick up their pet's poop (CLAYGO)/</li>
+        <li>The owner must manage responsibly and prevent household pet odors.</li>
+        </ol>
+    </div>
+
+
+
+
+
+
+    <div id="waste" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Waste</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Dumping of leakage of grease and/or chemical residuals is prohibited.</li>
+        </ol>
+    </div>
+
+
+
+
+
+
+    <div id="noise-party" class="rule-section hidden bg-white rounded-3xl shadow-md p-8">
+      <h3 class="font-bold text-xl text-[#333333] mb-4">Noise and Party</h3>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li> If homeowners are having a party or celebration, noise must be minimized. Advance notice to a neighbor would be encouraged.</li>
+        <li>There should be no loud noise from 10 pm to 5 am.</li>
+      </ol>
+    </div>
+
+
+
+
+    <!-- Download Button -->
+    <div class="mt-8 text-center">
+  <a href="/rules file/HOUSE RULES and SECURITY REGULATIONS AUGUSTINE GROVE RESIDENTIAL VILLAGE HOA, INC (AGRVHOAI).docx.pdf"
+     download="AGRVHOAI_House_Rules_and_Security_Regulations.pdf"
+     class="py-2 px-4 rounded-full bg-[#FAF1E6] text-[#4A5568] font-poppins text-sm"
+     style="box-shadow: inset 0px 4px 4px 0px rgba(0,0,0,0.25);">
+    Download a copy
+  </a>
+</div>
+  
+</section>
+
+
+
+
+<!-- JavaScript for tab functionality -->
+<script>
+  const buttons = document.querySelectorAll('.rule-btn');
+  const sections = document.querySelectorAll('.rule-section');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-target');
+
+      // Hide all sections
+      sections.forEach(section => section.classList.add('hidden'));
+
+      // Remove active state from all buttons
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-[#5F8B4C]', 'text-white');
+        btn.classList.add('bg-[#E6DCD0]', 'text-[#4A5568]');
+      });
+
+      // Show selected section
+      document.getElementById(targetId).classList.remove('hidden');
+
+      // Highlight active button
+      button.classList.add('bg-[#5F8B4C]', 'text-white');
+      button.classList.remove('bg-[#E6DCD0]', 'text-[#4A5568]');
+    });
+  });
+</script>
 
 
 
@@ -209,211 +371,198 @@
                 <h2 class="text-4xl font-bold text-[#333333] mb-4 text-center">Get in touch</h2>
                 <p class="text-gray-700 text-lg text-center mb-8">Let us know how we can help.</p>
         
-                <section class="mb-12 grid justify-center">
-                    <h3 class="text-2xl font-poppins font-bold text-[#333333] mb-6">HOA Management</h3>
-                    <div class="flex flex-col md:flex-row gap-6">
-                        <div class="bg-white rounded-lg shadow-md p-6">
-                            <img src="pictures/AG logo no bg 1.png">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Mr. John Santos</h4>
-                            <p class="text-gray-600 mb-1">HOA President</p>
-                            <p class="text-gray-700">(555) 123-4560</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow-md p-6">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Ms. Maria Reyes</h4>
-                            <p class="text-gray-600 mb-1">HOA Secretary</p>
-                            <p class="text-gray-700">(555) 123-4560</p>
-                            <p class="text-gray-700">maria.hoa@gmail.com</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow-md p-6">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Mr. Robert Cruz</h4>
-                            <p class="text-gray-600 mb-1">HOA Treasurer</p>
-                            <p class="text-gray-700">(555) 123-4560</p>
-                        </div>
-                    </div>
-                </section>
-        
-                    <h3 class="text-2xl font-poppins font-bold text-[#333333] mb-6">Subdivision Services</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6 justify-center">
-                        <div class="bg-white rounded-lg shadow-md p-4 text-right">
-                            <img src="pictures/lucide_user-round 4.png" class="w-20">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Admin Office</h4>
-                            <p class="text-gray-700">(555) 123-4567</p>
-                            <p class="text-gray-700">admin.agrvhoa@gmail.com</p>
-                            <p class="text-gray-600">Mon - Fri, 8am to 5pm</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow-md p-6 text-right">
-                            <img src="pictures/mdi_security-lock-outline.png" class="w-20">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Security Guardhouse</h4>
-                            <p class="text-gray-700">(555) 987-6543</p>
-                            <p class="text-gray-600">24/7 Service</p>
-                        </div>
-
-                        <div class="bg-white rounded-lg shadow-md p-6 flex items-center justify-center gap-4">
-                            <img src="pictures/pajamas_issue-type-maintenance.png" class="w-10 h-10 object-contain">
+             <section class="bg-[#FAF1E6] py-12 px-4 md:px-20 space-y-10 text-[#333]">
+               <h3 class="text-2xl font-poppins font-bold text-[#333333] md:px-20">AGRV Homeowner's Association</h3>
+                     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                      <div class="bg-[#E6DCD0] rounded-lg shadow-md p-8 flex flex-row items-center gap-4">
+                            <i class="fa-solid fa-user-tie text-7xl text-[#5F8B4C] rounded-xl shadow-lg p-6"></i>
                             <div>
-                                <h4 class="text-lg font-semibold text-[#333333] mb-1">Maintenance</h4>
-                                <p class="text-gray-700 text-sm">(555) 123-4567</p>
-                                <p class="text-gray-700 text-sm">admin.agrvhoa@gmail.com</p>
-                                <p class="text-gray-600 text-sm">Mon - Fri, 8am to 5pm</p>
+                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Emelda Limbang</h4>
+                            <p class="text-gray-600 mb-1"> President</p>
+                            <p class="text-gray-700">0910 515 8805</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#E6DCD0] rounded-lg shadow-md p-8 flex flex-row items-center gap-4">
+                            <i class="fa-solid fa-user-tie text-7xl text-[#5F8B4C] rounded-xl shadow-lg p-6"></i>
+                            <div>
+                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Stephen Alayon</h4>
+                            <p class="text-gray-600 mb-1">Assistant Secretary</p>
+                            <p class="text-gray-700">0919 450 6688</p>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-lg shadow-md p-6 text-right">
-                            <img src="pictures/mage_facebook 1.png" class="w-20">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Augustine Grove Residential Village</h4>
-                            <p class="text-gray-700">Got questions? Chat with us here!</p>
-                        </div>
-                        <div class="bg-white rounded-lg shadow-md p-6 text-right">
-                            <img src="pictures/iconamoon_location-bold 1.png" class="w-20">
-                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Visit Us at Sambag, Jaro, Iloilo City, Iloilo
-                                5000 Philippines
-                            </h4>
-                            <p class="text-gray-700">View on Google Maps</p>
+                        <div class="bg-[#E6DCD0] rounded-lg shadow-md p-8 flex flex-row items-center gap-4">
+                            <i class="fa-solid fa-user-tie text-7xl text-[#5F8B4C] rounded-xl shadow-lg p-6"></i>
+                            <div>
+                            <h4 class="text-lg font-semibold text-[#333333] mb-2">Ailyn Acopio</h4>
+                            <p class="text-gray-600 mb-1">Treasurer</p>
+                            <p class="text-gray-700">0919 450 6688</p>
+                            </div>
                         </div>
                     </div>
                 </section>
+          </section>
 
-            </div>
-        </section>
-        
-
-
-
-
-    
-        
-                <section class="mt-12 pl-40 pr-40 pb-40">
-                    <div class="bg-[#E6DCD0] rounded-xl p-8">
-                        <h3 class="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
-                    <div class="space-y-4   ">
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-md font-semibold text-[#5F8B4C]">How do I pay my monthly HOA fees?</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m7 10 5 5 5-5"/></svg>
-                            </div>
-                            <div class="hidden mt-2 text-gray-700">
-                                <p>Answer to How do I pay my monthly HOA fees? will appear here.</p>
-                            </div>
-                        </div>
-        
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-md font-semibold text-[#5F8B4C]">What are the requirements to purchase a property in Augustine Grove?</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m7 10 5 5 5-5"/></svg>
-                            </div>
-                            <div class="hidden mt-2 text-gray-700">
-                                 <p>Answer to What are the requirements to purchase a property in Augustine Grove? will appear here.</p>
-                            </div>
-                        </div>
-        
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-md font-semibold text-[#5F8B4C]">How can I register my visitors for entry?</h4>
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m7 10 5 5 5-5"/></svg>
-                            </div>
-                            <div class="hidden mt-2 text-gray-700">
-                                 <p>Answer to How can I register my visitors for entry? will appear here.</p>
-                            </div>
-                        </div>
-        
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-md font-semibold text-[#5F8B4C]">What are the construction guidelines for new homes?</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m7 10 5 5 5-5"/></svg>
-                            </div>
-                            <div class="hidden mt-2 text-gray-700">
-                                 <p>Answer to What are the construction guidelines for new homes? will appear here.</p>
-                            </div>
-                        </div>
-        
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <div class="flex justify-between items-center">
-                                <h4 class="text-md font-semibold text-[#5F8B4C]">How can I report maintenance issues in common areas?</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m7 10 5 5 5-5"/></svg>
-                            </div>
-                            <div class="hidden mt-2 text-gray-700">
-                                 <p>Answer to How can I report maintenance issues in common areas? will appear here.</p>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
                     
-                </section>
-        
-            </div>
-        </section>
+  <section class="bg-[#FAF1E6] py-12 px-4 md:px-20 container mx-auto">
+  <h3 class="text-2xl font-poppins font-bold text-[#333333] mb-10 md:px-20">Subdivision Services</h3>
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- Admin Office Card -->
+    <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 flex items-start gap-4">
+      <div class="text-[#5F8B4C] text-2xl">
+        <i class="fas fa-user text-2xl rounded-xl shadow-lg p-2"></i>
+      </div>
+      <div>
+        <h4 class="font-semibold text-[#333] mb-4">Admin Office</h4>
+        <p class="text-sm text-[#333]">admin.agrvhoa@gmail.com</p>
+        <p class="text-sm text-[#333]">Mon-Fri from 8am to 5pm</p>
+      </div>
+    </div>
 
-        
+    <!-- Security Guardhouse Card -->
+    <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 flex items-start gap-4">
+      <div class="text-[#5F8B4C] text-2xl">
+        <i class="fas fa-shield-alt  text-2xl rounded-xl shadow-lg p-2"></i>
+      </div>
+      <div>
+        <h4 class="font-semibold text-[#333] mb-1">Security Guardhouse</h4>
+        <p class="text-sm text-[#333]">24/7 Service</p>
+      </div>
+    </div>
+
+    <!-- Maintenance Card -->
+    <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 flex items-start gap-4">
+      <div class="text-[#5F8B4C] text-2xl">
+        <i class="fas fa-tools  text-2xl rounded-xl shadow-lg p-2"></i>
+      </div>
+      <div>
+        <h4 class="font-semibold text-[#333] mb-1">Maintenance</h4>
+        <p class="text-sm text-[#333]">admin.agrvhoa@gmail.com</p>
+        <p class="text-sm text-[#333]">Mon-Fri from 8am to 5pm</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Row (2 Cards) -->
+  <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10">
+    <!-- Facebook Page -->
+    <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 flex items-start gap-4">
+      <div class="text-[#5F8B4C] text-2xl">
+        <i class="fab fa-facebook-square  text-2xl rounded-xl shadow-lg p-2"></i>
+      </div>
+      <div>
+
+        <a href="https://web.facebook.com/augustinegroveiloilo" target="_blank" class="text-sm text-green-700 underline">
+          <h4 class="font-semibold text-[#333] mb-1">Augustine Grove Residential Village</h4>
+        </a>
+        <p class="text-sm text-[#333]">Got questions? Chat with us here!</p>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 flex items-start gap-4">
+      <div class="text-[#5F8B4C] text-2xl">
+        <i class="fas fa-map-marker-alt text-2xl rounded-xl shadow-lg p-2"></i>
+      </div>
+      <div>
+        <h4 class="font-semibold text-[#333] mb-1">Visit us at Sambag, Jaro, Iloilo City, Iloilo 5000 Philippines</h4>
+        <a href="https://maps.app.goo.gl/8DUrBmN3479kG12Y6" target="_blank" class="text-sm text-green-700 underline">
+          View on Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 
+  <section class="mt-12 px-4 md:px-20 pb-40">
+  <div class="bg-[#E6DCD0] rounded-xl p-8">
+    <h3 class="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
+    <div class="space-y-4">
+      
+      <!-- FAQ Item 1 -->
+      <div class="faq-item bg-white rounded-lg shadow-md p-4">
+        <div class="flex justify-between items-center cursor-pointer">
+          <h4 class="text-md font-semibold text-[#5F8B4C]">How do I pay my monthly HOA fees?</h4>
+          <svg class="chevron-down text-gray-600 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 10 5 5 5-5"/>
+          </svg>
+        </div>
+        <div class="faq-answer hidden mt-2 text-gray-700">
+          <p>You can pay your monthly HOA fees via bank transfer to our official account, or drop off a check at the Admin Office.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ Item 2 -->
+      <div class="faq-item bg-white rounded-lg shadow-md p-4">
+        <div class="flex justify-between items-center cursor-pointer">
+          <h4 class="text-md font-semibold text-[#5F8B4C]">What are the requirements to purchase a property in Augustine Grove?</h4>
+          <svg class="chevron-down text-gray-600 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 10 5 5 5-5"/>
+          </svg>
+        </div>
+        <div class="faq-answer hidden mt-2 text-gray-700">
+          <p>Prospective buyers need a valid ID, proof of income, and must complete our HOA application form, available at the Admin Office.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ Item 3 -->
+      <div class="faq-item bg-white rounded-lg shadow-md p-4">
+        <div class="flex justify-between items-center cursor-pointer">
+          <h4 class="text-md font-semibold text-[#5F8B4C]">How can I register my visitors for entry?</h4>
+          <svg class="chevron-down text-gray-600 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 10 5 5 5-5"/>
+          </svg>
+        </div>
+        <div class="faq-answer hidden mt-2 text-gray-700">
+          <p>Use the “Generate QR” feature on the Security page: fill in visitor details and print or save the QR code for gate entry.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ Item 4 -->
+      <div class="faq-item bg-white rounded-lg shadow-md p-4">
+        <div class="flex justify-between items-center cursor-pointer">
+          <h4 class="text-md font-semibold text-[#5F8B4C]">What are the construction guidelines for new homes?</h4>
+          <svg class="chevron-down text-gray-600 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 10 5 5 5-5"/>
+          </svg>
+        </div>
+        <div class="faq-answer hidden mt-2 text-gray-700">
+          <p>All new constructions must adhere to the HOA’s architectural guidelines—see the full PDF on the “About” page or contact the Admin Office.</p>
+        </div>
+      </div>
+      
+      <!-- FAQ Item 5 -->
+      <div class="faq-item bg-white rounded-lg shadow-md p-4">
+        <div class="flex justify-between items-center cursor-pointer">
+          <h4 class="text-md font-semibold text-[#5F8B4C]">How can I report maintenance issues in common areas?</h4>
+          <svg class="chevron-down text-gray-600 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 10 5 5 5-5"/>
+          </svg>
+        </div>
+        <div class="faq-answer hidden mt-2 text-gray-700">
+          <p>Navigate to the “Concerns” page, fill out the form with details and images, and submit. The maintenance team will be notified immediately.</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
 
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const header = item.querySelector('.flex');
+    const answer = item.querySelector('.faq-answer');
+    const chevron = item.querySelector('.chevron-down');
+    
+    header.addEventListener('click', () => {
+      answer.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    });
+  });
+</script>
 
-        <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              
-              <!-- Left: Logo and Description -->
-              <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                  <img src="pictures/logo 2.png" alt="Logo" class="h-10">
-                  <span class="text-xl font-bold">Augustine Grove</span>
-                </div>
-                <p class="text-sm">
-                  Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
-                </p>
-              </div>
-          
-              <!-- Contact Us -->
-              <div class="space-y-4">
-                <h4 class="font-bold mb-2">Contact us</h4>
-                <div class="flex items-center gap-2 text-sm">
-                  <img src="pictures/phone-icon.svg" alt="Phone" class="h-4 w-4">
-                  <span>(555) 123-4562</span>
-                </div>
-                <div class="flex items-center gap-2 text-sm">
-                  <img src="pictures/email-icon.svg" alt="Email" class="h-4 w-4">
-                  <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
-                </div>
-                <div class="flex items-center gap-2 text-sm">
-                  <img src="pictures/fb-icon.svg" alt="Facebook" class="h-4 w-4">
-                  <span>Augustine Grove Subdivision</span>
-                </div>
-              </div>
-          
-              <!-- Quick Links -->
-              <div class="space-y-4">
-                <h4 class="font-bold mb-2">Quick links</h4>
-                <ul class="space-y-2 text-sm">
-                  <li><a href="#" class="hover:underline">Home</a></li>
-                  <li><a href="#" class="hover:underline">About Us</a></li>
-                  <li><a href="#" class="hover:underline">Amenities</a></li>
-                  <li><a href="#" class="hover:underline">Gallery</a></li>
-                  <li><a href="#" class="hover:underline">Announcements / News</a></li>
-                  <li><a href="#" class="hover:underline">Contact Us</a></li>
-                  <li><a href="#" class="hover:underline">FAQs</a></li>
-                </ul>
-              </div>
-          
-              <!-- Office Hours -->
-              <div class="space-y-4">
-                <h4 class="font-bold mb-2">Office Hours</h4>
-                <ul class="text-sm space-y-1">
-                  <li>Monday - Friday: 9AM - 5PM</li>
-                  <li>Saturday: 10AM - 2PM</li>
-                  <li>Sunday: Closed</li>
-                </ul>
-              </div>
-          
-            </div>
-          
-            <!-- Bottom -->
-            <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
-              <span>© 2025 Augustine Grove by Aser's Angels</span>
-              <span>|</span>
-              <a href="#" class="hover:underline">Privacy Policy</a>
-              <span>|</span>
-              <a href="#" class="hover:underline">Terms and Conditions</a>
-            </div>
-          </footer>
 
 
 
@@ -423,16 +572,74 @@
 
 
     </main>
-
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const menu = document.getElementById('menu');
-
-        menuBtn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            menuBtn.classList.toggle('rotate-90'); // Add rotation when clicked
-        });
-    </script>
+    
+  
+  <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-8">
+          
+          <!-- Left: Logo and Description -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <img src="pictures/logo 2.png" alt="Logo" class="h-10">
+              <span class="text-xl font-bold">Augustine Grove</span>
+            </div>
+            <p class="text-sm">
+              Creating communities that inspire a better way of life. Enjoy the perfect balance of convenience, peace, and community living.
+            </p>
+          </div>
+      
+          <!-- Contact Us -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Contact us</h4>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/phone_icon.png" alt="Phone" class="h-4 w-4">
+              <span>(555) 123-4562</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/email_icon.png" alt="Email" class="h-4 w-4">
+              <a href="mailto:augustinegrove@gmail.com" class="underline">augustinegrove@gmail.com</a>
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <img src="pictures/fb_icon.png" alt="Facebook" class="h-4 w-4">
+              <span>Augustine Grove Subdivision</span>
+            </div>
+          </div>
+      
+          <!-- Quick Links -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Quick links</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="main.html" class="hover:underline">Home</a></li>
+              <li><a href="aboutpage.html" class="hover:underline">About Us</a></li>
+              <li><a href="amenities.html" class="hover:underline">Amenities</a></li>
+              <li><a href="gallery.html" class="hover:underline">Gallery</a></li>
+              <li><a href="announcements.html" class="hover:underline">Announcements / News</a></li>
+              <li><a href="#" class="hover:underline">Contact Us</a></li>
+              <li><a href="#" class="hover:underline">FAQs</a></li>
+            </ul>
+          </div>
+      
+          <!-- Office Hours -->
+          <div class="space-y-4">
+            <h4 class="font-bold mb-2">Office Hours</h4>
+            <ul class="text-sm space-y-1">
+              <li>Monday - Friday: 9AM - 5PM</li>
+              <li>Saturday: 10AM - 2PM</li>
+              <li>Sunday: Closed</li>
+            </ul>
+          </div>
+      
+        </div>
+      
+        <!-- Bottom -->
+        <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
+          <span>© 2025 Augustine Grove by Aser's Angels</span>
+          <span>|</span>
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <span>|</span>
+          <a href="#" class="hover:underline">Terms and Conditions</a>
+        </div>
+      </footer>
 
 </body>
 </html>
