@@ -80,8 +80,9 @@
   </div>
   </div>
 
-  <!-- Mobile Slide-in Menu -->
-  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
+ <!-- Mobile Slide-in Menu -->
+ <div id="sidebar"
+  class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden hidden">
 
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
@@ -102,10 +103,10 @@
 
     <!-- Nav Links -->
     <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
-      <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="/pages/dashboard/announcement_detail.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
 
@@ -119,6 +120,26 @@
 </div>
 </nav>
 
+<script>
+const menuBtn = document.getElementById("menu-btn");
+const closeBtn = document.getElementById("close-btn");
+const sidebar = document.getElementById("sidebar");
+
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.remove("translate-x-full", "hidden");
+  sidebar.classList.add("translate-x-0");
+});
+
+closeBtn.addEventListener("click", () => {
+  sidebar.classList.remove("translate-x-0");
+  sidebar.classList.add("translate-x-full");
+
+  // Wait for transition to end before hiding completely
+  setTimeout(() => {
+    sidebar.classList.add("hidden");
+  }, 300); // matches the Tailwind transition duration
+});
+</script>
 <div class="py-16">
   <h1 class="text-center text-3xl font-bold pb-4 font-poppins text-[#333333]">
     Our Gallery
