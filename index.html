@@ -3,74 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HOA Sign Up</title>
+  <title>Admin Login - Augustine Grove</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
-<body class="bg-gradient-to-br from-[#cea166] to-[#e9e9e6] flex items-center justify-center min-h-screen">
+<body class="bg-[#FAF1E6] flex items-center justify-center min-h-screen">
   
-  <div class="bg-[#5F8B4C] text-white text-sm md:text-base rounded-xl p-8 w-80 md:w-full max-w-md shadow-lg">
-    <h1 class="text-center text-xl font-bold mb-6">Admin</h1>
-
+  <div class="bg-white rounded-2xl p-8 w-80 md:w-full max-w-md shadow-lg border border-[#5F8B4C]/20">
     <!-- Logo -->
     <div class="flex justify-center mb-6">
-      <img src="admin/pictures/logo 2.png" alt="AG Logo" class="h-16">
+      <img src="admin/pictures/logo 2.png" alt="Augustine Grove Logo" class="h-20">
     </div>
 
-    <!-- Error Message -->
-    <div id="loginError" class="text-red-300 text-sm mb-4 hidden text-center"></div>
+    <h1 class="text-center text-2xl font-bold mb-2 text-[#5F8B4C]">Admin Portal</h1>
+    <p class="text-center text-gray-600 mb-6">Please enter your credentials</p>
 
-    <!-- Sign Up Form -->
+    <!-- Error Message -->
+    <div id="loginError" class="text-red-600 text-sm mb-4 hidden text-center"></div>
+
+    <!-- Login Form -->
     <form id="adminLoginForm" class="space-y-4">
-      <input type="text" name="username" placeholder="Username" required 
-             class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" />    
-      <input type="password" name="password" placeholder="Password" required 
-             class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" />
+      <div>
+        <label class="block text-[#5F8B4C] font-medium mb-1">Username</label>
+        <input type="text" name="username" required autocomplete="username"
+               class="w-full px-4 py-3 rounded-lg border border-[#5F8B4C] focus:outline-none focus:ring-2 focus:ring-[#5F8B4C]">
+      </div>
+      
+      <div>
+        <label class="block text-[#5F8B4C] font-medium mb-1">Password</label>
+        <input type="password" name="password" required autocomplete="current-password"
+               class="w-full px-4 py-3 rounded-lg border border-[#5F8B4C] focus:outline-none focus:ring-2 focus:ring-[#5F8B4C]">
+      </div>
 
       <!-- Submit Button -->
-      <div class="flex justify-center">
-        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/3 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
-          Log in
-        </button>
-      </div>
+      <button type="submit" 
+              class="w-full bg-[#5F8B4C] text-white py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium mt-6">
+        Sign In
+      </button>
     </form>
   </div>
 
   <script>
-    // Initialize Supabase with your credentials
-     (function () {
-    const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-    window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
-  })();
+    // Initialize Supabase
+     window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
 
-    // Form submission handler
-    document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
+    // SHA-256 Hashing Function
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);                    
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Handle Form Submission
+    document.getElementById('adminLoginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
       
-      const form = e.target;
+      const form = event.target;
       const formData = new FormData(form);
-      const username = formData.get('username');
+      const username = formData.get('username').trim();
       const password = formData.get('password');
       
+      // Loading state
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Authenticating...';
+      
       try {
-        // Get user from database
+        // Get user from Supabase
         const { data, error } = await supabase
           .from('admin_users')
           .select('*')
           .eq('username', username)
           .single();
-
-        if (error || !data) {
-          throw new Error('Invalid credentials');
-        }
         
-        // Simple password check (in real app, use proper hashing)
-        if (password !== 'password') { // Replace with your actual password check
+        if (error) throw error;
+        if (!data) throw new Error('Invalid credentials');
+        
+        // Verify password
+        const inputHash = await sha256(password);
+        if (inputHash !== data.password_hash) {
           throw new Error('Invalid credentials');
         }
         
@@ -87,8 +106,13 @@
         window.location.href = 'admin/main.html';
         
       } catch (error) {
-        document.getElementById('loginError').textContent = 'Invalid username or password';
-        document.getElementById('loginError').classList.remove('hidden');
+        console.error('Login error:', error);
+        const errorElement = document.getElementById('loginError');
+        errorElement.textContent = 'Invalid username or password';
+        errorElement.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
       }
     });
   </script>
