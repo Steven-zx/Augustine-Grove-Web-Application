@@ -128,51 +128,76 @@
 
     <!-- Booking Details -->
     <h2 class="text-lg font-bold text-[#333] mb-2 amenity-name"></h2>
-    <p class="text-gray-700 text-sm mb-1"><strong>Booker:</strong> <span class="booker-name"></span></p>
-    <p class="text-gray-700 text-sm mb-1"><strong>Date:</strong> <span class="date"></span></p>
-    <p class="text-gray-700 text-sm mb-1"><strong>Time:</strong> <span class="time"></span></p>
-    <p class="text-gray-700 text-sm"><strong>Purpose:</strong> <span class="purpose"></span></p>
+
+    <div class="text-sm text-gray-700 space-y-1">
+      <p><strong>First Name:</strong> <span class="first-name"></span></p>
+      <p><strong>Last Name:</strong> <span class="last-name"></span></p>
+      <p><strong>Contact Number:</strong> <span class="contact-number"></span></p>
+      <p><strong>Email:</strong> <span class="email"></span></p>
+      <p><strong>Amenity:</strong> <span class="amenity-name"></span></p>
+      <p><strong>Date:</strong> <span class="date"></span></p>
+      <p><strong>Time:</strong> <span class="time"></span></p>
+      <p><strong>Purpose:</strong> <span class="purpose"></span></p>
+      <p><strong>Visitors:</strong> <span class="visitors"></span></p>
+      <p><strong>Resident/Guest:</strong> <span class="resident-type"></span></p>
+      <p><strong>Notes:</strong> <span class="notes"></span></p>
+    </div>
 
     <!-- Action Buttons -->
-  <div class="mt-6 flex justify-end gap-3">
-  <button class="approve-btn border px-4 py-2 rounded-xl text-sm shadow-md hidden bg-[#FAF1E6]">
-    Approve
-  </button>
-  <button class="reject-btn border px-4 py-2 rounded-xl text-sm shadow-md bg-[#FAF1E6]">
-    Reject
-  </button>
-</div>
-
-
-</div>
-
+    <div class="mt-6 flex justify-end gap-3">
+      <button class="approve-btn border px-4 py-2 rounded-xl text-sm shadow-md hidden bg-[#FAF1E6]">
+        Approve
+      </button>
+      <button class="reject-btn border px-4 py-2 rounded-xl text-sm shadow-md bg-[#FAF1E6]">
+        Reject
+      </button>
+    </div>
   </div>
 </template>
+
 
 <script>
   const bookings = [
     {
       amenity: "Clubhouse",
-      booker: "John Doe",
+      firstName: "John",
+      lastName: "Doe",
+      contact: "09171234567",
+      email: "john@example.com",
       date: "2025-05-20",
       time: "2:00 PM - 4:00 PM",
       purpose: "Birthday party",
+      visitors: 30,
+      residentType: "Resident",
+      notes: "Request for extra chairs",
       status: "pending",
     },
     {
       amenity: "Swimming Pool",
-      booker: "Jane Smith",
+      firstName: "Jane",
+      lastName: "Smith",
+      contact: "09179876543",
+      email: "jane@example.com",
       date: "2025-05-21",
       time: "10:00 AM - 12:00 PM",
       purpose: "Family gathering",
+      visitors: 15,
+      residentType: "Guest",
+      notes: "",
       status: "pending",
     },
     {
       amenity: "Basketball Court",
-      booker: "Mark Tan",
+      firstName: "Mark",
+      lastName: "Tan",
+      contact: "09178889999",
+      email: "marktan@example.com",
       date: "2025-05-22",
       time: "5:00 PM - 7:00 PM",
       purpose: "Friendly game",
+      visitors: 10,
+      residentType: "Resident",
+      notes: "Need scoreboard access",
       status: "rejected",
     },
   ];
@@ -188,28 +213,33 @@
 
   function renderBookings() {
     container.innerHTML = "";
-
-    // Optional: sort by date
     bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
-
     const today = new Date().toISOString().split("T")[0];
 
     bookings.forEach((booking, index) => {
       const clone = template.content.cloneNode(true);
+      const card = clone.querySelector("div");
 
+      // Fill booking data
       clone.querySelector(".amenity-name").textContent = booking.amenity;
-      clone.querySelector(".booker-name").textContent = booking.booker;
+      clone.querySelector(".first-name").textContent = booking.firstName;
+      clone.querySelector(".last-name").textContent = booking.lastName;
+      clone.querySelector(".contact-number").textContent = booking.contact;
+      clone.querySelector(".email").textContent = booking.email;
       clone.querySelector(".date").textContent = booking.date;
       clone.querySelector(".time").textContent = booking.time;
       clone.querySelector(".purpose").textContent = booking.purpose;
+      clone.querySelector(".visitors").textContent = booking.visitors;
+      clone.querySelector(".resident-type").textContent = booking.residentType;
+      clone.querySelector(".notes").textContent = booking.notes || "None";
 
+      // Status icon + label
       const icon = clone.querySelector(".status-icon");
       const text = clone.querySelector(".status-text");
-
-      const iconClass = statusIcons[booking.status] || "fa-solid fa-question-circle text-gray-400";
-      icon.className = iconClass;
+      icon.className = statusIcons[booking.status] || "fa-solid fa-question-circle text-gray-400";
       text.textContent = booking.status.charAt(0).toUpperCase() + booking.status.slice(1);
 
+      // Show buttons or status
       const approveBtn = clone.querySelector(".approve-btn");
       const rejectBtn = clone.querySelector(".reject-btn");
       const statusSection = clone.querySelector(".status-section");
@@ -219,7 +249,6 @@
         rejectBtn.classList.remove("hidden");
         statusSection.classList.add("hidden");
 
-        // Add button click functionality
         approveBtn.addEventListener("click", () => {
           bookings[index].status = "approved";
           renderBookings();
@@ -235,18 +264,18 @@
         statusSection.classList.remove("hidden");
       }
 
-      // Highlight today's booking
+      // Highlight today
       if (booking.date === today) {
-        clone.querySelector("div").classList.add("border", "border-blue-500");
+        card.classList.add("border", "border-blue-500");
       }
 
       container.appendChild(clone);
     });
   }
 
-  // 👑 Initial render
   renderBookings();
 </script>
+
 
 
 </body>

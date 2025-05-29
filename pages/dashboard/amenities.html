@@ -20,8 +20,7 @@
   <!-- FullCalendar JS -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
-  <style>
-    /* Apply Poppins font to the whole document */
+ <style>
     body {
       font-family: 'Poppins', sans-serif;
     }
@@ -30,7 +29,7 @@
     .calendar-container {
       max-width: 300px;             /* Control calendar width */
       width: 100%;
-      aspect-ratio: 1 / 1;          /* Makes the calendar perfectly square */
+      aspect-ratio: 1 / 1;
     }
   
     /* === REMOVE EVENT VISUALS (DOTS, COLORS, TITLES) === */
@@ -44,27 +43,19 @@
   
     /* Hide additional dot indicators in day cells */
     .fc .fc-event::after,
-    .fc .fc-daygrid-event-dot {
-      display: none !important;
-    }
-  
-    /* Hide event titles and times (just in case FullCalendar tries to display them) */
+    .fc .fc-daygrid-event-dot,
     .fc-event-title,
     .fc-event-time {
       display: none !important;
     }
-  
-    /* === DAY CELL STYLING === */
-  
-    /* Make each day cell square and center content inside */
+
     .fc-daygrid-day-frame {
       aspect-ratio: 1 / 1;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-  
-    /* Style the numbers inside the cells (day of the month) */
+
     .fc-daygrid-day-number {
       margin: 0;
       display: flex;
@@ -72,51 +63,39 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      font-size: 0.75rem;   /* Smaller digits */
-      font-weight: normal;  /* No bold */
+      font-size: 0.75rem;
+      font-weight: normal;
     }
-  
-    /* Remove the background color highlight for today's date */
+
     .fc .fc-day-today {
       background-color: inherit !important;
       border-radius: 0;
     }
-  
-    /* === NAVIGATION BUTTONS (NEXT / PREV) === */
-  
-    /* Remove default styles from prev/next buttons */
+
     .fc .fc-button {
       background: none !important;
       border: none !important;
       color: #333 !important;
-      font-size: 1rem;         /* Slightly smaller text */
+      font-size: 1rem;
       box-shadow: none !important;
     }
-  
-    /* Optional: subtle hover effect on navigation buttons */
+
     .fc .fc-button:hover {
       background-color: transparent !important;
       color: #666 !important;
     }
-  
-    /* === MONTH-YEAR HEADER === */
-  
-    /* Make the month + year title smaller */
+
     .fc .fc-toolbar-title {
-      font-size: 1rem !important;  /* Adjust this to your preference */
+      font-size: 1rem !important;
       font-weight: 700;
       color: #333;
     }
-  
-    /* === WEEKDAY HEADERS (Sun, Mon, ...) === */
-  
-    /* Make weekday names smaller and non-bold */
+
     .fc .fc-col-header-cell-cushion {
-      font-size: 0.75rem;    /* Tailwind: text-sm */
+      font-size: 0.75rem;
       font-weight: normal;
     }
-  
-    /* === LEGEND DOTS (for custom color indicators) === */
+
     .legend-dot {
       display: inline-block;
       width: 12px;
@@ -155,8 +134,11 @@
     .calendar-content.active {
       display: block;
     }
+
+    .booking-dot {
+      pointer-events: none;
+    }
   </style>
-  
 </head>
 <body class="bg-[#FAF1E6]">
 
@@ -276,9 +258,7 @@
               <p class="text-sm text-gray-700">Perfect for community events, parties, and gatherings.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
                 <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
                 <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
               </ul>
             </div>
              <div class="w-full flex justify-end mt-4">
@@ -296,15 +276,13 @@
       
          <!--swimming pool card-->
           <div class="bg-[#E6DCD0] rounded-t-lg shadow-md p-4 flex flex-col justify-between">
-            <img src="/pictures/pool.png" alt="Clubhouse" class="rounded-t-lg mb-4" />
+            <img src="/pictures/pool7.png" alt="Clubhouse" class="rounded-t-lg mb-4" />
             <div>
               <h3 class="text-lg font-semibold text-gray-800 mb-2">Swimming Pool</h3>
               <p class="text-sm text-gray-700"> Medium-sized pool with separate kids' area.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
-                <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
-                <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
+                <li>Max capacity: 25 people</li>
+                <li>₱150 entrance fee per pax</li>
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
@@ -325,10 +303,8 @@
               <h3 class="text-lg font-semibold text-gray-800 mb-2">Basketball Court</h3>
               <p class="text-sm text-gray-700"> A standard outdoor court with a mounted hoop, ideal for casual games, tournaments, or recreational play.</p>
               <ul class="text-sm text-gray-700 list-disc pl-5 space-y-1 mb-4">
-                <li>Max capacity: 50 people</li>
-                <li>Facilities: Kitchen, restrooms</li>
+                <li>Max capacity: 20 people</li>
                 <li>₱2,000 (half day), ₱3,500 (full day)</li>
-                <li>₱2,000 security deposit</li>
               </ul>
             </div>
             <div class="w-full flex justify-end mt-4">
@@ -354,7 +330,7 @@
       
         <!-- Footer CTA -->
         <div class="mt-10 text-right">
-          <a href="#" class="text-green-700 font-medium hover:underline flex justify-end items-center gap-1">
+          <a href="/pages/dashboard/gallery.html" class="text-green-700 font-medium hover:underline flex justify-end items-center gap-1">
             View Gallery
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
               viewBox="0 0 24 24">
@@ -392,29 +368,17 @@
         <p><span class="legend-dot" style="background-color: #e5e7eb;"></span> No bookings</p>
       </div>
     </div>
-
-    <p class="mt-8 text-xs text-gray-600 text-center">
-      For booking assistance or questions, please contact the Augustine Grove HOA office at (555) 123-4567
-    </p>
   </div>
 
-<!-- Time Block Modal -->
-<div id="timeBlockModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 hidden">
-  <div class="bg-white w-1/4 h-screen rounded-l-3xl p-4 overflow-y-auto shadow-lg relative">
-    <!-- Close Button -->
-    <button onclick="document.getElementById('timeBlockModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl">&times;</button>
+  <p class="text-xs text-center text-gray-600 mt-6">For assistance, contact HOA at (555) 123-4567</p>
+</div>
 
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-4">
-      <button class="text-lg">&lt;</button>
-      <h2 id="timeBlockDate" class="text-lg font-semibold text-center flex-1">April 16, 2025</h2>
-      <button class="text-lg">&gt;</button>
-    </div>
-
-    <!-- Time Blocks -->
-    <div id="timeBlocks" class="space-y-4">
-      <!-- JavaScript inserts blocks here -->
-    </div>
+<!-- Modal -->
+<div id="slotModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative">
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-lg font-bold">&times;</button>
+    <h3 id="timeBlockDate" class="text-lg font-semibold mb-4">Schedule</h3>
+    <div id="timeBlocks" class="space-y-4"></div>
   </div>
 </div>
 

@@ -55,8 +55,8 @@
     <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
       <li><a href="announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
       <li><a href="amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="gallery.html" class="text-[#FFDDAB]">Gallery</a></li>
-      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="gallery.html" class="text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li> 
     </ul>
     <img src="/pictures/profile.png" alt="Profile" class="h-8">
   </div>
@@ -100,72 +100,268 @@
 </div>
 </nav>
 
+<div class="py-16">
+  <h1 class="text-center text-3xl font-bold pb-4 font-poppins text-[#333333]">
+    Our Gallery
+  </h1>
+
+  <div class="w-1/2 mx-auto text-center">
+    <p class="font-poppins">
+    Immerse yourself in the stunning visuals of Augustine Grove. Here, you'll find a vibrant collection of photos and videos showcasing our beautiful landscapes, inviting amenities, 
+    and memorable community moments. Discover the true essence of living in Augustine Grove through these captivating visuals.
+    </p>
+  </div>
+
+</div>
+
 <!-- Filter Buttons -->
-<div class="flex flex-wrap justify-center gap-6 mt-6 px-4 font-[Poppins]">
-  <button class="gallery-tab active-tab" data-category="augustine">
-    <i class="fa-solid fa-house text-[#5F8B4C] text-3xl"></i>
+<div class="flex flex-wrap justify-center gap-6 mt-6 px-4 font-[Poppins] font-semibold w-4/5 mx-auto pb-12">
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2 rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab" 
+                 data-category="augustine">
+    <i class="fa-solid fa-house text-[#5F8B4C] text-xl"></i>
     <span>Augustine Grove</span>
   </button>
-  <button class="gallery-tab" data-category="pool">
-    <i class="fa-solid fa-person-swimming text-green-600"></i>
+
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab" 
+                 data-category="pool">
+    <i class="fa-solid fa-person-swimming text-[#5F8B4C] text-2xl"></i>
     <span>Swimming Pool</span>
   </button>
-  <button class="gallery-tab" data-category="clubhouse">
-    <i class="fa-solid fa-people-group text-green-600"></i>
+
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab"  
+                 data-category="clubhouse">
+    <i class="fa-solid fa-people-group text-[#5F8B4C] text-2xl"></i>
     <span>Clubhouse</span>
   </button>
-  <button class="gallery-tab" data-category="park">
-    <i class="fa-solid fa-tree text-green-600"></i>
+ 
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab" 
+                 data-category="park">
+    <i class="fa-solid fa-tree text-[#5F8B4C] text-2xl"></i>
     <span>Parks & Playground</span>
   </button>
-  <button class="gallery-tab" data-category="basketball">
-    <i class="fa-solid fa-basketball text-green-600"></i>
+
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab" 
+                 data-category="basketball">
+    <i class="fa-solid fa-basketball text-[#5F8B4C] text-2xl"></i>
     <span>Basketball Court</span>
   </button>
-  <button class="gallery-tab" data-category="events">
-    <i class="fa-solid fa-calendar-days text-green-600"></i>
+
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-100
+                 active-tab" 
+                 data-category="events">
+    <i class="fa-solid fa-calendar-days text-[#5F8B4C] text-2xl"></i>
     <span>Events & Occasions</span>
   </button>
-  <button class="gallery-tab" data-category="others">
-    <i class="fa-solid fa-ellipsis text-green-600"></i>
+  
+  <button class="gallery-tab flex items-center gap-2 px-12 py-2  rounded-3xl
+                 hover:border-b-4 hover:border-gray-300 hover:bg-gray-200
+                 active-tab" 
+                 data-category="others">
+    <i class="fa-solid fa-ellipsis text-[#5F8B4C] text-2xl"></i>
     <span>Others</span>
   </button>
 </div>
 
 
 <!-- Gallery -->
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10 px-6" id="gallery">
-  <img src="/pictures/clubhouse.png" class="rounded-lg gallery-img" data-category="augustine">
-  <img src="/pictures/hero3.png" class="rounded-lg gallery-img" data-category="augustine">
-  <img src="/pictures/pool.png" class="rounded-lg gallery-img" data-category="augustine">
-  <img src="images/pool1.jpg" class="rounded-lg gallery-img" data-category="pool">
-  <img src="images/pool2.jpg" class="rounded-lg gallery-img" data-category="pool">
-  <img src="images/clubhouse1.jpg" class="rounded-lg gallery-img" data-category="clubhouse">
-  <img src="images/park1.jpg" class="rounded-lg gallery-img" data-category="park">
-  <img src="images/events1.jpg" class="rounded-lg gallery-img" data-category="events">
-  <img src="images/others1.jpg" class="rounded-lg gallery-img" data-category="others">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10 px-6 w-4/5 mx-auto bg-[#e9e0d5] p-8 rounded-2xl" id="gallery">
+
+  <img src="/pictures/heroo.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine" >
+  <img src="/pictures/heroo2.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine" >
+  <img src="/pictures/heroo3.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine" >
+  <img src="/pictures/hero4.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine" >
+  <img src="/pictures/clubhouse.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/announcement2.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/court.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/announcement1.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/hero3.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine" >
+  <img src="/pictures/poool.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/hero2.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/hero1.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool5.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool6.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool7.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool8.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool9.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool10.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/pool11.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/clubhouse2.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/clubhouse3.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road1.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road2.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road3.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road4.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road5.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road6.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road7.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road8.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/road9.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+  <img src="/pictures/basketball3.png" class="rounded-lg gallery-img object-cover w-full h-72" data-category="augustine">
+
+
+
+  <img src="/pictures/poool.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/hero3.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool" >
+  <img src="/pictures/pool5.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool7.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool6.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool9.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool8.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool10.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+  <img src="/pictures/pool11.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="pool">
+
+
+  <img src="/pictures/clubhouse.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="clubhouse">
+  <img src="/pictures/clubhouse2.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="clubhouse">
+  <img src="/pictures/clubhouse3.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="clubhouse">
+
+
+  <img src="/pictures/announcement2.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road1.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road2.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road3.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road4.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road6.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road7.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road8.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+  <img src="/pictures/road9.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="others">
+
+
+  <img src="/pictures/court.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="basketball">
+  <img src="/pictures/hero2.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="basketball">
+  <img src="/pictures/basketball3.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="basketball">
 </div>
 
+<div id="fullscreen-overlay" class="fixed inset-0 bg-black bg-opacity-90 z-[1000] hidden flex items-center justify-center">
+        <i class="fas fa-times close-btn absolute top-5 right-5 text-white text-3xl cursor-pointer"></i>
+        <img src="" alt="Fullscreen Image" class="max-w-[90vw] max-h-[90vh] object-contain">
+    </div>
+
 <script>
-  const buttons = document.querySelectorAll(".gallery-tab");
-  const images = document.querySelectorAll(".gallery-img");
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Gallery Tab Filtering Variables ---
+        const buttons = document.querySelectorAll(".gallery-tab");
+        const allImages = document.querySelectorAll(".gallery-img"); // Changed to allImages for clarity
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active-tab"));
-      btn.classList.add("active-tab");
+        // --- Fullscreen Viewer Variables ---
+        const overlay = document.getElementById("fullscreen-overlay");
+        const overlayImg = overlay.querySelector('img');
+        const closeBtn = overlay.querySelector('.close-btn');
 
-      const category = btn.getAttribute("data-category");
+        // --- Function to apply/remove active tab styles ---
+        function setActiveTabStyles(tabElement, isActive) {
+            const defaultButtonClasses = ['text-gray-700'];
+            const defaultIconClasses = ['text-[#5F8B4C]']; // Default icon color
 
-      images.forEach(img => {
-        if (category === "all" || img.dataset.category === category) {
-          img.classList.remove("hidden");
-        } else {
-          img.classList.add("hidden");
+            // Active state classes for the button (underline, brand color, bold)
+            // Ensure 'rounded-none' is there to avoid rounded corners on the underline
+            const activeButtonClasses = ['active-tab', 'text-[#5F8B4C]', 'font-semibold', 'border-b-4', 'border-[#5F8B4C]', 'rounded-none'];
+            const activeIconClasses = ['text-[#5F8B4C]']; // Icon color same as button text here
+
+            const iconElement = tabElement.querySelector('i');
+
+            if (isActive) {
+                // Add active classes
+                tabElement.classList.add(...activeButtonClasses);
+                tabElement.classList.remove(...defaultButtonClasses);
+
+                if (iconElement) {
+                    iconElement.classList.add(...activeIconClasses);
+                    iconElement.classList.remove(...defaultIconClasses);
+                }
+            } else {
+                // Remove active classes
+                tabElement.classList.remove(...activeButtonClasses);
+                tabElement.classList.add(...defaultButtonClasses);
+
+                if (iconElement) {
+                    iconElement.classList.remove(...activeIconClasses);
+                    iconElement.classList.add(...defaultIconClasses);
+                }
+            }
         }
-      });
+        // --- End of style function ---
+
+
+        // --- Gallery Tab Click Listener ---
+        buttons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                // 1. Remove active state from all buttons and reset their styles
+                buttons.forEach(b => {
+                    setActiveTabStyles(b, false);
+                });
+
+                // 2. Add active state to the clicked button and apply its styles
+                setActiveTabStyles(btn, true);
+
+                // 3. Filter images based on data-category
+                const category = btn.getAttribute("data-category");
+
+                allImages.forEach(img => { // Use allImages here
+                    if (category === "all" || img.dataset.category === category) {
+                        img.classList.remove("hidden");
+                    } else {
+                        img.classList.add("hidden");
+                    }
+                });
+            });
+        });
+
+        // --- Fullscreen Image Click Listener ---
+        allImages.forEach(img => { // Use allImages here
+            img.addEventListener("click", () => {
+                overlay.classList.remove("hidden"); // Show the overlay
+                overlay.classList.add("flex"); // Ensure flex display for centering
+                overlayImg.src = img.src;       // Set the image source
+            });
+        });
+
+        // --- Close Fullscreen Listener ---
+        closeBtn.addEventListener("click", () => {
+            overlay.classList.add("hidden"); // Hide the overlay
+            overlay.classList.remove("flex"); // Remove flex display
+            overlayImg.src = "";            // Clear the image source
+        });
+
+
+        // --- Set initial active tab state and filtering on page load ---
+        const initialActiveTab = document.querySelector('.gallery-tab[data-category="augustine"]');
+        if (initialActiveTab) {
+            setActiveTabStyles(initialActiveTab, true);
+
+            // Trigger initial filtering for the default active tab
+            const initialCategory = initialActiveTab.getAttribute("data-category");
+            allImages.forEach(img => { // Use allImages here
+                if (initialCategory === "all" || img.dataset.category === initialCategory) {
+                    img.classList.remove("hidden");
+                } else {
+                    img.classList.add("hidden");
+                }
+            });
+        } else if (buttons.length > 0) {
+            // Fallback: If 'augustine' category isn't found, make the first button active
+            setActiveTabStyles(buttons[0], true);
+            const initialCategory = buttons[0].getAttribute("data-category");
+            allImages.forEach(img => { // Use allImages here
+                if (initialCategory === "all" || img.dataset.category === initialCategory) {
+                    img.classList.remove("hidden");
+                } else {
+                    img.classList.add("hidden");
+                }
+            });
+        }
     });
-  });
 </script>
 
 
