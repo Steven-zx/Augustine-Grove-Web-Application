@@ -115,7 +115,7 @@
 </div>
 </nav>
 
-<section id="hero" class="relative h-72 md:h-screen overflow-hidden bg-black">
+<section id="hero" class="relative h-[28rem] sm:h-[32rem] md:h-screen overflow-hidden bg-black">
   <!-- Slide Container -->
   <div id="slider" class="flex w-full h-full transition-transform duration-1000 ease-in-out">
     <img src="/pictures/hero1.png" class="w-full h-full object-cover flex-shrink-0" />
@@ -124,27 +124,30 @@
     <img src="/pictures/hero4.png" class="w-full h-full object-cover flex-shrink-0" />
   </div>
 
-
-
   <!-- Text & Buttons -->
-  <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center z-20">
-    <h1 class="font-bold text-xl md:text-4xl mb-4 md:mb-10 text-[#FAF1E6]">WELCOME TO</h1>
-    <h1 class="font-custom text-6xl md:text-9xl mb-8 md:mb-20 text-outline">Augustine Grove</h1>
-    <div class="flex md:gap-20 gap-10 justify-center">
-      <a href="/pages/dashboard/announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
-      <a href="/pages/dashboard/amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm md:text-xl px-6 py-3 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
+  <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center z-20 px-4">
+    <h1 class="font-bold text-base sm:text-lg md:text-4xl mb-2 sm:mb-4 md:mb-10 text-[#FAF1E6]">WELCOME TO</h1>
+    <h1 class="font-custom text-4xl sm:text-6xl md:text-9xl mb-4 sm:mb-8 md:mb-20 text-outline leading-tight">Augustine Grove</h1>
+    
+    <div class="flex flex-col sm:flex-row gap-4 sm:gap-10 md:gap-20 justify-center items-center">
+      <a href="announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-sm sm:text-base md:text-xl px-6 py-2 sm:py-3 sm:px-12 md:px-20 rounded-full transition transform hover:scale-105 duration-300">
+        Updates &gt;
+      </a>              
+      <a href="amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-sm sm:text-base md:text-xl px-6 py-2 sm:py-3 sm:px-12 md:px-20 rounded-full border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">
+        Amenities
+      </a>
     </div>
 
     <!-- Dot Indicators -->
-    <div id="carousel-dots" class="mt-10 md:mt-20 flex justify-center gap-4">
-      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#5F8B4C]"></div>
-      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
-      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
-      <div class="w-10 h-2 rounded-full transition-all duration-300 bg-[#FAF1E6]"></div>
+    <div id="carousel-dots" class="mt-6 sm:mt-10 md:mt-20 flex justify-center gap-2 sm:gap-4">
+      <div class="w-6 sm:w-8 md:w-10 h-1 sm:h-2 rounded-full bg-[#5F8B4C] transition-all duration-300"></div>
+      <div class="w-6 sm:w-8 md:w-10 h-1 sm:h-2 rounded-full bg-[#FAF1E6] transition-all duration-300"></div>
+      <div class="w-6 sm:w-8 md:w-10 h-1 sm:h-2 rounded-full bg-[#FAF1E6] transition-all duration-300"></div>
+      <div class="w-6 sm:w-8 md:w-10 h-1 sm:h-2 rounded-full bg-[#FAF1E6] transition-all duration-300"></div>
     </div>
   </div>
-  
 </section>
+
 
 
 <!-- Map -->
