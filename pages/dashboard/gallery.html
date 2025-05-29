@@ -283,10 +283,19 @@ closeBtn.addEventListener("click", () => {
   <img src="/pictures/basketball3.png" class="rounded-lg gallery-img object-cover w-full h-72 hidden" data-category="basketball">
 </div>
 
-<div id="fullscreen-overlay" class="fixed inset-0 bg-black bg-opacity-90 z-[1000] hidden flex items-center justify-center">
-        <i class="fas fa-times close-btn absolute top-5 right-5 text-white text-3xl cursor-pointer"></i>
-        <img src="" alt="Fullscreen Image" class="max-w-[90vw] max-h-[90vh] object-contain">
+<div id="fullscreen-overlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100] hidden">
+    <div class="relative max-w-[95%] max-h-[95%] flex items-center justify-center">
+        <img src="" alt="Fullscreen Image" class="max-w-full max-h-full object-contain">
+        
+        <button class="close-btn absolute top-4 right-4 text-white text-4xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+            &times;
+        </button>
+
+        <button id="saveImageBtn" class="absolute top-4 left-4 text-white text-xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+            <i class="fas fa-download"></i> Save
+        </button>
     </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -298,6 +307,8 @@ closeBtn.addEventListener("click", () => {
         const overlay = document.getElementById("fullscreen-overlay");
         const overlayImg = overlay.querySelector('img');
         const closeBtn = overlay.querySelector('.close-btn');
+
+        const saveImageBtn = document.getElementById('saveImageBtn');
 
         // --- Function to apply/remove active tab styles ---
         function setActiveTabStyles(tabElement, isActive) {
@@ -373,6 +384,28 @@ closeBtn.addEventListener("click", () => {
             overlay.classList.remove("flex"); // Remove flex display
             overlayImg.src = "";            // Clear the image source
         });
+
+        if (saveImageBtn) { // Ensure the button exists before adding listener
+            saveImageBtn.addEventListener('click', () => {
+                const imageUrl = overlayImg.src;
+                if (imageUrl) {
+                    // Create a temporary anchor element
+                    const link = document.createElement('a');
+                    link.href = imageUrl;
+                    
+                    // Suggest a filename (extract from URL, or use a generic one)
+                    const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+                    link.download = filename || 'gallery_image.png'; // Fallback filename
+
+                    // Programmatically click the link to trigger download
+                    document.body.appendChild(link); // Append to body (required for Firefox)
+                    link.click();
+                    document.body.removeChild(link); // Clean up
+                } else {
+                    console.warn("No image source available to save.");
+                }
+            });
+        }
 
 
         // --- Set initial active tab state and filtering on page load ---

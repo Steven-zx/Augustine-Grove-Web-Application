@@ -153,9 +153,32 @@
 <!-- Map -->
       <section class="bg-[#FAF1E6] p-10 md:px-40 md:py-20 flex flex-col md:flex-row items-center gap-12">
         <div class="w-full md:w-1/2">
-            <h1 class="text-xl md:text-2xl font-bold mb-4">Augustine Community Map</h1>
-            <img src="/pictures/AG Map 1.png" alt="Community Map" class="rounded-[80px] border-2 border-[#5F8B4C] shadow-lg w-full max-h-[500px] object-contain mx-auto">
+        <h1 class="text-xl md:text-2xl font-bold mb-4">Augustine Community Map</h1>
+        <img id="communityMapImage" src="/pictures/AG Map 1.png" alt="Community Map" 
+             class="rounded-[80px] border-2 border-[#5F8B4C] shadow-lg w-full max-h-[500px] object-contain mx-auto cursor-pointer" 
+             onclick="openMapModal()">
+    </div>
+
+    <div id="mapModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[100] hidden !w-screen !h-screen">
+    <div class="relative bg-gray-800 rounded-lg p-4 md:p-8 !max-w-[37vw] !h-auto flex items-center justify-center overflow-hidden">
+        <img id="fullScreenMapImage" src="" alt="Community Map Fullscreen" class="block !max-w-full !max-h-full object-contain">
+        
+        <button onclick="closeMapModal()" class="absolute top-2 right-2 md:top-4 md:right-4 text-white text-3xl md:text-4xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+            &times;
+        </button>
+
+        <div class="absolute bottom-4 right-4 flex gap-2">
+            <button id="zoomInBtn" class="text-white text-3xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+                +
+            </button>
+            <button id="zoomOutBtn" class="text-white text-3xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+                -
+            </button>
+            <button id="resetZoomBtn" class="text-white text-xl font-bold p-2 leading-none hover:text-gray-300 bg-black bg-opacity-50 rounded-full cursor-pointer">
+                <i class="fas fa-redo"></i> </button>
         </div>
+        </div>
+</div>
         <div class="w-full md:w-1/2">
           <h2 class="text-xl font-bold mb-4">Overview</h2>
           <p class="text-gray-700 mb-6">
@@ -194,7 +217,7 @@
   
     <!-- Header -->
     <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
-      <h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2>
+      <a href="/pages/dashboard/announcements.html"><h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2></a>
       <a href="/pages/dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
     </div>
 
@@ -219,7 +242,7 @@
 <!-- Announcement Card Template -->
 <template id="announcement-card-template">
   <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
-    <img src="" alt="Announcement Image" class="rounded-2xl mb-4 h-44 object-cover announcement-img">
+    <img src="" alt="Announcement Image" class="rounded-2xl mb-4 h-44 object-contain announcement-img">
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-lg md:text-xl font-bold text-left announcement-title"></h3>
       <div class="flex items-center gap-1">
@@ -488,8 +511,6 @@
         <!-- Bottom -->
         <div class="border-t border-white/30 pt-6 text-center text-xs space-x-2">
           <span>© 2025 Augustine Grove by Aser's Angels</span>
-          <span>|</span>
-          <a href="#" class="hover:underline">Terms and Conditions</a>
         </div>
       </footer>
       
@@ -550,6 +571,170 @@ closeBtn.addEventListener("click", () => {
     alert("Logging out...");
     // redirect or clear session, etc.
   }
+</script>
+
+<script>
+
+    // Function to apply the current zoom AND translation to the image (UPDATED)
+    function applyZoom() {
+        // Combine scale and translate transformations
+        fullScreenMapImage.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+        fullScreenMapImage.style.transformOrigin = 'center center'; // Keep origin centered for scaling
+    }
+
+    // Function to zoom in
+    function zoomIn() {
+        currentZoom += zoomStep;
+        if (currentZoom > maxZoom) {
+            currentZoom = maxZoom;
+        }
+        applyZoom();
+    }
+
+    // Function to zoom out
+    function zoomOut() {
+        currentZoom -= zoomStep;
+        if (currentZoom < minZoom) {
+            currentZoom = minZoom;
+        }
+        applyZoom();
+    }
+
+    // Function to reset zoom (UPDATED to also reset panning)
+    function resetZoom() {
+        currentZoom = 1; // Reset to original size
+        translateX = 0; // Reset horizontal translation
+        translateY = 0; // Reset vertical translation
+        applyZoom();
+    }
+
+</script>
+
+
+<script>
+  // Get references to your map elements
+    const mapModal = document.getElementById('mapModal');
+    const fullScreenMapImage = document.getElementById('fullScreenMapImage');
+    const communityMapImage = document.getElementById('communityMapImage'); // Reference to the small map image
+
+      // NEW: Panning variables
+    let isDragging = false;
+    let startX, startY; // Mouse position when drag starts relative to the viewport
+    let translateX = 0, translateY = 0; // Current translation offset of the image
+
+      // NEW: Zoom variables
+    let currentZoom = 1; // Initial zoom level (1 = 100%)
+    const zoomStep = 0.1; // How much to zoom in/out each time
+    const maxZoom = 3;    // Maximum zoom level
+    const minZoom = 0.5;  // Minimum zoom level
+
+    function openMapModal() {
+        if (mapModal && fullScreenMapImage && communityMapImage) {
+            // Use communityMapImage.dataset.fullscreenSrc || communityMapImage.src; 
+            // if you implemented the lower-res image loading
+            fullScreenMapImage.src = communityMapImage.src; 
+            
+            mapModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            resetZoom(); // Reset zoom and pan every time the modal is opened
+            fullScreenMapImage.style.cursor = 'grab'; // Set initial cursor for dragging
+        } else {
+            console.error("Map modal elements not found!");
+        }
+    }
+
+     // Existing closeMapModal function (UPDATED to reset zoom on close)
+    function closeMapModal() {
+        if (mapModal) {
+            mapModal.classList.add('hidden');
+            document.body.style.overflow = '';
+            fullScreenMapImage.src = "";
+            resetZoom(); // Reset zoom and pan state when closing
+            fullScreenMapImage.style.cursor = 'default'; // Reset cursor
+        } else {
+            console.error("Map modal element not found for closing!");
+        }
+    }
+
+    // Optional: Close modal when clicking on the transparent overlay background
+    document.addEventListener('DOMContentLoaded', () => {
+        if (mapModal) {
+            mapModal.addEventListener('click', (event) => {
+                // Check if the click occurred directly on the modal backdrop, not on the content itself
+                if (event.target === mapModal) {
+                    closeMapModal();
+                }
+            });
+        }
+        // NEW: Get references to zoom buttons
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const resetZoomBtn = document.getElementById('resetZoomBtn');
+
+    // NEW: Add click listeners for zoom buttons
+    if (zoomInBtn) zoomInBtn.addEventListener('click', zoomIn);
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', zoomOut);
+    if (resetZoomBtn) resetZoomBtn.addEventListener('click', resetZoom);
+
+    // Optional: Add mouse wheel zoom
+    if (fullScreenMapImage) {
+        fullScreenMapImage.addEventListener('wheel', (event) => {
+            event.preventDefault(); // Prevent page scrolling
+
+            if (event.deltaY < 0) { // Scrolling up (zoom in)
+                zoomIn();
+            } else { // Scrolling down (zoom out)
+                zoomOut();
+            }
+        });
+
+        // --- START OF NEW PANNING INTEGRATION ---
+
+        // NEW: Panning Event Listeners
+        fullScreenMapImage.addEventListener('mousedown', (e) => {
+            // Only allow dragging if image is actually zoomed in
+            if (currentZoom > 1) {
+                isDragging = true;
+                // Calculate the starting mouse position relative to the image's current translation
+                // This makes sure dragging starts smoothly from where the image currently is
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                fullScreenMapImage.style.cursor = 'grabbing'; // Change cursor to indicate dragging
+                e.preventDefault(); // Prevent default browser image dragging (like dragging the image itself)
+            }
+        });
+
+        fullScreenMapImage.addEventListener('mousemove', (e) => {
+            if (!isDragging) return; // If not dragging, do nothing
+
+            // Calculate new translation based on current mouse position and starting offset
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+
+            applyZoom(); // Apply the new translation (and existing zoom) to the image
+        });
+
+        // Stop dragging when mouse button is released
+        fullScreenMapImage.addEventListener('mouseup', () => {
+            isDragging = false;
+            fullScreenMapImage.style.cursor = 'grab'; // Change cursor back to indicate it's draggable
+        });
+
+        // Stop dragging if mouse leaves the image area while the button is pressed
+        fullScreenMapImage.addEventListener('mouseleave', () => {
+            isDragging = false;
+            fullScreenMapImage.style.cursor = 'grab'; // Change cursor back
+        });
+
+        // Set the initial cursor to 'grab' when the image is visible
+        fullScreenMapImage.style.cursor = 'grab';
+
+        // --- END OF NEW PANNING INTEGRATION ---
+
+    } // End of if (fullScreenMapImage)
+}); // End of DOMContentLoaded listener
+
+    
 </script>
 
 <!--hero background image slider-->
