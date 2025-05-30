@@ -267,6 +267,7 @@
         <div class="text-left">
           <p class="font-semibold text-[#5F8B4C]">${user.user_metadata.full_name}</p>
         </div>
+<<<<<<< Updated upstream
       `;
     }
   }
@@ -275,6 +276,25 @@
   async function handleAuthAction() {
     const { data: { user } } = await supabase.auth.getUser();
     const isLoggedIn = !!user;
+=======
+      </div>
+  
+      <!-- Nav Links -->
+      <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+        <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+        <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+        <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+        <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      </ul>
+      
+  
+  <!-- Bottom Log Out Button -->
+  <div class="w-full text-center mt-20 mb-6">
+  <button onclick="logout()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+  Log Out
+</button>
+    </div>  
+>>>>>>> Stashed changes
     
     if (isLoggedIn) {
       // Log out logic
