@@ -5,149 +5,579 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../dist/output.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Profile</title>
 </head>
 <body class="bg-[#FAF1E6]">
 
+<!-- Auth Modal -->
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#5F8B4C] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-lg relative">
+    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    
+    <div class="flex justify-center mb-6">
+      <img src="/pictures/logo 2.png" alt="AG Logo" class="h-16">
+    </div>
+    
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />    
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Log in
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Don't have an account? <a href="#" onclick="switchToSignup(); return false;" class="underline hover:text-[#FFDDAB]">Sign up</a>
+      </p>
+    </form>
+    
+    <form id="signupForm" class="space-y-4 hidden">
+      <input type="text" id="fullName" placeholder="Full Name" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="text" id="address" placeholder="Address (e.g. Block 3, Lot 8, Phase 2)" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="tel" id="mobileNumber" placeholder="Mobile Number" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="signupPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Sign up
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Already have an account? <a href="#" onclick="switchToLogin(); return false;" class="underline hover:text-[#FFDDAB]">Log in</a>
+      </p>
+    </form>
+  </div>
+</div>
 
-<!-- Nav BAr -->
+<!-- Nav Bar -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-    <a href="../../index.html" class="flex items-center gap-2">
+  <a href="/index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
   </a>
+
+  <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
+    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
+    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+      <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
   
-    <!-- Hamburger Button -->
-    <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
-      <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  
-    <!-- Desktop Menu -->
-    <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
-      <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-        <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-        <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-        <li><a href=/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-        <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-      </ul>
-      <img src="/pictures/profile.png" alt="Profile" class="h-8">
-    </div>
-  
-    <!-- Mobile Slide-in Menu -->
-    <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
-  
-      <div class="flex items-center justify-between p-4 border-b border-gray-300">
-        <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
-        <button id="close-btn" class="text-[#5F8B4C]">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+    <div class="relative">
+      <button id="profileBtn" class="focus:outline-none">
+        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+      </button>
+
+      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+        <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+          Profile
+        </a>
+        <button onclick="openAuthModal()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+          Log in
         </button>
       </div>
-  
-      <!-- Profile Card -->
-      <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+    </div>
+  </div>
+
+  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden hidden">
+    <div class="flex items-center justify-between p-4 border-b border-gray-300">
+      <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
+      <button id="close-btn" class="text-[#5F8B4C]">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
+      <div class="text-left">
+        <p class="font-semibold text-[#5F8B4C]">John Smith</p>
+      </div>
+    </div>
+
+    <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
+      <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+    </ul>
+    
+    <div class="w-full text-center mt-20 mb-6">
+      <button onclick="openAuthModal()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+        Log Out
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="profileContainer" class="min-h-screen">
+  <h2 class="text-center mt-10 text-base font-bold mb-4">My Profile</h2>
+
+  <div class="flex items-center justify-center">
+    <div class="bg-[#E6DCD0] p-5 rounded-xl shadow-md w-full max-w-md">
+      <div id="loadingIndicator" class="text-center py-8">
+        <i class="fas fa-spinner fa-spin text-[#5F8B4C] text-2xl"></i>
+        <p class="mt-2">Loading profile...</p>
+      </div>
+
+      <!-- Replace the existing profileContent div with this updated version -->
+<div id="profileContent" class="hidden">
+  <!-- Name Field -->
+  <div class="flex justify-between items-start mb-3">
+    <div>
+      <p class="font-bold">Full Name</p>
+      <p id="profileName">Loading...</p>
+      <div id="nameEditForm" class="hidden mt-2">
+        <input type="text" id="nameInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+        <div class="flex gap-2 mt-2">
+          <button onclick="saveField('name')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+          <button onclick="cancelEdit('name')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="startEdit('name')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+    </button>
+  </div>
+
+  <!-- Email Field (non-editable) -->
+  <div class="flex justify-between items-start mb-3">
+    <div>
+      <p class="font-bold">Email Address</p>
+      <p id="profileEmail">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Profile Picture -->
+  <div class="mb-4">
+    <p class="font-bold mb-2 text-center">Profile picture</p>
+    <div class="flex flex-col items-center space-y-1">
+      <div id="profileAvatar" class="w-16 h-16 rounded-full bg-green-600 text-white flex items-center justify-center text-3xl">
+        <!-- Will be filled by JavaScript -->
+      </div>
+      <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+        <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+        <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Address Field -->
+  <div class="flex justify-between items-start mb-3">
+    <div>
+      <p class="font-bold">Address</p>
+      <p id="profileAddress">Loading...</p>
+      <div id="addressEditForm" class="hidden mt-2">
+        <input type="text" id="addressInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+        <div class="flex gap-2 mt-2">
+          <button onclick="saveField('address')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+          <button onclick="cancelEdit('address')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="startEdit('address')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+    </button>
+  </div>
+
+  <!-- Mobile Number Field -->
+  <div class="flex justify-between items-start">
+    <div>
+      <p class="font-bold">Mobile Number</p>
+      <p id="profileMobile">Loading...</p>
+      <div id="mobileEditForm" class="hidden mt-2">
+        <input type="tel" id="mobileInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+        <div class="flex gap-2 mt-2">
+          <button onclick="saveField('mobile')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+          <button onclick="cancelEdit('mobile')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="startEdit('mobile')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+    </button>
+  </div>
+</div>
+    
+
+<script>
+  // Initialize Supabase
+  window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+  window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+  window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+
+  // Global UI Update Function
+  async function updateAuthUI() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const isLoggedIn = !!user;
+    
+    // Update desktop dropdown
+    const profileModal = document.getElementById('profileModal');
+    if (profileModal) {
+      profileModal.innerHTML = `
+        <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+          Profile
+        </a>
+        <button onclick="handleAuthAction()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="${isLoggedIn ? '/pictures/logout_icon.png' : '/pictures/login_icon.png'}" alt="Auth Action" class="h-5 w-5">
+          <span>${isLoggedIn ? 'Log Out' : 'Log In'}</span>
+        </button>
+      `;
+    }
+
+    // Update mobile menu
+    const mobileAuthButton = document.getElementById('mobileAuthButton');
+    if (mobileAuthButton) {
+      mobileAuthButton.textContent = isLoggedIn ? 'Log Out' : 'Log In';
+      mobileAuthButton.onclick = handleAuthAction;
+    }
+
+    // Update sidebar profile info
+    const sidebarProfile = document.querySelector('#sidebar .bg-[#FAF1E6]');
+    if (sidebarProfile && user?.user_metadata?.full_name) {
+      sidebarProfile.innerHTML = `
         <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
         <div class="text-left">
-          <p class="font-semibold text-[#5F8B4C]">John Smith</p>
+          <p class="font-semibold text-[#5F8B4C]">${user.user_metadata.full_name}</p>
         </div>
-      </div>
-  
-      <!-- Nav Links -->
-      <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
-        <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-        <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-        <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-        <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-      </ul>
-      
-  
-  <!-- Bottom Log Out Button -->
-  <div class="w-full text-center mt-20 mb-6">
-    <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-      Log Out
-    </button>
-    </div>
+      `;
+    }
+  }
+
+  // Auth Action Handler
+  async function handleAuthAction() {
+    const { data: { user } } = await supabase.auth.getUser();
+    const isLoggedIn = !!user;
     
-  </div>
-  </nav>
-    <h2 class="text-center mt-10 text-base font-bold mb-4">Edit profile</h2>
+    if (isLoggedIn) {
+      // Log out logic
+      const { error } = await supabase.auth.signOut();
+      if (!error) {
+        // Update UI and redirect to home if not already there
+        if (window.location.pathname !== '/index.html') {
+          window.location.href = '/index.html';
+        } else {
+          await updateAuthUI();
+        }
+      }
+    } else {
+      // Open login modal
+      openAuthModal();
+    }
+  }
 
-  <div class=" flex items-center justify-center">
-    <div class="bg-[#E6DCD0] p-5 rounded-xl shadow-md w-1/2">
+  // Profile Editing Functions
+  function startEdit(field) {
+    // Hide all edit forms first
+    document.getElementById('nameEditForm').classList.add('hidden');
+    document.getElementById('addressEditForm').classList.add('hidden');
+    document.getElementById('mobileEditForm').classList.add('hidden');
+    
+    // Show the selected edit form
+    const form = document.getElementById(`${field}EditForm`);
+    const input = document.getElementById(`${field}Input`);
+    const currentValue = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`).textContent;
+    
+    input.value = currentValue;
+    form.classList.remove('hidden');
+  }
 
-      <!-- Name -->
-      <div class="flex justify-between items-start mb-3">
-        <div>
-          <p class="font-bold">Name</p>
-          <p>John Smith</p>
-        </div>
-        
-      </div>
+  function cancelEdit(field) {
+    document.getElementById(`${field}EditForm`).classList.add('hidden');
+  }
 
-      <!-- Email -->
-      <div class="flex justify-between items-start mb-3">
-        <div>
-          <p class="font-bold">Email Address</p>
-          <p>johnsmith@gmail.com</p>
-        </div>
-        
-      </div>
+  async function saveField(field) {
+    const input = document.getElementById(`${field}Input`);
+    const newValue = input.value.trim();
+    const displayElement = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`);
+    
+    if (!newValue) {
+      alert(`${field} cannot be empty`);
+      return;
+    }
+    
+    try {
+      // Get current user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      
+      // Prepare update data
+      let updateData = {};
+      if (field === 'name') updateData = { full_name: newValue };
+      if (field === 'address') updateData = { address: newValue };
+      if (field === 'mobile') updateData = { mobile_number: newValue };
+      
+      // Update user metadata
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: updateData
+      });
+      
+      if (updateError) throw updateError;
+      
+      // Update UI
+      displayElement.textContent = newValue;
+      document.getElementById(`${field}EditForm`).classList.add('hidden');
+      
+      // Show success message
+      const successMsg = document.createElement('div');
+      successMsg.className = 'text-green-600 text-sm mt-1';
+      successMsg.textContent = 'Updated successfully!';
+      displayElement.parentNode.appendChild(successMsg);
+      
+      // Update all UI elements
+      await updateAuthUI();
+      
+      // Remove success message after 3 seconds
+      setTimeout(() => {
+        successMsg.remove();
+      }, 3000);
+      
+   
 
-      <!-- Profile Picture -->
-      <div class="mb-4">
-        <p class="font-bold mb-2 text-center">Profile picture</p>
-        <div class="flex flex-col items-center space-y-1">
-          <div class="w-16 h-16 rounded-full bg-green-600 text-white flex items-center justify-center text-3xl">
-            <span>👤</span>
-          </div>
-          <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-            <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-            <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
-          </button>
-        </div>
-      </div>
+  // Auth Modal Functions
+  function openAuthModal(showSignup = false) {
+    const modal = document.getElementById('authModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    if (showSignup) {
+      switchToSignup();
+    } else {
+      switchToLogin();
+    }
+  }
+  
+  function closeAuthModal() {
+    document.getElementById('authModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  function switchToLogin() {
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('signupForm').classList.add('hidden');
+  }
+  
+  function switchToSignup() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+  }
 
-      <!-- Address -->
-      <div class="flex justify-between items-start mb-3">
-        <div>
-          <p class="font-bold">Address</p>
-          <p>Block 3, Lot 8, Phase 2</p>
-        </div>
-        <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-          <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-          <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
-        </button>
-      </div>
+  // Load User Profile
+  async function loadUserProfile() {
+    try {
+      // Get the current user from Supabase
+      const { data: { user }, error } = await supabase.auth.getUser();
+      
+      if (error) throw error;
+      if (!user) {
+        openAuthModal();
+        return;
+      }
 
-      <!-- Mobile -->
-      <div class="flex justify-between items-start mb-3">
-        <div>
-          <p class="font-bold">Mobile Number</p>
-          <p>09123456789</p>
-        </div>
-        <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-          <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-          <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
-        </button>
-      </div>
+      // Get user metadata
+      const userData = user.user_metadata || {};
+      
+      // Update profile fields
+      document.getElementById('profileName').textContent = userData.full_name || 'Not set';
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('profileAddress').textContent = userData.address || 'Not set';
+      document.getElementById('profileMobile').textContent = userData.mobile_number || 'Not set';
+      
+      // Create profile avatar
+      const avatar = document.getElementById('profileAvatar');
+      if (userData.avatar_url) {
+        avatar.innerHTML = `<img src="${userData.avatar_url}" alt="Profile" class="w-full h-full rounded-full object-cover">`;
+      } else {
+        // Fallback: Use first letter of email
+        const firstLetter = user.email.charAt(0).toUpperCase();
+        avatar.textContent = firstLetter;
+        avatar.style.backgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+      }
 
-      <!-- Password -->
-      <div class="flex justify-between items-start">
-        <div>
-          <p class="font-bold">Password</p>
-          <p>**********</p>
-        </div>
-        <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-          <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-          <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
-        </button>
-      </div>
+      // Hide loading, show content
+      document.getElementById('loadingIndicator').classList.add('hidden');
+      document.getElementById('profileContent').classList.remove('hidden');
 
-    </div>
-  </div>
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      openAuthModal();
+    }
+  }
+
+  // Form Submissions
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Logging in...';
+    
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      
+      if (error) throw error;
+      
+      closeAuthModal();
+      await loadUserProfile();
+      await updateAuthUI();
+      
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(error.message || 'Login failed');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Log in';
+    }
+  });
+  
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const address = document.getElementById('address').value;
+    const mobileNumber = document.getElementById('mobileNumber').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Signing up...';
+    
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            address,
+            mobile_number: mobileNumber
+          }
+        }
+      });
+      
+      if (error) throw error;
+      
+      alert('Signup successful! Please check your email for verification.');
+      switchToLogin();
+      
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert(error.message || 'Signup failed');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Sign up';
+    }
+  });
+
+  // DOM Ready Handler
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Check for existing session
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('Error checking session:', error);
+      openAuthModal();
+      return;
+    }
+    
+    if (!session) {
+      openAuthModal();
+      return;
+    }
+    
+    // Load profile and update UI
+    await loadUserProfile();
+    await updateAuthUI();
+    
+    // Set up auth state listener
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        openAuthModal();
+        await updateAuthUI();
+      } else if (event === 'SIGNED_IN') {
+        await loadUserProfile();
+        await updateAuthUI();
+      }
+    });
+
+    // Sidebar functionality
+    const menuBtn = document.getElementById("menu-btn");
+    const closeBtn = document.getElementById("close-btn");
+    const sidebar = document.getElementById("sidebar");
+
+    if (menuBtn && closeBtn && sidebar) {
+      menuBtn.addEventListener("click", () => {
+        sidebar.classList.remove("translate-x-full", "hidden");
+        sidebar.classList.add("translate-x-0");
+      });
+
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.remove("translate-x-0");
+        sidebar.classList.add("translate-x-full");
+
+        setTimeout(() => {
+          sidebar.classList.add("hidden");
+        }, 300);
+      });
+    }
+
+    // Profile dropdown functionality
+    const profileBtn = document.getElementById("profileBtn");
+    const profileModal = document.getElementById("profileModal");
+
+    if (profileBtn && profileModal) {
+      profileBtn.addEventListener("click", () => {
+        profileModal.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
+          profileModal.classList.add("hidden");
+        }
+      });
+    }
+  });
+</script>
 
 </body>
 </html>

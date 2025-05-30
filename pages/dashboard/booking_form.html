@@ -161,14 +161,13 @@ closeBtn.addEventListener("click", () => {
           <input type="tel" id="dcontact" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
         </div>
 
-        <!-- Email Address -->
+                <!-- Email Address -->
         <div>
           <label class="font-semibold block text-[#333333] mb-1 text-sm">
-            Email Address
+            <span class="text-red-500">*</span> Email Address
           </label>
-          <input type="email" id="demail" class="w-full rounded-lg px-4 py-2 focus:outline-none" />
+          <input type="email" id="demail" required class="w-full rounded-lg px-4 py-2 focus:outline-none" />
         </div>
-
         <!-- Amenity Type -->
         <div>
           <label class="font-semibold block text-[#333333] mb-1 text-sm">
@@ -334,12 +333,12 @@ closeBtn.addEventListener("click", () => {
         <input type="tel" id="contact" required class="w-full mt-1 rounded-xl border p-2" />
       </div>
 
-      <div class="mb-3">
-        <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
-          Email Address
-        </label>
-        <input type="email" id="email" class="w-full mt-1 rounded-xl border p-2" />
-      </div>
+    <div class="mb-3">
+  <label class="font-semibold block text-[#333333] mb-1 text-sm md:text-base">
+    <span class="text-red-500">*</span> Email Address
+  </label>
+  <input type="email" id="email" required class="w-full mt-1 rounded-xl border p-2" />
+</div>
 
       <p class="text-xs text-red-500 font-thin">* Indicates required field</p>
 
@@ -486,11 +485,11 @@ closeBtn.addEventListener("click", () => {
     }
 
     function validateStep(step) {
-      const fields = {
-        1: ['fname', 'lname', 'contact'],
-        2: ['amenity', 'date', 'time', 'attendees'],
-        3: ['purpose', 'type']
-      };
+       const fields = {
+    1: ['fname', 'lname', 'contact', 'email'], // Added 'email' to required fields
+    2: ['amenity', 'date', 'time', 'attendees'],
+    3: ['purpose', 'type']
+  };
       
       const missing = fields[step]?.filter(id => {
         if (id === 'type') return !document.querySelector('input[name="type"]:checked');

@@ -260,20 +260,23 @@ closeBtn.addEventListener("click", () => {
 
 <!-- Template Announcement Card -->
 <template id="announcement-template">
-  <div class="bg-[#FAF1E6] rounded-xl border border-[#5F8B4C] px-4 py-4 flex flex-col md:flex-row items-start gap-6 shadow-md h-full" id="announcementsSection">
+  <a href="announcement_detail.html?id=${announcement.id}" class="bg-[#FAF1E6] rounded-xl border border-[#5F8B4C] px-4 py-4 flex flex-col md:flex-row items-start gap-6 shadow-md h-full cursor-pointer hover:shadow-lg transition-shadow duration-200">
     <!-- Left Image -->
     <img class="w-full md:w-48 h-40 object-contain rounded-lg" src="" alt="Announcement Image">
     
     <!-- Right Side Content -->
     <div class="flex-1 flex flex-col justify-between min-h-[10rem]">
       <div>
-        <!-- Announcement Title -->
-        <h3 class="text-lg md:text-xl font-bold mb-2 title"></h3>
+        <!-- Announcement Title with visibility badge -->
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg md:text-xl font-bold mb-2 title"></h3>
+          <span class="visibility-badge hidden bg-[#5F8B4C] text-white text-xs px-2 py-1 rounded-full">Private</span>
+        </div>
 
         <!-- Description with Read More -->
         <p class="text-gray-700 text-sm md:text-base mb-4">
           <span class="description"></span>
-          <a href="#" class="read-more text-green-700 hover:underline">...read more</a>
+          <span class="read-more text-green-700 hover:underline">...read more</span>
         </p>
       </div>
 
@@ -289,7 +292,7 @@ closeBtn.addEventListener("click", () => {
         </div>
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <!-- Pagination -->
@@ -388,11 +391,17 @@ closeBtn.addEventListener("click", () => {
 </section>
 
 <script>
-  // Initialize Supabase
+  // Initialize Supabase with auth
   (function() {
     const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
     window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    
+    // Initialize auth state listener
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session);
+      updateUIForAuthState(session);
+    });
   })();
 
   // Announcements Functionality
@@ -405,93 +414,193 @@ closeBtn.addEventListener("click", () => {
   let filteredData = [];
   let allAnnouncements = [];
 
-  async function fetchAnnouncements() {
-    try {
-      const { data, error } = await supabase
-        .from('announcements')
-        .select('*')
-        .order('date', { ascending: false });
-
-      if (error) throw error;
-
-      if (!data || data.length === 0) {
-        announcementsContainer.innerHTML = `
-          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-            No announcements found in the database.
-          </div>
+  // Update UI based on auth state
+  function updateUIForAuthState(session) {
+    const profileBtn = document.getElementById("profileBtn");
+    const mobileProfile = document.querySelector("#sidebar .text-left p");
+    const authButtons = document.getElementById('auth-buttons');
+    const profileSection = document.querySelector('.relative');
+    
+    if (session?.user) {
+      // User is logged in
+      if (profileBtn) {
+        profileBtn.innerHTML = `
+          <img src="${session.user.user_metadata?.avatar_url || '/pictures/profile.png'}" 
+               alt="Profile" class="h-8 w-8 rounded-full">
         `;
-        return;
       }
+      
+      if (mobileProfile) {
+        mobileProfile.textContent = session.user.user_metadata?.full_name || 
+                                   session.user.email || 
+                                   'User';
+      }
+      
+      if (authButtons) authButtons.classList.add('hidden');
+      if (profileSection) profileSection.classList.remove('hidden');
+    } else {
+      // User is not logged in
+      if (profileBtn) {
+        profileBtn.innerHTML = `
+          <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+        `;
+      }
+      
+      if (mobileProfile) {
+        mobileProfile.textContent = 'Guest';
+      }
+      
+      if (authButtons) authButtons.classList.remove('hidden');
+      if (profileSection) profileSection.classList.add('hidden');
+    }
+  }
 
-      allAnnouncements = data.map(item => ({
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        date: item.date ? new Date(item.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }) : 'No date',
-        image: item.image_url || '/pictures/default-announcement.png',
-        category: item.category || 'General',
-        month: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'long' }) : 'Unknown',
-        importance: item.importance || 'Medium'
-      }));
-
-      filteredData = [...allAnnouncements];
-      loadAnnouncements(filteredData, currentPage);
+  // Logout function
+  async function logout() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      window.location.href = '../../index.html';
     } catch (error) {
-      console.error('Error fetching announcements:', error);
+      console.error('Error logging out:', error.message);
+      alert('Logout failed: ' + error.message);
+    }
+  }
+
+  // Profile modal functionality
+  const profileBtn = document.getElementById("profileBtn");
+  const profileModal = document.getElementById("profileModal");
+
+  if (profileBtn) {
+    profileBtn.addEventListener("click", async () => {
+      profileModal.classList.toggle("hidden");
+      
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const profileLink = profileModal.querySelector('a[href="/pages/profile.html"]');
+        if (profileLink) {
+          profileLink.innerHTML = `
+            <img src="${user.user_metadata?.avatar_url || '/pictures/profilegreen_icon.png'}" 
+                 alt="Profile" class="h-6 w-6">
+            ${user.user_metadata?.full_name || 'Profile'}
+          `;
+        }
+      }
+    });
+
+    // Close modal when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
+        profileModal.classList.add("hidden");
+      }
+    });
+  }
+
+  // Mobile menu logout
+  const mobileLogoutBtn = document.querySelector('#sidebar button');
+  if (mobileLogoutBtn) {
+    mobileLogoutBtn.addEventListener('click', logout);
+  }
+
+  async function fetchAnnouncements() {
+  try {
+    // Get current user session
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    // Base query
+    let query = supabase
+      .from('announcements')
+      .select('*')
+      .order('date', { ascending: false });
+
+    // If user is not authenticated, only show public announcements
+    if (!session) {
+      query = query.eq('visibility', 'public');
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
       announcementsContainer.innerHTML = `
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          Failed to load announcements. Error: ${error.message}
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          No announcements found in the database.
         </div>
       `;
+      return;
     }
-  }
 
-  function loadAnnouncements(data, page = 1) {
-  announcementsContainer.innerHTML = "";
-  const start = (page - 1) * cardsPerPage;
-  const end = start + cardsPerPage;
-  const paginated = data.slice(start, end);
+    allAnnouncements = data.map(item => ({
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      date: item.date ? new Date(item.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }) : 'No date',
+      image: item.image_url || '/pictures/default-announcement.png',
+      category: item.category || 'General',
+      month: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'long' }) : 'Unknown',
+      importance: item.importance || 'Medium',
+      visibility: item.visibility || 'public' // Add visibility to the announcement object
+    }));
 
-  if (paginated.length === 0) {
+    filteredData = [...allAnnouncements];
+    loadAnnouncements(filteredData, currentPage);
+  } catch (error) {
+    console.error('Error fetching announcements:', error);
     announcementsContainer.innerHTML = `
-      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-        No announcements found matching your filters.
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        Failed to load announcements. Error: ${error.message}
       </div>
     `;
-    paginationContainer.innerHTML = "";
-    return;
   }
-
-  paginated.forEach(item => {
-    const clone = template.content.cloneNode(true);
-    clone.querySelector("img").src = item.image;
-    clone.querySelector(".title").textContent = item.title;
-    
-    // Limit description to 20 words
-    const words = item.description.split(' ');
-    const shortDesc = words.length > 100 
-      ? words.slice(0, 100).join(' ') 
-      : item.description;
-    
-    clone.querySelector(".description").textContent = shortDesc;
-    clone.querySelector(".date").textContent = item.date;
-    clone.querySelector(".read-more").href = `announcement_detail.html?id=${item.id}`;
-    
-    // Hide "read more" if description is already short
-    if (words.length <= 20) {
-      clone.querySelector(".read-more").style.display = 'none';
-    }
-    
-    clone.firstElementChild.classList.add("animate-fadeSlide");
-    announcementsContainer.appendChild(clone);
-  });
-
-  renderPagination(data.length, page);
 }
+
+  function loadAnnouncements(data, page = 1) {
+    announcementsContainer.innerHTML = "";
+    const start = (page - 1) * cardsPerPage;
+    const end = start + cardsPerPage;
+    const paginated = data.slice(start, end);
+
+    if (paginated.length === 0) {
+      announcementsContainer.innerHTML = `
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          No announcements found matching your filters.
+        </div>
+      `;
+      paginationContainer.innerHTML = "";
+      return;
+    }
+
+    paginated.forEach(item => {
+      const clone = template.content.cloneNode(true);
+      const card = clone.querySelector("a");
+      card.href = `announcement_detail.html?id=${item.id}`;
+      
+      clone.querySelector("img").src = item.image;
+      clone.querySelector(".title").textContent = item.title;
+      
+      const words = item.description.split(' ');
+      const shortDesc = words.length > 100 
+        ? words.slice(0, 100).join(' ') 
+        : item.description;
+      
+      clone.querySelector(".description").textContent = shortDesc;
+      clone.querySelector(".date").textContent = item.date;
+      
+      if (words.length <= 100) {
+        clone.querySelector(".read-more").style.display = 'none';
+      }
+      
+      clone.firstElementChild.classList.add("animate-fadeSlide");
+      announcementsContainer.appendChild(clone);
+    });
+
+    renderPagination(data.length, page);
+  }
 
   function renderPagination(totalItems, currentPage) {
     const totalPages = Math.ceil(totalItems / cardsPerPage);
@@ -553,7 +662,7 @@ closeBtn.addEventListener("click", () => {
   }
 
   // Image Preview Functionality
-  document.getElementById('imageInput').addEventListener('change', function(e) {
+  document.getElementById('imageInput')?.addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
       const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -587,13 +696,11 @@ closeBtn.addEventListener("click", () => {
   function validateForm(form) {
     let isValid = true;
     
-    // Clear previous errors
     document.querySelectorAll('.error-message').forEach(el => el.remove());
     document.querySelectorAll('.error-highlight').forEach(el => {
       el.classList.remove('error-highlight');
     });
     
-    // Check required fields
     const requiredFields = ['name', 'location', 'issueType', 'email'];
     requiredFields.forEach(fieldName => {
       const field = form.elements[fieldName];
@@ -602,7 +709,6 @@ closeBtn.addEventListener("click", () => {
         field.classList.add('error-highlight');
         showError(field, 'This field is required');
       }
-      // Additional email validation
       else if (fieldName === 'email' && !isValidEmail(field.value)) {
         isValid = false;
         field.classList.add('error-highlight');
@@ -624,7 +730,6 @@ closeBtn.addEventListener("click", () => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  // Helper function to upload image to Supabase Storage
   async function uploadImage(file) {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Math.random()}.${fileExt}`;
@@ -645,11 +750,16 @@ closeBtn.addEventListener("click", () => {
     return publicUrl;
   }
 
-
-
   // Form Submission Handler
-  document.getElementById('concerns-form').addEventListener('submit', async function(e) {
+  document.getElementById('concerns-form')?.addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    // Check authentication
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      alert('Please log in to submit concerns');
+      return;
+    }
     
     if (!validateForm(this)) return;
     
@@ -661,20 +771,15 @@ closeBtn.addEventListener("click", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
       
-      // Match this structure to your table columns
       const concernData = {
         name: formData.get('name'),
         email: formData.get('email'),
         location: formData.get('location'),
         issue_type: formData.get('issueType'),
         description: formData.get('description'),
-        // status defaults to 'Pending'
-        // created_at defaults to now()
+        user_id: session.user.id // Add user ID to track who submitted
       };
       
-      console.log('Submitting data:', concernData);
-
-      // Handle image upload
       const imageFile = formData.get('image');
       if (imageFile && imageFile.size > 0) {
         try {
@@ -684,7 +789,6 @@ closeBtn.addEventListener("click", () => {
         }
       }
       
-      // Insert into database
       const { data, error } = await supabase
         .from('concerns')
         .insert([concernData])
@@ -692,7 +796,6 @@ closeBtn.addEventListener("click", () => {
       
       if (error) throw error;
       
-      // Success handling
       const successDiv = document.createElement('div');
       successDiv.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4';
       successDiv.innerHTML = `
@@ -701,7 +804,6 @@ closeBtn.addEventListener("click", () => {
       `;
       form.parentNode.insertBefore(successDiv, form);
       
-      // Reset form
       form.reset();
       document.getElementById('imagePreviewContainer').style.display = 'none';
       
@@ -722,35 +824,19 @@ closeBtn.addEventListener("click", () => {
 
   // Initialize the page
   document.addEventListener('DOMContentLoaded', async () => {
+    // Check current auth state
+    const { data: { session } } = await supabase.auth.getSession();
+    updateUIForAuthState(session);
+    
+    // Load announcements
     await fetchAnnouncements();
+    
+    // Add filter event listeners
     document.getElementById("filter-category")?.addEventListener("change", applyFilters);
     document.getElementById("filter-month")?.addEventListener("change", applyFilters);
     document.getElementById("filter-importance")?.addEventListener("change", applyFilters);
     document.getElementById("filter-sort")?.addEventListener("change", applyFilters);
   });
-</script>
-
-<!--profile modal-->>
-  <script>
-  const profileBtn = document.getElementById("profileBtn");
-  const profileModal = document.getElementById("profileModal");
-
-  profileBtn.addEventListener("click", () => {
-    profileModal.classList.toggle("hidden");
-  });
-
-  // Optional: Close when clicking outside
-  document.addEventListener("click", (event) => {
-    if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
-      profileModal.classList.add("hidden");
-    }
-  });
-
-  function logout() {
-    // perform logout logic
-    alert("Logging out...");
-    // redirect or clear session, etc.
-  }
 </script>
 
 <footer class="bg-[#5F8B4C] text-white py-12 px-8 md:px-20">

@@ -113,6 +113,39 @@
     window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
   })();
 
+  document.addEventListener('DOMContentLoaded', async () => {
+  // Get announcement ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const announcementId = urlParams.get('id');
+  
+  if (!announcementId) {
+    window.location.href = 'announcements.html';
+    return;
+  }
+
+  // Get announcement data
+  const { data: announcement, error } = await supabase
+    .from('announcements')
+    .select('*')
+    .eq('id', announcementId)
+    .single();
+
+  if (error || !announcement) {
+    window.location.href = 'announcements.html';
+    return;
+  }
+
+  // Check if announcement is private and user is not authenticated
+  const { data: { session } } = await supabase.auth.getSession();
+  if (announcement.visibility === 'private' && !session) {
+    window.location.href = 'announcements.html';
+    return;
+  }
+
+  // Load announcement data into the page...
+  // ... rest of your existing detail page code
+});
+
   // Get ID from URL
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');

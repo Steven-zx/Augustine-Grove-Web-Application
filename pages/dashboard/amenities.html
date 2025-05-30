@@ -574,37 +574,71 @@ closeBtn.addEventListener("click", () => {
     /**
      * Converts raw bookings data into calendar events
      */
-    function processBookingsToEvents(bookings) {
-      const eventsByDate = {};
+   /**
+ * Converts raw bookings data into calendar events
+ */
+/**
+ * Converts raw bookings data into calendar events
+ */
+function processBookingsToEvents(bookings) {
+  const eventsByDate = {};
 
-      // Group bookings by date
-      bookings.forEach(booking => {
-        if (!booking.booking_date) return;
-        if (!eventsByDate[booking.booking_date]) {
-          eventsByDate[booking.booking_date] = [];
-        }
-        eventsByDate[booking.booking_date].push(booking);
-      });
-
-      // Generate calendar events
-      return Object.keys(eventsByDate).map(date => {
-        const dailyBookings = eventsByDate[date];
-        const isFullyBooked = dailyBookings.some(b => 
-          b.status === 'Approved' && 
-          b.start_time === '08:00' && 
-          b.end_time === '20:00'
-        );
-        const isPartiallyBooked = dailyBookings.length > 0 && !isFullyBooked;
-
-        return {
-          start: date,
-          display: 'background',
-          color: isFullyBooked ? '#F87171' : (isPartiallyBooked ? '#FB923C' : 'transparent'),
-          className: 'booking-dot'
-        };
-      });
+  // Group bookings by date
+  bookings.forEach(booking => {
+    if (!booking.booking_date) return;
+    if (!eventsByDate[booking.booking_date]) {
+      eventsByDate[booking.booking_date] = [];
     }
+    eventsByDate[booking.booking_date].push(booking);
+  });
 
+  // Generate calendar events
+  return Object.keys(eventsByDate).map(date => {
+    const dailyBookings = eventsByDate[date];
+    
+    // Check if the entire operating hours are booked (8AM-8PM)
+    const operatingHoursCovered = isDayFullyBooked(dailyBookings);
+    
+    return {
+      start: date,
+      display: 'background',
+      color: operatingHoursCovered ? '#F87171' : '#FB923C', // red for fully booked, orange for partial
+      className: 'booking-bg'
+    };
+  });
+}
+
+/**
+ * Checks if all operating hours (8AM-8PM) are booked
+ */
+function isDayFullyBooked(bookings) {
+  // First filter only approved bookings
+  const approvedBookings = bookings.filter(b => b.status === 'Approved');
+  
+  // If no approved bookings, day is not fully booked
+  if (approvedBookings.length === 0) return false;
+  
+  // Sort bookings by start time
+  approvedBookings.sort((a, b) => a.start_time.localeCompare(b.start_time));
+  
+  // Check if bookings cover 8AM-8PM without gaps
+  let currentTime = '08:00';
+  
+  for (const booking of approvedBookings) {
+    if (booking.start_time > currentTime) {
+      // There's a gap before this booking
+      return false;
+    }
+    currentTime = booking.end_time;
+    if (currentTime >= '20:00') {
+      // We've reached the end of operating hours
+      return true;
+    }
+  }
+  
+  // If we get here, the day isn't fully covered
+  return false;
+}
     async function showTimeSlots(date, amenity) {
     try {
         const dateStr = date.toISOString().split('T')[0];

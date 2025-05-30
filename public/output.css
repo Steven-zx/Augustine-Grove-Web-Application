@@ -3453,3 +3453,19 @@ body {
     padding-right: 2rem;
   }
 }
+
+.fc .booking-bg {
+  opacity: 0.3;
+}
+
+.fc-daygrid-day-frame {
+  position: relative;
+}
+
+.fc-daygrid-day-bg .booking-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

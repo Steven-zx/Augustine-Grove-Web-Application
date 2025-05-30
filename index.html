@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link  href="../dist/output.css" rel="stylesheet">
+<link  href="dist/output.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -31,6 +31,62 @@
 </head>
 <body class="bg-[#FAF1E6]">
 
+  <!-- Add this modal HTML near the top of your body (right after opening <body> tag) -->
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#5F8B4C] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-lg relative">
+    <!-- Close Button (X) in top-right corner -->
+    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    
+    <!-- Logo -->
+    <div class="flex justify-center mb-6">
+      <img src="/pictures/logo 2.png" alt="AG Logo" class="h-16">
+    </div>
+    
+    <!-- Login Form (shown by default) -->
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />    
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Log in
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Don't have an account? <a href="#" onclick="switchToSignup(); return false;" class="underline hover:text-[#FFDDAB]">Sign up</a>
+      </p>
+    </form>
+    
+    <!-- Signup Form (hidden by default) -->
+    <form id="signupForm" class="space-y-4 hidden">
+      <input type="text" id="fullName" placeholder="Full Name" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="text" id="address" placeholder="Address (e.g. Block 3, Lot 8, Phase 2)" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="tel" id="mobileNumber" placeholder="Mobile Number" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="signupPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Sign up
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Already have an account? <a href="#" onclick="switchToLogin(); return false;" class="underline hover:text-[#FFDDAB]">Log in</a>
+      </p>
+    </form>
+  </div>
+</div>
+    
+    
+
+
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="/index.html" class="flex items-center gap-2">
@@ -48,27 +104,26 @@
   <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
     <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
   
-    <!--profile button-->
+    <!-- In your nav bar (replace the existing profile dropdown section) -->
 <div class="relative">
   <button id="profileBtn" class="focus:outline-none">
     <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
   </button>
 
-  <!-- Modal Dropdown -->
   <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <a href="pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
       Profile
     </a>
-    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-      Log Out
+    <button id="authButton" onclick="handleAuthAction()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+      <span id="authText">Log in</span>
     </button>
   </div>
 </div>
@@ -98,19 +153,19 @@
 
     <!-- Nav Links -->
     <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
-      <li><a href="/pages/dashboard/announcement_detail.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+      <li><a href="pages/dashboard/announcement_detail.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
+      <li><a href="pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+      <li><a href="pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
 
 <!-- Bottom Log Out Button -->
 <div class="w-full text-center mt-20 mb-6">
-  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-    Log Out
+  <button id="mobileAuthButton" onclick="handleAuthAction()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+    Log In
   </button>
-  </div>
+</div>
   
 </div>
 </nav>
@@ -205,7 +260,7 @@
             </div>
           </div>
           <div class="flex justify-center mt:16 md:justify-end mt-4">
-          <a href="/pages/dashboard/aboutpage.html" class="font-bold hover:underline text-[#5F8B4C] text-sm md:text-base px-6 py-3">Learn More &gt;</a>
+          <a href="pages/dashboard/aboutpage.html" class="font-bold hover:underline text-[#5F8B4C] text-sm md:text-base px-6 py-3">Learn More &gt;</a>
         </div>
         </div>
       </section>
@@ -216,8 +271,8 @@
   
     <!-- Header -->
     <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
-      <a href="/pages/dashboard/announcements.html"><h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2></a>
-      <a href="/pages/dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
+      <a href="pages/dashboard/announcements.html"><h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2></a>
+      <a href="pages/dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
     </div>
 
     <div class="relative">
@@ -240,7 +295,8 @@
 
 <!-- Announcement Card Template -->
 <template id="announcement-card-template">
-  <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
+  <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200" 
+       onclick="window.location.href='pages/dashboard/announcement_detail.html?id=${announcement.id}'">
     <img src="" alt="Announcement Image" class="rounded-2xl mb-4 h-44 object-contain announcement-img">
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-lg md:text-xl font-bold text-left announcement-title"></h3>
@@ -252,14 +308,13 @@
     <p class="text-gray-700 text-sm flex-grow overflow-hidden mb-4 announcement-description"></p>
     <div class="flex justify-between items-center mt-auto">
       <p class="text-gray-500 text-xs announcement-date"></p>
-      <a class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs announcement-readmore">Read More</a>
+      <span class="bg-[#5F8B4C] text-white px-4 py-2 rounded-2xl hover:bg-green-700 text-xs">Read More</span>
     </div>
   </div>
 </template>
 
 
-        </div>
-      </section>
+      
 
 <!-- Amenities Section -->
 <section class="bg-[#FAF1E6] py-16 px-8 md:px-20">
@@ -281,7 +336,7 @@
         </div>
         <h3 class="text-lg md:text-xl font-bold mt-8 mb-2">Clubhouse</h3>
         <p class="text-gray-700 mb-6 text-sm">Enjoy the perfect balance of convenience, peace, and community living.</p>
-        <a href="/pages/dashboard/amenities.html" class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
+        <a href="pages/dashboard/amenities.html" class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200">
   <i class="fa-solid fa-arrow-right text-[#5F8B4C] text-sm"></i>
 </a>
 
@@ -486,10 +541,10 @@
           <div class="space-y-4">
             <h4 class="font-bold mb-2">Quick links</h4>
             <ul class="space-y-2 text-sm">
-              <li><a href="/index.html" class="hover:underline">Home</a></li>
+              <li><a href="index.html" class="hover:underline">Home</a></li>
               <li><a href="/pages/dashboard/aboutpage.html" class="hover:underline">About Us</a></li>
               <li><a href="/pages/dashboard/amenities.html" class="hover:underline">Amenities</a></li>
-              <li><a href="/pages/dashboard/announcements.html" class="hover:underline">Announcements / News</a></li>
+              <li><a href="/announcements.html" class="hover:underline">Announcements / News</a></li>
               <li><a href="/pages/dashboard/aboutpage.html" class="hover:underline">Contact Us</a></li>
               <li><a href="/pages/dashboard/aboutpage.html" class="hover:underline">FAQs</a></li>
             </ul>
@@ -514,19 +569,221 @@
       </footer>
       
  <!-- Scripts -->
- 
+ <script>
+  // Initialize Supabase with proper session handling
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize Supabase
+  window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+  window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+  window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+  
+  // Check for existing session
+  const { data: { session }, error } = await supabase.auth.getSession();
+  
+  if (error) {
+    console.error('Error checking session:', error);
+    return;
+  }
+  
+  // Update UI based on auth state
+  updateAuthUI();
+  
+  // Set up auth state listener
+  supabase.auth.onAuthStateChange((event, session) => {
+    updateAuthUI();
+  });
+});
+ </script>
  <!--sidebar-->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
- <script>
-  // Initialize Supabase
-    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Add this script section (can be placed with your other scripts) -->
+     <script>
+      // Add this to your existing script section
+async function checkAuthStatus() {
+  const { data: { user } } = await supabase.auth.getUser();
+  return !!user;
+}
+
+async function updateAuthUI() {
+  const isLoggedIn = await checkAuthStatus();
+  const authText = document.getElementById('authText');
+  const authIcon = document.getElementById('authIcon');
+  const mobileAuthButton = document.getElementById('mobileAuthButton');
+
+  if (isLoggedIn) {
+    // Update desktop dropdown
+    if (authText) authText.textContent = 'Log Out';
+    if (authIcon) authIcon.src = '/pictures/logout_icon.png';
+    
+    // Update mobile menu
+    if (mobileAuthButton) mobileAuthButton.textContent = 'Log Out';
+  } else {
+    // Update desktop dropdown
+    if (authText) authText.textContent = 'Log In';
+    if (authIcon) authIcon.src = '/pictures/login_icon.png';
+    
+    // Update mobile menu
+    if (mobileAuthButton) mobileAuthButton.textContent = 'Log In';
+  }
+}
+
+async function handleAuthAction() {
+  const { data: { user } } = await supabase.auth.getUser();
+  const isLoggedIn = !!user;
+  
+  if (isLoggedIn) {
+    // Log out logic
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      // Update UI and redirect to home if not already there
+      if (window.location.pathname !== '/index.html') {
+        window.location.href = '/index.html';
+      } else {
+        updateAuthUI();
+      }
+    }
+  } else {
+    // Open login modal
+    openAuthModal();
+  }
+}
+async function updateAuthUI() {
+  const { data: { user } } = await supabase.auth.getUser();
+  const isLoggedIn = !!user;
+  
+  // Update desktop dropdown
+  const authText = document.getElementById('authText');
+  const authIcon = document.getElementById('authIcon');
+  const mobileAuthButton = document.getElementById('mobileAuthButton');
+  
+  if (isLoggedIn) {
+    if (authText) authText.textContent = 'Log Out';
+    if (authIcon) authIcon.src = '/pictures/logout_icon.png';
+    if (mobileAuthButton) mobileAuthButton.textContent = 'Log Out';
+    
+    // Update profile info in sidebar if it exists
+    const sidebarProfileName = document.querySelector('#sidebar .font-semibold.text-[#5F8B4C]');
+    if (sidebarProfileName && user.user_metadata?.full_name) {
+      sidebarProfileName.textContent = user.user_metadata.full_name;
+    }
+  } else {
+    if (authText) authText.textContent = 'Log In';
+    if (authIcon) authIcon.src = '/pictures/login_icon.png';
+    if (mobileAuthButton) mobileAuthButton.textContent = 'Log In';
+  }
+}
+     </script>
+  // Auth Modal Functions
+  <script>
+  // Auth Modal Functions
+  function openAuthModal(showSignup = false) {
+    const modal = document.getElementById('authModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    if (showSignup) {
+      switchToSignup();
+    } else {
+      switchToLogin();
+    }
+  }
+  
+  function closeAuthModal() {
+    document.getElementById('authModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  
+  function switchToLogin() {
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('signupForm').classList.add('hidden');
+  }
+  
+  function switchToSignup() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+  }
+  
+  // Rest of your existing form submission handlers remain the same
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  const submitButton = e.target.querySelector('button[type="submit"]');
+  
+  submitButton.disabled = true;
+  submitButton.textContent = 'Logging in...';
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    
+    if (error) throw error;
+    
+    closeAuthModal();
+    updateAuthUI(); // Add this line to update UI after successful login
+    // Don't need alert if you have visual UI updates
+  } catch (error) {
+    console.error('Login error:', error);
+    alert(error.message || 'Login failed');
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Log in';
+  }
+});
+  
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const address = document.getElementById('address').value;
+    const mobileNumber = document.getElementById('mobileNumber').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    
+    if (password !== confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Signing up...';
+    
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            address,
+            mobile_number: mobileNumber
+          }
+        }
+      });
+      
+      if (error) throw error;
+      
+      alert('Signup successful! Please check your email for verification.');
+      switchToLogin();
+      
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert(error.message || 'Signup failed');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Sign up';
+    }
+  });
+</script>
 
  <script>
  const menuBtn = document.getElementById("menu-btn");
@@ -764,71 +1021,97 @@ closeBtn.addEventListener("click", () => {
   const next = document.getElementById("next");
   const prev = document.getElementById("prev");
 
-  async function loadLatestAnnouncements() {
-    try {
-      const { data, error } = await supabase
-        .from('announcements')
-        .select('*')
-        .order('date', { ascending: false })
-        .limit(5);
+ async function loadLatestAnnouncements() {
+  try {
+    // Get current user session
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    // Base query
+    let query = supabase
+      .from('announcements')
+      .select('*')
+      .order('date', { ascending: false })
+      .limit(5);
 
-      if (error) throw error;
+    // If user is not authenticated, only show public announcements
+    if (!session) {
+      query = query.eq('visibility', 'public');
+    }
 
-      if (!data || data.length === 0) {
-        carousel.innerHTML = `
-          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-            No announcements found.
-          </div>
-        `;
+    const { data, error } = await query;
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      carousel.innerHTML = `
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+          No announcements found.
+        </div>
+      `;
+      return;
+    }
+
+    data.forEach((announcement) => {
+      // Skip private announcements for non-authenticated users (just in case)
+      if (!session && announcement.visibility === 'private') {
         return;
       }
 
-      data.forEach((announcement) => {
-        const clone = template.content.cloneNode(true);
-        const img = clone.querySelector(".announcement-img");
-        img.src = announcement.image_url || "/pictures/default-announcement.png";
-        img.alt = announcement.title;
-        
-        clone.querySelector(".announcement-title").textContent = announcement.title;
-        clone.querySelector(".announcement-description").textContent = 
-          announcement.description.length > 100 
-            ? announcement.description.substring(0, 100) + "..." 
-            : announcement.description;
-            
-        clone.querySelector(".announcement-date").textContent = 
-          announcement.date ? new Date(announcement.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-          }) : 'No date';
+      const clone = template.content.cloneNode(true);
+      const card = clone.querySelector("div");
+      
+      // Set the onclick handler with the correct announcement ID
+      card.onclick = function() {
+        window.location.href = `pages/dashboard/announcement_detail.html?id=${announcement.id}`;
+      };
+      
+      const img = clone.querySelector(".announcement-img");
+      img.src = announcement.image_url || "/pictures/default-announcement.png";
+      img.alt = announcement.title;
+      
+      clone.querySelector(".announcement-title").textContent = announcement.title;
+      clone.querySelector(".announcement-description").textContent = 
+        announcement.description.length > 100 
+          ? announcement.description.substring(0, 100) + "..." 
+          : announcement.description;
           
-        clone.querySelector(".announcement-readmore").href = 
-          `/pages/dashboard/announcement_detail.html?id=${announcement.id}`;
-          
-        // Hide read more if description is short
-        if (announcement.description.length <= 100) {
-          clone.querySelector(".announcement-readmore").style.display = 'none';
-        }
+      clone.querySelector(".announcement-date").textContent = 
+        announcement.date ? new Date(announcement.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        }) : 'No date';
         
-        carousel.appendChild(clone);
-      });
+      // Add visibility badge if announcement is private and user is authenticated
+      if (session && announcement.visibility === 'private') {
+        const detailsDiv = clone.querySelector(".flex.justify-between.items-center.mb-2");
+        const badge = document.createElement('span');
+        badge.className = 'bg-[#5F8B4C] text-white text-xs px-2 py-1 rounded-full ml-2';
+        badge.textContent = 'Private';
+        detailsDiv.appendChild(badge);
+      }
+      
+      carousel.appendChild(clone);
+    });
 
-    } catch (err) {
-      console.error("Error loading announcements:", err);
-      carousel.innerHTML = `
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          Failed to load announcements. Please try again later.
-        </div>
-      `;
-    }
+  } catch (err) {
+    console.error("Error loading announcements:", err);
+    carousel.innerHTML = `
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        Failed to load announcements. Please try again later.
+      </div>
+    `;
   }
+}   
 
   // Carousel Scroll Function
-  next.addEventListener("click", () => {
+  next.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent triggering card click
     carousel.scrollBy({ left: 350, behavior: "smooth" });
   });
 
-  prev.addEventListener("click", () => {
+  prev.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent triggering card click
     carousel.scrollBy({ left: -350, behavior: "smooth" });
   });
 
