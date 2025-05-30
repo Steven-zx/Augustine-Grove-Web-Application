@@ -93,9 +93,9 @@
           <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
           Profile
         </a>
-        <button onclick="openAuthModal()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+        <button onclick="handleLogout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
           <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-          Log in
+          Log out
         </button>
       </div>
     </div>
@@ -126,7 +126,7 @@
     </ul>
     
     <div class="w-full text-center mt-20 mb-6">
-      <button onclick="openAuthModal()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+      <button onclick="handleLogout()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
         Log Out
       </button>
     </div>
@@ -143,241 +143,208 @@
         <p class="mt-2">Loading profile...</p>
       </div>
 
-      <!-- Replace the existing profileContent div with this updated version -->
-<div id="profileContent" class="hidden">
-  <!-- Name Field -->
-  <div class="flex justify-between items-start mb-3">
-    <div>
-      <p class="font-bold">Full Name</p>
-      <p id="profileName">Loading...</p>
-      <div id="nameEditForm" class="hidden mt-2">
-        <input type="text" id="nameInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
-        <div class="flex gap-2 mt-2">
-          <button onclick="saveField('name')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
-          <button onclick="cancelEdit('name')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+      <div id="profileContent" class="hidden">
+        <!-- Name Field -->
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <p class="font-bold">Full Name</p>
+            <p id="profileName">Loading...</p>
+            <div id="nameEditForm" class="hidden mt-2">
+              <input type="text" id="nameInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+              <div class="flex gap-2 mt-2">
+                <button onclick="saveField('name')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+                <button onclick="cancelEdit('name')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <button onclick="startEdit('name')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+            <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+            <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+          </button>
+        </div>
+
+        <!-- Email Field (non-editable) -->
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <p class="font-bold">Email Address</p>
+            <p id="profileEmail">Loading...</p>
+          </div>
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="mb-4">
+          <p class="font-bold mb-2 text-center">Profile picture</p>
+          <div class="flex flex-col items-center space-y-1">
+            <div id="profileAvatar" class="w-16 h-16 rounded-full bg-green-600 text-white flex items-center justify-center text-3xl">
+              <!-- Will be filled by JavaScript -->
+            </div>
+            <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+              <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+              <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Address Field -->
+        <div class="flex justify-between items-start mb-3">
+          <div>
+            <p class="font-bold">Address</p>
+            <p id="profileAddress">Loading...</p>
+            <div id="addressEditForm" class="hidden mt-2">
+              <input type="text" id="addressInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+              <div class="flex gap-2 mt-2">
+                <button onclick="saveField('address')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+                <button onclick="cancelEdit('address')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <button onclick="startEdit('address')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+            <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+            <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+          </button>
+        </div>
+
+        <!-- Mobile Number Field -->
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="font-bold">Mobile Number</p>
+            <p id="profileMobile">Loading...</p>
+            <div id="mobileEditForm" class="hidden mt-2">
+              <input type="tel" id="mobileInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
+              <div class="flex gap-2 mt-2">
+                <button onclick="saveField('mobile')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
+                <button onclick="cancelEdit('mobile')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <button onclick="startEdit('mobile')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
+            <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
+            <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
+          </button>
         </div>
       </div>
     </div>
-    <button onclick="startEdit('name')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
-    </button>
-  </div>
-
-  <!-- Email Field (non-editable) -->
-  <div class="flex justify-between items-start mb-3">
-    <div>
-      <p class="font-bold">Email Address</p>
-      <p id="profileEmail">Loading...</p>
-    </div>
-  </div>
-
-  <!-- Profile Picture -->
-  <div class="mb-4">
-    <p class="font-bold mb-2 text-center">Profile picture</p>
-    <div class="flex flex-col items-center space-y-1">
-      <div id="profileAvatar" class="w-16 h-16 rounded-full bg-green-600 text-white flex items-center justify-center text-3xl">
-        <!-- Will be filled by JavaScript -->
-      </div>
-      <button class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-        <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-        <span class="text-[#5F8B4C] text-xs font-bold">Change</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Address Field -->
-  <div class="flex justify-between items-start mb-3">
-    <div>
-      <p class="font-bold">Address</p>
-      <p id="profileAddress">Loading...</p>
-      <div id="addressEditForm" class="hidden mt-2">
-        <input type="text" id="addressInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
-        <div class="flex gap-2 mt-2">
-          <button onclick="saveField('address')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
-          <button onclick="cancelEdit('address')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
-        </div>
-      </div>
-    </div>
-    <button onclick="startEdit('address')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
-    </button>
-  </div>
-
-  <!-- Mobile Number Field -->
-  <div class="flex justify-between items-start">
-    <div>
-      <p class="font-bold">Mobile Number</p>
-      <p id="profileMobile">Loading...</p>
-      <div id="mobileEditForm" class="hidden mt-2">
-        <input type="tel" id="mobileInput" class="w-full px-3 py-1 rounded-lg border border-[#5F8B4C]">
-        <div class="flex gap-2 mt-2">
-          <button onclick="saveField('mobile')" class="bg-[#5F8B4C] text-white px-3 py-1 rounded text-xs">Save</button>
-          <button onclick="cancelEdit('mobile')" class="bg-gray-300 px-3 py-1 rounded text-xs">Cancel</button>
-        </div>
-      </div>
-    </div>
-    <button onclick="startEdit('mobile')" class="text-green-700 text-xs flex items-center space-x-1 hover:underline">
-      <img src="/pictures/pencil_icon.png" alt="Edit" class="w-3 h-3">
-      <span class="text-[#5F8B4C] text-xs font-bold">Edit</span>
-    </button>
   </div>
 </div>
-    
 
 <script>
   // Initialize Supabase
-// Initialize Supabase with proper session handling
-document.addEventListener('DOMContentLoaded', async () => {
-  // Initialize Supabase
-  window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-  window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-  window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
-  
-  
-  // Check for existing session
-  const { data: { session }, error } = await supabase.auth.getSession();
-  
-  if (error) {
-    console.error('Error checking session:', error);
-    openAuthModal();
-    return;
-  }
-  
-  if (!session) {
-    openAuthModal();
-    return;
-  }
-  
-  async function updateAuthUI() {
-  const { data: { user } } = await supabase.auth.getUser();
-  const isLoggedIn = !!user;
-  
-  // Update desktop dropdown
-  const authText = document.getElementById('authText');
-  const authIcon = document.getElementById('authIcon');
-  const mobileAuthButton = document.getElementById('mobileAuthButton');
-  
-  if (isLoggedIn) {
-    if (authText) authText.textContent = 'Log Out';
-    if (authIcon) authIcon.src = '/pictures/logout_icon.png';
-    if (mobileAuthButton) mobileAuthButton.textContent = 'Log Out';
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize Supabase
+    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
     
-    // Update profile info in sidebar if it exists
-    const sidebarProfileName = document.querySelector('#sidebar .font-semibold.text-[#5F8B4C]');
-    if (sidebarProfileName && user.user_metadata?.full_name) {
-      sidebarProfileName.textContent = user.user_metadata.full_name;
-    }
-  } else {
-    if (authText) authText.textContent = 'Log In';
-    if (authIcon) authIcon.src = '/pictures/login_icon.png';
-    if (mobileAuthButton) mobileAuthButton.textContent = 'Log In';
-  }
-}
-
-  // If we have a session, load the profile
-  loadUserProfile();
-  
-  // Set up auth state listener
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_OUT') {
+    // Check for existing session
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('Error checking session:', error);
       openAuthModal();
-    } else if (event === 'SIGNED_IN') {
-      loadUserProfile();
+      return;
     }
-  });
-});
-
-async function handleAuthAction() {
-  const { data: { user } } = await supabase.auth.getUser();
-  const isLoggedIn = !!user;
-  
-  if (isLoggedIn) {
-    // Log out logic
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-      // Update UI and redirect to home if not already there
-      if (window.location.pathname !== '/index.html') {
+    
+    if (!session) {
+      openAuthModal();
+      return;
+    }
+    
+    // If we have a session, load the profile
+    loadUserProfile();
+    
+    // Set up auth state listener
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
         window.location.href = '/index.html';
-      } else {
-        updateAuthUI();
+      } else if (event === 'SIGNED_IN') {
+        loadUserProfile();
       }
+    });
+  });
+
+  // Logout function
+  async function handleLogout() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      // Redirect to index page after logout
+      window.location.href = '/index.html';
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Failed to log out. Please try again.');
     }
-  } else {
-    // Open login modal
-    openAuthModal();
   }
-}
 
   // Edit Profile Functions
-function startEdit(field) {
-  // Hide all edit forms first
-  document.getElementById('nameEditForm').classList.add('hidden');
-  document.getElementById('addressEditForm').classList.add('hidden');
-  document.getElementById('mobileEditForm').classList.add('hidden');
-  
-  // Show the selected edit form
-  const form = document.getElementById(`${field}EditForm`);
-  const input = document.getElementById(`${field}Input`);
-  const currentValue = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`).textContent;
-  
-  input.value = currentValue;
-  form.classList.remove('hidden');
-}
-
-function cancelEdit(field) {
-  document.getElementById(`${field}EditForm`).classList.add('hidden');
-}
-
-async function saveField(field) {
-  const input = document.getElementById(`${field}Input`);
-  const newValue = input.value.trim();
-  const displayElement = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`);
-  
-  if (!newValue) {
-    alert(`${field} cannot be empty`);
-    return;
+  function startEdit(field) {
+    // Hide all edit forms first
+    document.getElementById('nameEditForm').classList.add('hidden');
+    document.getElementById('addressEditForm').classList.add('hidden');
+    document.getElementById('mobileEditForm').classList.add('hidden');
+    
+    // Show the selected edit form
+    const form = document.getElementById(`${field}EditForm`);
+    const input = document.getElementById(`${field}Input`);
+    const currentValue = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`).textContent;
+    
+    input.value = currentValue;
+    form.classList.remove('hidden');
   }
-  
-  try {
-    // Get current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    if (userError) throw userError;
-    
-    // Prepare update data
-    let updateData = {};
-    if (field === 'name') updateData = { full_name: newValue };
-    if (field === 'address') updateData = { address: newValue };
-    if (field === 'mobile') updateData = { mobile_number: newValue };
-    
-    // Update user metadata
-    const { error: updateError } = await supabase.auth.updateUser({
-      data: updateData
-    });
-    
-    if (updateError) throw updateError;
-    
-    // Update UI
-    displayElement.textContent = newValue;
+
+  function cancelEdit(field) {
     document.getElementById(`${field}EditForm`).classList.add('hidden');
-    
-    // Show success message
-    const successMsg = document.createElement('div');
-    successMsg.className = 'text-green-600 text-sm mt-1';
-    successMsg.textContent = 'Updated successfully!';
-    displayElement.parentNode.appendChild(successMsg);
-    
-    // Remove success message after 3 seconds
-    setTimeout(() => {
-      successMsg.remove();
-    }, 3000);
-    
-  } catch (error) {
-    console.error(`Error updating ${field}:`, error);
-    alert(`Failed to update ${field}. Please try again.`);
   }
-}
+
+  async function saveField(field) {
+    const input = document.getElementById(`${field}Input`);
+    const newValue = input.value.trim();
+    const displayElement = document.getElementById(`profile${field.charAt(0).toUpperCase() + field.slice(1)}`);
+    
+    if (!newValue) {
+      alert(`${field} cannot be empty`);
+      return;
+    }
+    
+    try {
+      // Get current user
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      
+      // Prepare update data
+      let updateData = {};
+      if (field === 'name') updateData = { full_name: newValue };
+      if (field === 'address') updateData = { address: newValue };
+      if (field === 'mobile') updateData = { mobile_number: newValue };
+      
+      // Update user metadata
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: updateData
+      });
+      
+      if (updateError) throw updateError;
+      
+      // Update UI
+      displayElement.textContent = newValue;
+      document.getElementById(`${field}EditForm`).classList.add('hidden');
+      
+      // Show success message
+      const successMsg = document.createElement('div');
+      successMsg.className = 'text-green-600 text-sm mt-1';
+      successMsg.textContent = 'Updated successfully!';
+      displayElement.parentNode.appendChild(successMsg);
+      
+      // Remove success message after 3 seconds
+      setTimeout(() => {
+        successMsg.remove();
+      }, 3000);
+      
+    } catch (error) {
+      console.error(`Error updating ${field}:`, error);
+      alert(`Failed to update ${field}. Please try again.`);
+    }
+  }
+
   // Auth Modal Functions
   function openAuthModal(showSignup = false) {
     const modal = document.getElementById('authModal');
@@ -518,45 +485,45 @@ async function saveField(field) {
 
   // Function to load user profile
   async function loadUserProfile() {
-  try {
-    // Get the current user from Supabase
-    const { data: { user }, error } = await supabase.auth.getUser();
-    
-    if (error) throw error;
-    if (!user) {
+    try {
+      // Get the current user from Supabase
+      const { data: { user }, error } = await supabase.auth.getUser();
+      
+      if (error) throw error;
+      if (!user) {
+        openAuthModal();
+        return;
+      }
+
+      // Get user metadata
+      const userData = user.user_metadata || {};
+      
+      // Update profile fields
+      document.getElementById('profileName').textContent = userData.full_name || 'Not set';
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('profileAddress').textContent = userData.address || 'Not set';
+      document.getElementById('profileMobile').textContent = userData.mobile_number || 'Not set';
+      
+      // Create profile avatar
+      const avatar = document.getElementById('profileAvatar');
+      if (userData.avatar_url) {
+        avatar.innerHTML = `<img src="${userData.avatar_url}" alt="Profile" class="w-full h-full rounded-full object-cover">`;
+      } else {
+        // Fallback: Use first letter of email
+        const firstLetter = user.email.charAt(0).toUpperCase();
+        avatar.textContent = firstLetter;
+        avatar.style.backgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+      }
+
+      // Hide loading, show content
+      document.getElementById('loadingIndicator').classList.add('hidden');
+      document.getElementById('profileContent').classList.remove('hidden');
+
+    } catch (error) {
+      console.error('Error loading profile:', error);
       openAuthModal();
-      return;
     }
-
-    // Get user metadata
-    const userData = user.user_metadata || {};
-    
-    // Update profile fields
-    document.getElementById('profileName').textContent = userData.full_name || 'Not set';
-    document.getElementById('profileEmail').textContent = user.email;
-    document.getElementById('profileAddress').textContent = userData.address || 'Not set';
-    document.getElementById('profileMobile').textContent = userData.mobile_number || 'Not set';
-    
-    // Create profile avatar
-    const avatar = document.getElementById('profileAvatar');
-    if (userData.avatar_url) {
-      avatar.innerHTML = `<img src="${userData.avatar_url}" alt="Profile" class="w-full h-full rounded-full object-cover">`;
-    } else {
-      // Fallback: Use first letter of email
-      const firstLetter = user.email.charAt(0).toUpperCase();
-      avatar.textContent = firstLetter;
-      avatar.style.backgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
-    }
-
-    // Hide loading, show content
-    document.getElementById('loadingIndicator').classList.add('hidden');
-    document.getElementById('profileContent').classList.remove('hidden');
-
-  } catch (error) {
-    console.error('Error loading profile:', error);
-    openAuthModal();
   }
-}
 </script>
 
 </body>
