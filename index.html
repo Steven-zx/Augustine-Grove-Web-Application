@@ -186,8 +186,8 @@
     <h1 class="font-custom text-4xl sm:text-6xl md:text-9xl mb-4 sm:mb-8 md:mb-20 text-outline leading-tight">Augustine Grove</h1>
     
     <div class="flex md:gap-20 gap-10 justify-center">
-      <a href="announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-xs sm:text-base md:text-xl px-6 py-2 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
-      <a href="amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-xs sm:text-base md:text-xl px-6 py-2 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
+      <a href="/announcements.html" class="font-bold bg-[#5F8B4C] hover:bg-green-700 text-white text-xs sm:text-base md:text-xl px-6 py-2 md:px-20 rounded-[80px] transition transform hover:scale-105 duration-300">Updates ></a>              
+      <a href="/pages/dashboard/amenities.html" class="font-bold bg-[#E6DCD0] hover:bg-[#d6cfc0] text-[#5F8B4C] text-xs sm:text-base md:text-xl px-6 py-2 md:px-20 rounded-[80px] border-2 border-[#5F8B4C] transition transform hover:scale-105 duration-300">Amenities</a>
     </div>
 
     <!-- Dot Indicators -->
@@ -265,19 +265,14 @@
         </div>
       </section>
 
-<!-- Announcements -->
+!-- Announcements Section -->
 <section class="bg-[#ffe5bd] py-12 px-8 md:px-40">
   <div class="container mx-auto px-4">
   
     <!-- Header -->
     <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 md:gap-0">
-<<<<<<< Updated upstream
       <a href="pages/dashboard/announcements.html"><h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2></a>
       <a href="pages/dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
-=======
-      <a href="/pages/dashboard/announcements.html"><h2 class="text-xxl md:text-2xl font-bold">Latest Community Updates</h2></a>
-      <a href="/pages/dashboard/announcements.html" class="text-[#5F8B4C] font-bold hover:underline text-sm md:text-base md:px-3 md:py-3">View More ></a>
->>>>>>> Stashed changes
     </div>
 
     <div class="relative">
@@ -300,12 +295,8 @@
 
 <!-- Announcement Card Template -->
 <template id="announcement-card-template">
-<<<<<<< Updated upstream
   <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col cursor-pointer hover:shadow-lg transition-shadow duration-200" 
        onclick="window.location.href='pages/dashboard/announcement_detail.html?id=${announcement.id}'">
-=======
-  <div class="flex-shrink-0 w-[280px] md:w-[350px] bg-white p-6 rounded-3xl shadow-md h-[430px] md:h-[500px] flex flex-col">
->>>>>>> Stashed changes
     <img src="" alt="Announcement Image" class="rounded-2xl mb-4 h-44 object-contain announcement-img">
     <div class="flex justify-between items-center mb-2">
       <h3 class="text-lg md:text-xl font-bold text-left announcement-title"></h3>
@@ -321,7 +312,6 @@
     </div>
   </div>
 </template>
-
 
       
 
@@ -1030,88 +1020,63 @@ closeBtn.addEventListener("click", () => {
   const next = document.getElementById("next");
   const prev = document.getElementById("prev");
 
- async function loadLatestAnnouncements() {
-  try {
-    // Get current user session
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    // Base query
-    let query = supabase
-      .from('announcements')
-      .select('*')
-      .order('date', { ascending: false })
-      .limit(5);
+  async function loadLatestAnnouncements() {
+    try {
+      const { data, error } = await supabase
+        .from('announcements')
+        .select('*')
+        .order('date', { ascending: false })
+        .limit(5);
 
-    // If user is not authenticated, only show public announcements
-    if (!session) {
-      query = query.eq('visibility', 'public');
-    }
+      if (error) throw error;
 
-    const { data, error } = await query;
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      carousel.innerHTML = `
-        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-          No announcements found.
-        </div>
-      `;
-      return;
-    }
-
-    data.forEach((announcement) => {
-      // Skip private announcements for non-authenticated users (just in case)
-      if (!session && announcement.visibility === 'private') {
+      if (!data || data.length === 0) {
+        carousel.innerHTML = `
+          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+            No announcements found.
+          </div>
+        `;
         return;
       }
 
-      const clone = template.content.cloneNode(true);
-      const card = clone.querySelector("div");
-      
-      // Set the onclick handler with the correct announcement ID
-      card.onclick = function() {
-        window.location.href = `pages/dashboard/announcement_detail.html?id=${announcement.id}`;
-      };
-      
-      const img = clone.querySelector(".announcement-img");
-      img.src = announcement.image_url || "/pictures/default-announcement.png";
-      img.alt = announcement.title;
-      
-      clone.querySelector(".announcement-title").textContent = announcement.title;
-      clone.querySelector(".announcement-description").textContent = 
-        announcement.description.length > 100 
-          ? announcement.description.substring(0, 100) + "..." 
-          : announcement.description;
-          
-      clone.querySelector(".announcement-date").textContent = 
-        announcement.date ? new Date(announcement.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        }) : 'No date';
+      data.forEach((announcement) => {
+        const clone = template.content.cloneNode(true);
+        const card = clone.querySelector("div"); // Get the card container
         
-      // Add visibility badge if announcement is private and user is authenticated
-      if (session && announcement.visibility === 'private') {
-        const detailsDiv = clone.querySelector(".flex.justify-between.items-center.mb-2");
-        const badge = document.createElement('span');
-        badge.className = 'bg-[#5F8B4C] text-white text-xs px-2 py-1 rounded-full ml-2';
-        badge.textContent = 'Private';
-        detailsDiv.appendChild(badge);
-      }
-      
-      carousel.appendChild(clone);
-    });
+        // Set the onclick handler with the correct announcement ID
+        card.onclick = function() {
+          window.location.href = `pages/dashboard/announcement_detail.html?id=${announcement.id}`;
+        };
+        
+        const img = clone.querySelector(".announcement-img");
+        img.src = announcement.image_url || "/pictures/default-announcement.png";
+        img.alt = announcement.title;
+        
+        clone.querySelector(".announcement-title").textContent = announcement.title;
+        clone.querySelector(".announcement-description").textContent = 
+          announcement.description.length > 100 
+            ? announcement.description.substring(0, 100) + "..." 
+            : announcement.description;
+            
+        clone.querySelector(".announcement-date").textContent = 
+          announcement.date ? new Date(announcement.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          }) : 'No date';
+          
+        carousel.appendChild(clone);
+      });
 
-  } catch (err) {
-    console.error("Error loading announcements:", err);
-    carousel.innerHTML = `
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        Failed to load announcements. Please try again later.
-      </div>
-    `;
+    } catch (err) {
+      console.error("Error loading announcements:", err);
+      carousel.innerHTML = `
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load announcements. Please try again later.
+        </div>
+      `;
+    }
   }
-}   
 
   // Carousel Scroll Function
   next.addEventListener("click", (e) => {
@@ -1127,10 +1092,6 @@ closeBtn.addEventListener("click", () => {
   // Load announcements when page is ready
   document.addEventListener('DOMContentLoaded', loadLatestAnnouncements);
 </script>
-
-<!-- Scripts -->
-
-  <script>
 
     // QR Code Functions
     let currentQRCodeData = null;
