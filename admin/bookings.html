@@ -6,25 +6,42 @@
 <link  href="../dist/output.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
 
 <title>Augustine Grove</title>
+<style>
+  .status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .status-pending {
+    background-color: #FEF3C7;
+    color: #92400E;
+  }
+  .status-approved {
+    background-color: #D1FAE5;
+    color: #065F46;
+  }
+  .status-rejected {
+    background-color: #FEE2E2;
+    color: #92400E;
+  }
+</style>
 </head>
 <body class="bg-[#FAF1E6]">
 
-<!-- Nav BAr -->
+<!-- Nav Bar -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="main.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
     <div class="flex-row items-start">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
     <!-- Admin Badge beside logo or user -->
-<div class="gap-2 text-base font-bold">
-  ADMIN
-</div>
-</div>
-
+    <div class="gap-2 text-base font-bold">
+      ADMIN
+    </div>
+    </div>
   </a>
 
   <!-- Hamburger Button -->
@@ -43,32 +60,24 @@
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
 
-  
     <!--profile button-->
-<div class="relative">
-  <button id="profileBtn" class="focus:outline-none">
-    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
-  </button>
+    <div class="relative">
+      <button id="profileBtn" class="focus:outline-none">
+        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+      </button>
 
-  <!-- Modal Dropdown -->
-  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-   <!--
-    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-      Profile
-    </a>  -->
-    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-      Log Out
-    </button>
-  </div>
-</div>
-
+      <!-- Modal Dropdown -->
+      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+        <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+          <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+          Log Out
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Mobile Slide-in Menu -->
   <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden pointer-events-none">
-
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
       <button id="close-btn" class="text-[#5F8B4C]">
@@ -93,190 +102,250 @@
       <li><a href="gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
-    
 
-<!-- Bottom Log Out Button -->
-<div class="w-full text-center mt-20 mb-6">
-  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-    Log Out
-  </button>
+    <!-- Bottom Log Out Button -->
+    <div class="w-full text-center mt-20 mb-6">
+      <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+        Log Out
+      </button>
+    </div>
   </div>
-  
-</div>
 </nav>
 
- <div class="flex justify-between items-center py-6 w-full ">
+<div class="flex justify-between items-center py-6 w-full">
   <h1 class="flex items-start md:text-2xl text-xl text-[#333333] font-bold sm:px-10 md:px-20">Booking Requests</h1>
-   <!-- 🔙 Back button -->
+  <!-- 🔙 Back button -->
   <div class="px-6 py-2">
-  <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
-    <i class="fa-solid fa-xmark"></i>
-  </button>
+    <button onclick="history.back()" class="text-xl text-[#5F8B4C] hover:text-[#FFDDAB] transition-colors duration-200 font-bold">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
 </div>
+
+<!-- Filters -->
+<div class="flex flex-wrap gap-4 mb-10 px-4 sm:px-10 md:px-20">
+  <select id="filter-status" class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-2 text-sm font-medium focus:outline-none">
+    <option value="all">All Statuses</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Rejected">Rejected</option>
+  </select>
+  <select id="filter-amenity" class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-2 text-sm font-medium focus:outline-none">
+    <option value="all">All Amenities</option>
+    <option value="Clubhouse">Clubhouse</option>
+    <option value="Swimming Pool">Swimming Pool</option>
+    <option value="Basketball Court">Basketball Court</option>
+  </select>
+  <select id="filter-sort" class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-2 text-sm font-medium focus:outline-none">
+    <option value="newest">Newest First</option>
+    <option value="oldest">Oldest First</option>
+  </select>
 </div>
+
 <!-- 📦 Booking Container -->
 <div id="booking-container" class="px-4 sm:px-10 md:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-<!-- ✅ Template (hidden until cloned in JS) -->
-<template id="booking-card-template">
-  <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 relative transition hover:shadow-lg">
-    <!-- Status Badge -->
-    <div class="absolute top-4 right-4 flex items-center gap-2 text-sm font-semibold px-3 py-1 rounded-full status-section">
-      <i class="status-icon"></i>
-      <span class="status-text capitalize"></span>
-    </div>
+<!-- Loading Indicator -->
+<div id="loading" class="text-center py-8">
+  <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#5F8B4C]"></div>
+</div>
 
-    <!-- Booking Details -->
-    <h2 class="text-lg font-bold text-[#333] mb-2 amenity-name"></h2>
-
-    <div class="text-sm text-gray-700 space-y-1">
-      <p><strong>First Name:</strong> <span class="first-name"></span></p>
-      <p><strong>Last Name:</strong> <span class="last-name"></span></p>
-      <p><strong>Contact Number:</strong> <span class="contact-number"></span></p>
-      <p><strong>Email:</strong> <span class="email"></span></p>
-      <p><strong>Amenity:</strong> <span class="amenity-name"></span></p>
-      <p><strong>Date:</strong> <span class="date"></span></p>
-      <p><strong>Time:</strong> <span class="time"></span></p>
-      <p><strong>Purpose:</strong> <span class="purpose"></span></p>
-      <p><strong>Visitors:</strong> <span class="visitors"></span></p>
-      <p><strong>Resident/Guest:</strong> <span class="resident-type"></span></p>
-      <p><strong>Notes:</strong> <span class="notes"></span></p>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="mt-6 flex justify-end gap-3">
-      <button class="approve-btn border px-4 py-2 rounded-xl text-sm shadow-md hidden bg-[#FAF1E6]">
-        Approve
-      </button>
-      <button class="reject-btn border px-4 py-2 rounded-xl text-sm shadow-md bg-[#FAF1E6]">
-        Reject
-      </button>
-    </div>
-  </div>
-</template>
-
-
+<!-- Empty State -->
+<div id="empty-state" class="hidden text-center py-12">
+  <img src="/pictures/no-bookings.svg" alt="No bookings" class="mx-auto h-32 mb-4">
+  <h3 class="text-lg font-medium text-gray-700">No booking requests found</h3>
+  <p class="text-gray-500 mt-2">All booking requests are processed.</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const bookings = [
-    {
-      amenity: "Clubhouse",
-      firstName: "John",
-      lastName: "Doe",
-      contact: "09171234567",
-      email: "john@example.com",
-      date: "2025-05-20",
-      time: "2:00 PM - 4:00 PM",
-      purpose: "Birthday party",
-      visitors: 30,
-      residentType: "Resident",
-      notes: "Request for extra chairs",
-      status: "pending",
-    },
-    {
-      amenity: "Swimming Pool",
-      firstName: "Jane",
-      lastName: "Smith",
-      contact: "09179876543",
-      email: "jane@example.com",
-      date: "2025-05-21",
-      time: "10:00 AM - 12:00 PM",
-      purpose: "Family gathering",
-      visitors: 15,
-      residentType: "Guest",
-      notes: "",
-      status: "pending",
-    },
-    {
-      amenity: "Basketball Court",
-      firstName: "Mark",
-      lastName: "Tan",
-      contact: "09178889999",
-      email: "marktan@example.com",
-      date: "2025-05-22",
-      time: "5:00 PM - 7:00 PM",
-      purpose: "Friendly game",
-      visitors: 10,
-      residentType: "Resident",
-      notes: "Need scoreboard access",
-      status: "rejected",
-    },
-  ];
+  (function() {
+    window.supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+    window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+    window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+  })();
 
-  const statusIcons = {
-    approved: "fa-solid fa-circle-check text-green-600",
-    pending: "fa-solid fa-hourglass-half text-yellow-500",
-    rejected: "fa-solid fa-circle-xmark text-red-600",
-  };
+  const bookingContainer = document.getElementById('booking-container');
+  const loadingIndicator = document.getElementById('loading');
+  const emptyState = document.getElementById('empty-state');
+  
+  let allBookings = [];
+  let filteredBookings = [];
 
-  const container = document.getElementById("booking-container");
-  const template = document.getElementById("booking-card-template");
+  async function fetchBookings() {
+    try {
+      loadingIndicator.classList.remove('hidden');
+      bookingContainer.innerHTML = '';
+      emptyState.classList.add('hidden');
 
-  function renderBookings() {
-    container.innerHTML = "";
-    bookings.sort((a, b) => new Date(a.date) - new Date(b.date));
-    const today = new Date().toISOString().split("T")[0];
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    bookings.forEach((booking, index) => {
-      const clone = template.content.cloneNode(true);
-      const card = clone.querySelector("div");
+      if (error) throw error;
 
-      // Fill booking data
-      clone.querySelector(".amenity-name").textContent = booking.amenity;
-      clone.querySelector(".first-name").textContent = booking.firstName;
-      clone.querySelector(".last-name").textContent = booking.lastName;
-      clone.querySelector(".contact-number").textContent = booking.contact;
-      clone.querySelector(".email").textContent = booking.email;
-      clone.querySelector(".date").textContent = booking.date;
-      clone.querySelector(".time").textContent = booking.time;
-      clone.querySelector(".purpose").textContent = booking.purpose;
-      clone.querySelector(".visitors").textContent = booking.visitors;
-      clone.querySelector(".resident-type").textContent = booking.residentType;
-      clone.querySelector(".notes").textContent = booking.notes || "None";
-
-      // Status icon + label
-      const icon = clone.querySelector(".status-icon");
-      const text = clone.querySelector(".status-text");
-      icon.className = statusIcons[booking.status] || "fa-solid fa-question-circle text-gray-400";
-      text.textContent = booking.status.charAt(0).toUpperCase() + booking.status.slice(1);
-
-      // Show buttons or status
-      const approveBtn = clone.querySelector(".approve-btn");
-      const rejectBtn = clone.querySelector(".reject-btn");
-      const statusSection = clone.querySelector(".status-section");
-
-      if (booking.status === "pending") {
-        approveBtn.classList.remove("hidden");
-        rejectBtn.classList.remove("hidden");
-        statusSection.classList.add("hidden");
-
-        approveBtn.addEventListener("click", () => {
-          bookings[index].status = "approved";
-          renderBookings();
-        });
-
-        rejectBtn.addEventListener("click", () => {
-          bookings[index].status = "rejected";
-          renderBookings();
-        });
-      } else {
-        approveBtn.classList.add("hidden");
-        rejectBtn.classList.add("hidden");
-        statusSection.classList.remove("hidden");
+      if (!data || data.length === 0) {
+        showEmptyState();
+        return;
       }
 
-      // Highlight today
-      if (booking.date === today) {
-        card.classList.add("border", "border-blue-500");
-      }
+      allBookings = data.map(booking => ({
+        ...booking,
+        formattedDate: new Date(booking.booking_date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        formattedTime: `${booking.start_time} - ${booking.end_time}`
+      }));
 
-      container.appendChild(clone);
-    });
+      filteredBookings = [...allBookings];
+      renderBookings(filteredBookings);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      bookingContainer.innerHTML = `
+        <div class="col-span-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load bookings. Please try again later.
+        </div>
+      `;
+    } finally {
+      loadingIndicator.classList.add('hidden');
+    }
   }
 
-  renderBookings();
+  function renderBookings(bookings) {
+    if (bookings.length === 0) {
+      showEmptyState();
+      return;
+    }
+
+    bookingContainer.innerHTML = bookings.map(booking => `
+      <div class="bg-[#E6DCD0] rounded-xl shadow-md p-6 relative transition hover:shadow-lg">
+        <!-- Status Badge -->
+        <div class="status-badge status-${booking.status.toLowerCase()} mb-4">
+          ${booking.status}
+        </div>
+
+        <!-- Booking Details -->
+        <h2 class="text-lg font-bold text-[#333] mb-2">${booking.amenity_type || 'Amenity'}</h2>
+
+        <div class="text-sm text-gray-700 space-y-1">
+          <p><strong>First Name:</strong> ${booking.first_name || '-'}</p>
+          <p><strong>Last Name:</strong> ${booking.last_name || '-'}</p>
+          <p><strong>Contact Number:</strong> ${booking.contact_number || '-'}</p>
+          <p><strong>Email:</strong> ${booking.email || '-'}</p>
+          <p><strong>Date:</strong> ${booking.formattedDate || '-'}</p>
+          <p><strong>Time:</strong> ${booking.formattedTime || '-'}</p>
+          <p><strong>Purpose:</strong> ${booking.purpose || '-'}</p>
+          <p><strong>Attendees:</strong> ${booking.attendees || '0'}</p>
+          <p><strong>Resident/Guest:</strong> ${booking.user_type || '-'}</p>
+          <p><strong>Notes:</strong> ${booking.notes || 'None'}</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-6 flex justify-end gap-3">
+          <button onclick="updateBookingStatus(${booking.booking_id}, 'Approved')" 
+            class="border px-4 py-2 rounded-xl text-sm shadow-md bg-[#FAF1E6] hover:bg-green-100 ${booking.status !== 'Pending' ? 'hidden' : ''}">
+            Approve
+          </button>
+          <button onclick="updateBookingStatus(${booking.booking_id}, 'Rejected')" 
+            class="border px-4 py-2 rounded-xl text-sm shadow-md bg-[#FAF1E6] hover:bg-red-100 ${booking.status !== 'Pending' ? 'hidden' : ''}">
+            Reject
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function updateBookingStatus(bookingId, newStatus) {
+    try {
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status: newStatus })
+        .eq('booking_id', bookingId);
+
+      if (error) throw error;
+
+      // Refresh the bookings
+      await fetchBookings();
+    } catch (error) {
+      console.error('Error updating booking status:', error);
+      alert('Failed to update booking status. Please try again.');
+    }
+  }
+
+  function showEmptyState() {
+    bookingContainer.innerHTML = '';
+    emptyState.classList.remove('hidden');
+  }
+
+  function applyFilters() {
+    const status = document.getElementById('filter-status').value;
+    const amenity = document.getElementById('filter-amenity').value;
+    const sort = document.getElementById('filter-sort').value;
+
+    let filtered = [...allBookings];
+
+    // Filter by status
+    if (status !== 'all') {
+      filtered = filtered.filter(booking => booking.status === status);
+    }
+
+    // Filter by amenity
+    if (amenity !== 'all') {
+      filtered = filtered.filter(booking => booking.amenity_type === amenity);
+    }
+
+    // Sort
+    if (sort === 'newest') {
+      filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    } else {
+      filtered.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    }
+
+    filteredBookings = filtered;
+    renderBookings(filteredBookings);
+  }
+
+  // Mobile menu functionality
+  document.getElementById('menu-btn')?.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.remove('translate-x-full', 'pointer-events-none');
+    document.getElementById('sidebar').classList.add('translate-x-0', 'pointer-events-auto');
+  });
+
+  document.getElementById('close-btn')?.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.add('translate-x-full', 'pointer-events-none');
+    document.getElementById('sidebar').classList.remove('translate-x-0', 'pointer-events-auto');
+  });
+
+  // Profile dropdown functionality
+  document.getElementById('profileBtn')?.addEventListener('click', function() {
+    document.getElementById('profileModal').classList.toggle('hidden');
+  });
+
+  // Close dropdown when clicking outside
+  window.addEventListener('click', function(event) {
+    if (!event.target.matches('#profileBtn')) {
+      const dropdown = document.getElementById('profileModal');
+      if (!dropdown.classList.contains('hidden')) {
+        dropdown.classList.add('hidden');
+      }
+    }
+  });
+
+  function logout() {
+    // Implement logout functionality here
+    window.location.href = 'login.html';
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    await fetchBookings();
+    
+    // Set up filter event listeners
+    document.getElementById('filter-status').addEventListener('change', applyFilters);
+    document.getElementById('filter-amenity').addEventListener('change', applyFilters);
+    document.getElementById('filter-sort').addEventListener('change', applyFilters);
+  });
 </script>
-
-
-
 </body>
 </html>

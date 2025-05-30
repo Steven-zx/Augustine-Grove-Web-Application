@@ -84,11 +84,6 @@
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
 
-    <!--profile button-->
-    <div class="relative">
-      <button id="profileBtn" class="focus:outline-none">
-        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
-      </button>
 
       <!-- Modal Dropdown -->
       <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
@@ -160,7 +155,7 @@
 <!-- Filter Container -->
 <section class="px-6">
   <div class="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 md:gap-4">
-    <!-- Filters (Category, Month, Importance, Sort By) -->
+    <!-- Category Filter -->
     <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
       <label class="block text-base font-bold text-[#2E4C2C]">Category</label>
       <div class="relative">
@@ -178,14 +173,24 @@
       </div>
     </div>
 
+    <!-- Month Filter -->
     <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
       <label class="block text-base font-bold text-[#2E4C2C]">Month</label>
       <div class="relative">
         <select id="filter-month" class="appearance-none w-full bg-[#E6DCD0] text-[#5F8B4C] text-sm font-medium pr-6 focus:outline-none">
           <option value="all">All Months</option>
+          <option value="January">January</option>
+          <option value="Februay">February</option>
+          <option value="March">March</option>
           <option value="April">April</option>
           <option value="May">May</option>
           <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
           <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
@@ -195,6 +200,7 @@
       </div>
     </div>
 
+    <!-- Importance Filter -->
     <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
       <label class="block text-base font-bold text-[#2E4C2C]">Importance</label>
       <div class="relative">
@@ -202,6 +208,7 @@
           <option value="all">All</option>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 text-[#5F8B4C]">
           <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
@@ -211,6 +218,7 @@
       </div>
     </div>
 
+    <!-- Sort By Filter -->
     <div class="bg-[#E6DCD0] border border-[#5F8B4C] rounded-xl px-4 py-1 md:py-2 w-full max-w-[160px]">
       <label class="block text-base font-bold text-[#2E4C2C]">Sort By</label>
       <div class="relative">
@@ -400,27 +408,38 @@
   }
 
   function applyFilters() {
-    const category = document.getElementById("filter-category")?.value || "all";
-    const month = document.getElementById("filter-month")?.value || "all";
-    const importance = document.getElementById("filter-importance")?.value || "all";
-    const sort = document.getElementById("filter-sort")?.value || "newest";
+  const category = document.getElementById("filter-category")?.value || "all";
+  const month = document.getElementById("filter-month")?.value || "all";
+  const importance = document.getElementById("filter-importance")?.value || "all";
+  const sort = document.getElementById("filter-sort")?.value || "newest";
 
-    filteredData = allAnnouncements.filter(item => {
-      const matchCategory = category === "all" || item.category === category;
-      const matchMonth = month === "all" || item.month === month;
-      const matchImportance = importance === "all" || item.importance === importance;
-      return matchCategory && matchMonth && matchImportance;
-    });
+  filteredData = allAnnouncements.filter(item => {
+    // Normalize category case (create_announcement uses lowercase)
+    const itemCategory = item.category?.toLowerCase() || 'general';
+    const matchCategory = category === "all" || itemCategory === category.toLowerCase();
+    
+    // Get month from date (handle both Date objects and strings)
+    const itemDate = item.date ? new Date(item.date) : null;
+    const itemMonth = itemDate ? itemDate.toLocaleDateString('en-US', { month: 'long' }) : 'Unknown';
+    const matchMonth = month === "all" || itemMonth === month;
+    
+    // Normalize importance case
+    const itemImportance = item.importance?.toLowerCase() || 'medium';
+    const matchImportance = importance === "all" || itemImportance === importance.toLowerCase();
+    
+    return matchCategory && matchMonth && matchImportance;
+  });
 
-    if (sort === "newest") {
-      filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else {
-      filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
-    }
+  // Sort by date
+  filteredData.sort((a, b) => {
+    const dateA = a.date ? new Date(a.date) : new Date(0);
+    const dateB = b.date ? new Date(b.date) : new Date(0);
+    return sort === "newest" ? dateB - dateA : dateA - dateB;
+  });
 
-    currentPage = 1;
-    loadAnnouncements(filteredData, currentPage);
-  }
+  currentPage = 1;
+  loadAnnouncements(filteredData, currentPage);
+}
 
   document.addEventListener('DOMContentLoaded', async () => {
     await fetchAnnouncements();
@@ -430,20 +449,10 @@
     document.getElementById("filter-sort")?.addEventListener("change", applyFilters);
   });
 
-  // Profile dropdown functionality
-  document.getElementById('profileBtn')?.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const modal = document.getElementById('profileModal');
-    modal.classList.toggle('hidden');
-  });
+ 
 
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function() {
-    const modal = document.getElementById('profileModal');
-    if (!modal.classList.contains('hidden')) {
-      modal.classList.add('hidden');
-    }
-  });
+
+
 
   // Mobile menu functionality
   document.getElementById('menu-btn')?.addEventListener('click', function() {

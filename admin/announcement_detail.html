@@ -97,6 +97,7 @@
   <div id="error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"></div>
 </section>
 
+<!-- View Mode Template -->
 <template id="detail-template">
   <h1 class="text-2xl font-bold title"></h1>
   <div class="flex gap-4 text-sm text-gray-500 items-center mt-1">
@@ -115,16 +116,63 @@
   <p class="mt-2 text-sm text-gray-600"><strong>Category:</strong> <span class="category"></span></p>
   <p class="text-sm text-gray-600"><strong>Importance:</strong> <span class="importance"></span></p>
 
-  <!-- ✅ Admin Action Buttons -->
+  <!-- Admin Action Buttons -->
   <div class="flex gap-4 mt-6">
-    <a href="#" id="edit-btn" class="px-4 py-2 rounded-full border border-[#5F8B4C] text-[#5F8B4C] font-bold hover:bg-[#5F8B4C]/10 transition">Edit</a>
+    <button id="edit-toggle-btn" class="px-4 py-2 rounded-full border border-[#5F8B4C] text-[#5F8B4C] font-bold hover:bg-[#5F8B4C]/10 transition">Edit Announcement</button>
     <button id="delete-btn" class="px-4 py-2 rounded-full border border-red-500 text-red-600 font-bold hover:bg-red-100 transition">Delete</button>
   </div>
 </template>
 
+<!-- Edit Mode Template -->
+<template id="edit-template">
+  <div class="space-y-4">
+    <div>
+      <label for="edit-title" class="block text-sm font-medium text-gray-700">Title</label>
+      <input type="text" id="edit-title" class="mt-1 block w-full rounded-md border border-[#5F8B4C] shadow-sm p-2">
+    </div>
 
+    <div>
+      <label for="edit-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+      <input type="text" id="edit-image" class="mt-1 block w-full rounded-md border border-[#5F8B4C] shadow-sm p-2">
+    </div>
+
+    <div>
+      <label for="edit-content" class="block text-sm font-medium text-gray-700">Content</label>
+      <textarea id="edit-content" rows="6" class="mt-1 block w-full rounded-md border border-[#5F8B4C] shadow-sm p-2"></textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="edit-category" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="edit-category" class="mt-1 block w-full rounded-md border border-[#5F8B4C] shadow-sm p-2">
+          <option value="General">General</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Event">Event</option>
+          <option value="Security">Security</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="edit-importance" class="block text-sm font-medium text-gray-700">Importance</label>
+        <select id="edit-importance" class="mt-1 block w-full rounded-md border border-[#5F8B4C] shadow-sm p-2">
+          <option value="Low">Low</option>
+          <option value="Normal">Normal</option>
+          <option value="High">High</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex gap-4 mt-6">
+      <button id="save-edit-btn" class="px-4 py-2 rounded-full bg-[#5F8B4C] text-white font-bold hover:bg-[#4a6d3a] transition">Save Changes</button>
+      <button id="cancel-edit-btn" class="px-4 py-2 rounded-full border border-gray-500 text-gray-600 font-bold hover:bg-gray-100 transition">Cancel</button>
+    </div>
+  </div>
+</template>
+
+<!-- Previous HTML remains the same until the script section -->
 <script>
- (function () {
+  (function () {
     const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
     window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
@@ -139,7 +187,10 @@
   const detailSection = document.getElementById('announcement-detail');
   const loadingElement = document.getElementById('loading');
   const errorElement = document.getElementById('error-message');
-  const template = document.getElementById('detail-template');
+  const viewTemplate = document.getElementById('detail-template');
+  const editTemplate = document.getElementById('edit-template');
+
+  let currentAnnouncement = null;
 
   async function fetchAnnouncement() {
     if (!id) {
@@ -158,6 +209,7 @@
       if (!data) throw new Error('Announcement not found');
       console.log("Announcement fetched:", data);
 
+      currentAnnouncement = data;
       renderAnnouncement(data);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -165,31 +217,51 @@
     }
   }
 
-  function renderAnnouncement(announcement) {
+  function renderAnnouncement(announcement, editMode = false) {
     loadingElement.classList.add('hidden');
+    detailSection.innerHTML = '';
 
-    const clone = template.content.cloneNode(true);
-    clone.querySelector('.title').textContent = announcement.title;
-    clone.querySelector('.date').textContent = new Date(announcement.date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    clone.querySelector('.image').src = announcement.image_url || '/pictures/default-announcement.png';
-    clone.querySelector('.content').textContent = announcement.description || 'No content available';
-    clone.querySelector('.category').textContent = announcement.category || 'None';
-    clone.querySelector('.importance').textContent = announcement.importance || 'Normal';
+    if (editMode) {
+      // Render edit form
+      const clone = editTemplate.content.cloneNode(true);
+      clone.querySelector('#edit-title').value = announcement.title;
+      clone.querySelector('#edit-image').value = announcement.image_url || '';
+      clone.querySelector('#edit-content').value = announcement.description || '';
+      clone.querySelector('#edit-category').value = announcement.category || 'General';
+      clone.querySelector('#edit-importance').value = announcement.importance || 'Normal';
 
-    // Set edit button href
-    const editBtn = clone.querySelector('#edit-btn');
-    if (editBtn) {
-      editBtn.href = `edit_announcement.html?id=${id}`;
-    }
+      // Set up save button
+      clone.querySelector('#save-edit-btn').addEventListener('click', async () => {
+        await saveAnnouncement();
+      });
 
-    // Set up delete button
-    const deleteBtn = clone.querySelector('#delete-btn');
-    if (deleteBtn) {
-      deleteBtn.addEventListener('click', async () => {
+      // Set up cancel button
+      clone.querySelector('#cancel-edit-btn').addEventListener('click', () => {
+        renderAnnouncement(currentAnnouncement);
+      });
+
+      detailSection.appendChild(clone);
+    } else {
+      // Render view mode
+      const clone = viewTemplate.content.cloneNode(true);
+      clone.querySelector('.title').textContent = announcement.title;
+      clone.querySelector('.date').textContent = new Date(announcement.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      clone.querySelector('.image').src = announcement.image_url || '/pictures/default-announcement.png';
+      clone.querySelector('.content').textContent = announcement.description || 'No content available';
+      clone.querySelector('.category').textContent = announcement.category || 'None';
+      clone.querySelector('.importance').textContent = announcement.importance || 'Normal';
+
+      // Set up edit toggle button
+      clone.querySelector('#edit-toggle-btn').addEventListener('click', () => {
+        renderAnnouncement(announcement, true);
+      });
+
+      // Set up delete button
+      clone.querySelector('#delete-btn').addEventListener('click', async () => {
         const confirmed = confirm("Are you sure you want to delete this announcement?");
         if (!confirmed) return;
 
@@ -208,10 +280,40 @@
           console.error('Delete error:', error);
         }
       });
-    }
 
-    detailSection.appendChild(clone);
-}
+      detailSection.appendChild(clone);
+    }
+  }
+
+  async function saveAnnouncement() {
+    try {
+      const updatedData = {
+        title: document.getElementById('edit-title').value,
+        description: document.getElementById('edit-content').value,
+        image_url: document.getElementById('edit-image').value || null,
+        category: document.getElementById('edit-category').value,
+        importance: document.getElementById('edit-importance').value
+        // Removed updated_at since it doesn't exist in your table
+      };
+
+      const { data, error } = await supabase
+        .from('announcements')
+        .update(updatedData)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      currentAnnouncement = data;
+      renderAnnouncement(data);
+      alert("Announcement updated successfully!");
+    } catch (error) {
+      console.error("Update error:", error);
+      alert("Failed to update announcement: " + error.message);
+    }
+  }
+
   function showError(msg) {
     loadingElement.classList.add('hidden');
     errorElement.textContent = "Error: " + msg;
