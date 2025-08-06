@@ -58,12 +58,22 @@
       <li><a href="gallery.html" class="text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li> 
     </ul>
-       <!--profile button-->
-<div class="relative">
+        <!--profile button-->
+<div class="relative" id="profile-section">  <!-- Added id here -->
   <button id="profileBtn" class="focus:outline-none">
     <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
   </button>
 
+      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+  <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+    Profile
+  </a>
+  <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+    <span id="authText">Log In</span>
+  </button>
+</div>
   <!-- Modal Dropdown -->
   <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
     <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
@@ -93,13 +103,6 @@
       </button>
     </div>
 
-    <!-- Profile Card -->
-    <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
-      <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
-      <div class="text-left">
-        <p class="font-semibold text-[#5F8B4C]">John Smith</p>
-      </div>
-    </div>
 
     <!-- Nav Links -->
     <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
@@ -108,6 +111,24 @@
       <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
+
+      <!-- In your nav bar (replace the existing profile dropdown section) -->
+<div class="relative">
+  <button id="profileBtn" class="focus:outline-none">
+    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+  </button>
+
+  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+    <a href="/pages/dashboard/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+      Profile
+    </a>
+    <button id="authButton" onclick="handleAuthAction()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+      <span id="authText">Log in</span>
+    </button>
+  </div>
+</div>
     
 
 <!-- Bottom Log Out Button -->

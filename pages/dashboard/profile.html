@@ -16,11 +16,11 @@
 <!-- Auth Modal -->
 <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
   <div class="bg-[#5F8B4C] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-lg relative">
-    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+    <button onclick="document.getElementById('authModal').classList.add('hidden'); document.body.style.overflow = '';" class="absolute top-4 right-4 text-white hover:text-gray-300">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</button>
     
     <div class="flex justify-center mb-6">
       <img src="/pictures/logo 2.png" alt="AG Logo" class="h-16">
@@ -62,46 +62,64 @@
   </div>
 </div>
 
-<!-- Nav Bar -->
+<!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
-  <a href="/index.html" class="flex items-center gap-2">
+  <a href="../../index.html" class="flex items-center gap-2">
     <img src="/pictures/logo 2.png" alt="Logo" class="h-8 w-auto md:h-12 lg:h-16">
     <span class="text-lg md:text-2xl font-bold">AUGUSTINE GROVE</span>
   </a>
 
+  <!-- Hamburger Button -->
   <button id="menu-btn" class="block md:hidden focus:outline-none transition-transform duration-300" aria-label="Toggle Menu">
     <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
 
+  <!-- Desktop Menu -->
   <div id="menu-desktop" class="hidden md:flex flex-row items-center gap-6">
-    <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
-      <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
-      <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
-      <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
-      <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
-    </ul>
-  
-    <div class="relative">
-      <button id="profileBtn" class="focus:outline-none">
-        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
-      </button>
+ <ul class="flex flex-row gap-8 text-md font-semibold font-poppins">
+  <li><a href="announcements.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+  <li><a href="amenities.html" class="text-[#FFDDAB]">Amenities</a></li>
+  <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
+  <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
+</ul>
+        <!--profile button-->
+<div class="relative" id="profile-section">  <!-- Added id here -->
+  <button id="profileBtn" class="focus:outline-none">
+    <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+  </button>
 
       <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-        <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-          <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-          Profile
-        </a>
-        <button onclick="handleLogout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-          <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-          Log out
-        </button>
-      </div>
-    </div>
+  <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+    Profile
+  </a>
+  <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+    <span id="authText">Log In</span>
+  </button>
+</div>
+  <!-- Modal Dropdown -->
+  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+      Profile
+    </a>
+    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
+      Log In
+    </button>
+  </div>
+</div>
+
+  </div>
   </div>
 
-  <div id="sidebar" class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden hidden">
+<!-- Mobile Slide-in Menu -->
+ <div id="sidebar"
+  class="fixed top-0 right-0 h-screen w-2/3 bg-white overflow-y-auto transform translate-x-full transition-transform duration-300 z-50 shadow-lg md:hidden hidden">
+
     <div class="flex items-center justify-between p-4 border-b border-gray-300">
       <h2 class="text-lg font-bold text-[#5F8B4C]">Menu</h2>
       <button id="close-btn" class="text-[#5F8B4C]">
@@ -111,6 +129,7 @@
       </button>
     </div>
 
+    <!-- Profile Card -->
     <div class="bg-[#FAF1E6] rounded-xl shadow-md mx-6 my-6 p-4 flex items-center gap-4">
       <img src="/pictures/profilegreen_icon.png" alt="Profile Icon" class="h-10 w-10 rounded-full object-cover">
       <div class="text-left">
@@ -118,19 +137,23 @@
       </div>
     </div>
 
+    <!-- Nav Links -->
     <ul class="flex flex-col gap-6 text-[#5F8B4C] font-semibold px-8">
-      <li><a href="/pages/dashboard/announcements.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
+      <li><a href="/pages/dashboard/announcement_detail.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Announcements</a></li>
       <li><a href="/pages/dashboard/amenities.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Amenities</a></li>
       <li><a href="/pages/dashboard/gallery.html" class="hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
       <li><a href="/pages/dashboard/aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
     
-    <div class="w-full text-center mt-20 mb-6">
-      <button onclick="handleLogout()" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-        Log Out
-      </button>
-    </div>
+
+<!-- Bottom Log Out Button -->
+<div class="w-full text-center mt-20 mb-6">
+  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+    Log Out
+  </button>
   </div>
+  
+</div>
 </nav>
 
 <div id="profileContainer" class="min-h-screen">
@@ -228,6 +251,8 @@
 </div>
 
 <script>
+   let isLoggedIn = false;
+   
   // Initialize Supabase
   document.addEventListener('DOMContentLoaded', async () => {
     // Initialize Supabase
@@ -263,10 +288,13 @@
   });
 
   // Logout function
-  async function handleLogout() {
+ async function handleLogout() {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      
+      // Update login state
+      isLoggedIn = false;
       
       // Redirect to index page after logout
       window.location.href = '/index.html';
@@ -275,6 +303,7 @@
       alert('Failed to log out. Please try again.');
     }
   }
+
 
   // Edit Profile Functions
   function startEdit(field) {
@@ -359,10 +388,21 @@
   }
   
   function closeAuthModal() {
-    document.getElementById('authModal').classList.add('hidden');
-    document.body.style.overflow = '';
+     if (isLoggedIn) {
+      document.getElementById('authModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
   }
-  
+
+  // Modify the modal click event listener (replace the existing one)
+  document.getElementById('authModal').addEventListener('click', (e) => {
+    // Only close if clicking directly on the close button or if logged in
+    const closeButton = e.target.closest('button[onclick="closeAuthModal()"]');
+    if (closeButton || isLoggedIn) {
+      closeAuthModal();
+    }
+  });
+
   function switchToLogin() {
     document.getElementById('loginForm').classList.remove('hidden');
     document.getElementById('signupForm').classList.add('hidden');
@@ -495,6 +535,9 @@
         return;
       }
 
+      // User is logged in
+      isLoggedIn = true;
+
       // Get user metadata
       const userData = user.user_metadata || {};
       
@@ -523,7 +566,15 @@
       console.error('Error loading profile:', error);
       openAuthModal();
     }
+
+    // Prevent clicks inside the modal content from closing it
+  document.querySelector('#authModal > div').addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
   }
+
+
 </script>
 
 </body>
