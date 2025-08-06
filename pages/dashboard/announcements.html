@@ -63,6 +63,58 @@
 </head>
 <body class="bg-[#FFF8F0] text-[#5F8B4C] font-sans">
 
+  <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#5F8B4C] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-lg relative">
+    <!-- Close Button (X) in top-right corner -->
+    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    
+    <!-- Logo -->
+    <div class="flex justify-center mb-6">
+      <img src="/pictures/logo 2.png" alt="AG Logo" class="h-16">
+    </div>
+    
+    <!-- Login Form (shown by default) -->
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />    
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Log in
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Don't have an account? <a href="#" onclick="switchToSignup(); return false;" class="underline hover:text-[#FFDDAB]">Sign up</a>
+      </p>
+    </form>
+    
+    <!-- Signup Form (hidden by default) -->
+    <form id="signupForm" class="space-y-4 hidden">
+      <input type="text" id="fullName" placeholder="Full Name" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="text" id="address" placeholder="Address (e.g. Block 3, Lot 8, Phase 2)" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="tel" id="mobileNumber" placeholder="Mobile Number" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="signupPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Sign up
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Already have an account? <a href="#" onclick="switchToLogin(); return false;" class="underline hover:text-[#FFDDAB]">Log in</a>
+      </p>
+    </form>
+  </div>
+</div>
+
 <!-- Nav Bar -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
   <a href="../../index.html" class="flex items-center gap-2">
@@ -86,23 +138,23 @@
       <li><a href="aboutpage.html" class="hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
     </ul>
         <!--profile button-->
-<div class="relative">
+<div class="relative" id="profile-section">  <!-- Added id here -->
   <button id="profileBtn" class="focus:outline-none">
     <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
   </button>
 
-  <!-- Modal Dropdown -->
-  <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-      Profile
-    </a>
-    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-      Log Out
-    </button>
-  </div>
+      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
+  <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
+    Profile
+  </a>
+  <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+    <span id="authText">Log In</span>
+  </button>
 </div>
+
+    </div>
   </div>
 
  <!-- Mobile Slide-in Menu -->
@@ -150,6 +202,17 @@ const menuBtn = document.getElementById("menu-btn");
 const closeBtn = document.getElementById("close-btn");
 const sidebar = document.getElementById("sidebar");
 
+// Handle login/logout actions
+async function handleAuthAction() {
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  if (session) {
+    await logout();
+  } else {
+    window.location.href = 'login.html'; // Make sure you have a login page
+  }
+}
+
 menuBtn.addEventListener("click", () => {
   sidebar.classList.remove("translate-x-full", "hidden");
   sidebar.classList.add("translate-x-0");
@@ -165,6 +228,8 @@ closeBtn.addEventListener("click", () => {
   }, 300); // matches the Tailwind transition duration
 });
 </script>
+
+
 
 <!-- Announcements Section -->
 <h1 class="md:text-2xl text-xl font-bold px-4 sm:px-10 md:px-20 py-6">Community Announcements</h1>
@@ -401,70 +466,232 @@ closeBtn.addEventListener("click", () => {
     supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth state changed:', event, session);
       updateUIForAuthState(session);
+      updateAuthButton(session);
     });
   })();
 
-  // Announcements Functionality
+  // Announcements-related variables
   const announcementsContainer = document.getElementById("announcements");
   const template = document.getElementById("announcement-template");
   const paginationContainer = document.getElementById("pagination");
-
   const cardsPerPage = 3;
   let currentPage = 1;
   let filteredData = [];
   let allAnnouncements = [];
 
-  // Update UI based on auth state
-  function updateUIForAuthState(session) {
-    const profileBtn = document.getElementById("profileBtn");
-    const mobileProfile = document.querySelector("#sidebar .text-left p");
-    const authButtons = document.getElementById('auth-buttons');
-    const profileSection = document.querySelector('.relative');
+  // Auth Modal Functions
+  function openAuthModal() {
+    document.getElementById('authModal').classList.remove('hidden');
+  }
+
+  function closeAuthModal() {
+    document.getElementById('authModal').classList.add('hidden');
+  }
+
+  function switchToSignup() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+  }
+
+  function switchToLogin() {
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+  }
+
+  // Auth Functions
+  async function handleAuthAction() {
+    const { data: { session } } = await supabase.auth.getSession();
     
-    if (session?.user) {
-      // User is logged in
-      if (profileBtn) {
-        profileBtn.innerHTML = `
-          <img src="${session.user.user_metadata?.avatar_url || '/pictures/profile.png'}" 
-               alt="Profile" class="h-8 w-8 rounded-full">
-        `;
-      }
-      
-      if (mobileProfile) {
-        mobileProfile.textContent = session.user.user_metadata?.full_name || 
-                                   session.user.email || 
-                                   'User';
-      }
-      
-      if (authButtons) authButtons.classList.add('hidden');
-      if (profileSection) profileSection.classList.remove('hidden');
+    if (session) {
+      await logout();
     } else {
-      // User is not logged in
-      if (profileBtn) {
-        profileBtn.innerHTML = `
-          <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
-        `;
-      }
-      
-      if (mobileProfile) {
-        mobileProfile.textContent = 'Guest';
-      }
-      
-      if (authButtons) authButtons.classList.remove('hidden');
-      if (profileSection) profileSection.classList.add('hidden');
+      openAuthModal();
     }
   }
 
-  // Logout function
+async function login(email, password) {
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) throw error;
+        
+        closeAuthModal();
+        
+        // Refresh the UI and announcements after successful login
+        updateUIForAuthState(data.session);
+        updateAuthButton(data.session);
+        await fetchAnnouncements();
+        
+        return data;
+    } catch (error) {
+        console.error('Login error:', error.message);
+        alert('Login failed: ' + error.message);
+        return null;
+    }
+}
+
+  async function signup(fullName, email, address, mobileNumber, password) {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            address: address,
+            mobile_number: mobileNumber
+          }
+        }
+      });
+
+      if (error) throw error;
+      
+      alert('Signup successful! Please check your email for confirmation.');
+      switchToLogin();
+      return data;
+    } catch (error) {
+      console.error('Signup error:', error.message);
+      alert('Signup failed: ' + error.message);
+      return null;
+    }
+  }
+
   async function logout() {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      window.location.href = '../../index.html';
+      window.location.reload();
     } catch (error) {
       console.error('Error logging out:', error.message);
       alert('Logout failed: ' + error.message);
     }
+  }
+
+  // Update auth button based on session state
+  function updateAuthButton(session) {
+    const authButton = document.getElementById('authButton');
+    const authIcon = document.getElementById('authIcon');
+    const authText = document.getElementById('authText');
+    
+    if (session) {
+      authText.textContent = 'Log Out';
+      authIcon.src = '/pictures/logout_icon.png';
+    } else {
+      authText.textContent = 'Log In';
+      authIcon.src = '/pictures/login_icon.png';
+    }
+  }
+
+  // Update UI based on auth state
+  function updateUIForAuthState(session) {
+    const profileBtn = document.getElementById("profileBtn");
+    const mobileProfile = document.querySelector("#sidebar .text-left p");
+    const profileSection = document.getElementById('profile-section');
+    
+    if (session?.user) {
+        // User is logged in
+        if (profileBtn) {
+            profileBtn.innerHTML = `
+                <img src="${session.user.user_metadata?.avatar_url || '/pictures/profile.png'}" 
+                     alt="Profile" class="h-8 w-8 rounded-full">
+            `;
+        }
+        
+        if (mobileProfile) {
+            mobileProfile.textContent = session.user.user_metadata?.full_name || 
+                                       session.user.email || 
+                                       'User';
+        }
+        
+        if (profileSection) profileSection.classList.remove('hidden');
+        
+        // Update mobile logout button
+        const mobileLogoutBtn = document.querySelector('#sidebar button');
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.textContent = 'Log Out';
+            mobileLogoutBtn.onclick = logout;
+        }
+    } else {
+        // User is not logged in
+        if (profileBtn) {
+            profileBtn.innerHTML = `
+                <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+            `;
+        }
+        
+        if (mobileProfile) {
+            mobileProfile.textContent = 'Guest';
+        }
+        
+        // Update mobile login button
+        const mobileLogoutBtn = document.querySelector('#sidebar button');
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.textContent = 'Log In';
+            mobileLogoutBtn.onclick = openAuthModal;
+        }
+    }
+}
+
+  // Form Event Listeners
+  document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...';
+    
+    try {
+      await login(email, password);
+      e.target.reset();
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log in';
+    }
+  });
+
+  document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('signupEmail').value;
+    const address = document.getElementById('address').value;
+    const mobileNumber = document.getElementById('mobileNumber').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Signing up...';
+    
+    try {
+      await signup(fullName, email, address, mobileNumber, password);
+      e.target.reset();
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Sign up';
+    }
+  });
+
+  // Mobile menu logout
+  const mobileLogoutBtn = document.querySelector('#sidebar button');
+  if (mobileLogoutBtn) {
+    mobileLogoutBtn.addEventListener('click', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await logout();
+      } else {
+        openAuthModal();
+      }
+    });
   }
 
   // Profile modal functionality
@@ -472,12 +699,13 @@ closeBtn.addEventListener("click", () => {
   const profileModal = document.getElementById("profileModal");
 
   if (profileBtn) {
-    profileBtn.addEventListener("click", async () => {
+    profileBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
       profileModal.classList.toggle("hidden");
       
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        const profileLink = profileModal.querySelector('a[href="/pages/profile.html"]');
+        const profileLink = profileModal.querySelector('a[href="profile.html"]');
         if (profileLink) {
           profileLink.innerHTML = `
             <img src="${user.user_metadata?.avatar_url || '/pictures/profilegreen_icon.png'}" 
@@ -496,68 +724,63 @@ closeBtn.addEventListener("click", () => {
     });
   }
 
-  // Mobile menu logout
-  const mobileLogoutBtn = document.querySelector('#sidebar button');
-  if (mobileLogoutBtn) {
-    mobileLogoutBtn.addEventListener('click', logout);
-  }
-
+  // Announcements Functionality
   async function fetchAnnouncements() {
-  try {
-    // Get current user session
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    // Base query
-    let query = supabase
-      .from('announcements')
-      .select('*')
-      .order('date', { ascending: false });
+    try {
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Base query
+      let query = supabase
+        .from('announcements')
+        .select('*')
+        .order('date', { ascending: false });
 
-    // If user is not authenticated, only show public announcements
-    if (!session) {
-      query = query.eq('visibility', 'public');
-    }
+      // If user is not authenticated, only show public announcements
+      if (!session) {
+        query = query.eq('visibility', 'public');
+      }
 
-    const { data, error } = await query;
+      const { data, error } = await query;
 
-    if (error) throw error;
+      if (error) throw error;
 
-    if (!data || data.length === 0) {
+      if (!data || data.length === 0) {
+        announcementsContainer.innerHTML = `
+          <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+            No announcements found in the database.
+          </div>
+        `;
+        return;
+      }
+
+      allAnnouncements = data.map(item => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        date: item.date ? new Date(item.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }) : 'No date',
+        image: item.image_url || '/pictures/default-announcement.png',
+        category: item.category || 'General',
+        month: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'long' }) : 'Unknown',
+        importance: item.importance || 'Medium',
+        visibility: item.visibility || 'public'
+      }));
+
+      filteredData = [...allAnnouncements];
+      loadAnnouncements(filteredData, currentPage);
+    } catch (error) {
+      console.error('Error fetching announcements:', error);
       announcementsContainer.innerHTML = `
-        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
-          No announcements found in the database.
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          Failed to load announcements. Error: ${error.message}
         </div>
       `;
-      return;
     }
-
-    allAnnouncements = data.map(item => ({
-      id: item.id,
-      title: item.title,
-      description: item.description,
-      date: item.date ? new Date(item.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }) : 'No date',
-      image: item.image_url || '/pictures/default-announcement.png',
-      category: item.category || 'General',
-      month: item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'long' }) : 'Unknown',
-      importance: item.importance || 'Medium',
-      visibility: item.visibility || 'public' // Add visibility to the announcement object
-    }));
-
-    filteredData = [...allAnnouncements];
-    loadAnnouncements(filteredData, currentPage);
-  } catch (error) {
-    console.error('Error fetching announcements:', error);
-    announcementsContainer.innerHTML = `
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-        Failed to load announcements. Error: ${error.message}
-      </div>
-    `;
   }
-}
 
   function loadAnnouncements(data, page = 1) {
     announcementsContainer.innerHTML = "";
@@ -777,7 +1000,7 @@ closeBtn.addEventListener("click", () => {
         location: formData.get('location'),
         issue_type: formData.get('issueType'),
         description: formData.get('description'),
-        user_id: session.user.id // Add user ID to track who submitted
+        user_id: session.user.id
       };
       
       const imageFile = formData.get('image');
@@ -827,6 +1050,10 @@ closeBtn.addEventListener("click", () => {
     // Check current auth state
     const { data: { session } } = await supabase.auth.getSession();
     updateUIForAuthState(session);
+    updateAuthButton(session);
+    
+    // Add click handler for auth button
+    document.getElementById('authButton')?.addEventListener('click', handleAuthAction);
     
     // Load announcements
     await fetchAnnouncements();
