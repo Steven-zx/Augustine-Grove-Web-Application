@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amenities</title>
 
+  <!-- Load Supabase first -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <link href="../../dist/output.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -12,9 +15,8 @@
 
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
- <style>
+  <style>
     body {
       font-family: 'Poppins', sans-serif;
     }
@@ -25,12 +27,11 @@
       aspect-ratio: 1 / 1;
     }
 
-.fc .fc-event:not(.fc-bg-event) {
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
+    .fc .fc-event:not(.fc-bg-event) {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
 
     .fc .fc-event::after,
     .fc .fc-daygrid-event-dot,
@@ -96,11 +97,90 @@
 
     .booking-dot {
       pointer-events: none;
+
+      /* Profile Dropdown Styles */
+#profileModal {
+  transition: all 0.3s ease;
+}
+
+#profileModal a, 
+#profileModal button {
+  transition: background-color 0.2s ease;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+}
+
+#profileModal a:hover, 
+#profileModal button:hover {
+  background-color: #f0f0f0;
+}
+
+.relative {
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
     }
   </style>
 </head>
 <body class="bg-[#FAF1E6]">
 
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-[#5F8B4C] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-lg relative">
+    <!-- Close Button (X) in top-right corner -->
+    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    
+    <!-- Logo -->
+    <div class="flex justify-center mb-6">
+      <img src="/pictures/logo 2.png" alt="AG Logo" class="h-16">
+    </div>
+    
+    <!-- Login Form (shown by default) -->
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />    
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Log in
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Don't have an account? <a href="#" onclick="switchToSignup(); return false;" class="underline hover:text-[#FFDDAB]">Sign up</a>
+      </p>
+    </form>
+    
+    <!-- Signup Form (hidden by default) -->
+    <form id="signupForm" class="space-y-4 hidden">
+      <input type="text" id="fullName" placeholder="Full Name" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="email" id="signupEmail" placeholder="Email Address" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="text" id="address" placeholder="Address (e.g. Block 3, Lot 8, Phase 2)" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="tel" id="mobileNumber" placeholder="Mobile Number" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="signupPassword" placeholder="Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" class="w-full px-4 py-2 rounded-lg text-[#5F8B4C] focus:outline-none" required />
+      
+      <div class="flex justify-center">
+        <button type="submit" class="bg-[#FAF1E6] text-[#5F8B4C] font-semibold w-1/2 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
+          Sign up
+        </button>
+      </div>
+      
+      <p class="text-xs text-center mt-4 text-[#FAF1E6]">
+        Already have an account? <a href="#" onclick="switchToLogin(); return false;" class="underline hover:text-[#FFDDAB]">Log in</a>
+      </p>
+    </form>
+  </div>
+</div>
 
 <!-- Nav BAr -->
 <nav class="sticky top-0 z-50 flex items-center justify-between bg-[#5F8B4C] px-4 md:px-6 py-2 text-white backdrop-blur-sm">
@@ -124,48 +204,24 @@
   <li><a href="gallery.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">Gallery</a></li>
   <li><a href="aboutpage.html" class="nav-link hover:text-[#FFDDAB] transition-colors duration-200">About</a></li>
 </ul>
-         <!--profile button-->
-<div class="relative" id="profile-section">  <!-- Added id here -->
+        <!--profile button-->
+<div class="relative">  <!-- Removed id="profile-section" -->
   <button id="profileBtn" class="focus:outline-none">
     <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
   </button>
 
-      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-  <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-    <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-    Profile
-  </a>
-  <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-    <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
-    <span id="authText">Log In</span>
-  </button>
-</div>
-
-      <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-  <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-    <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
-    Profile
-  </a>
-  <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-    <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
-    <span id="authText">Log In</span>
-  </button>
-</div>
-
-  <!-- Modal Dropdown -->
   <div id="profileModal" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
-    <a href="/pages/profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+    <a href="profile.html" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
       <img src="/pictures/profilegreen_icon.png" alt="Profile" class="h-6 w-6">
       Profile
     </a>
-    <button onclick="logout()" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
-      <img src="/pictures/logout_icon.png" alt="Logout" class="h-5 w-5">
-      Log In
+    <button id="authButton" class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 font-bold hover:bg-gray-100">
+      <img id="authIcon" src="/pictures/logout_icon.png" alt="Auth Action" class="h-5 w-5">
+      <span id="authText">Log In</span>
     </button>
   </div>
 </div>
-
-  </div>
+ 
   </div>
 
 <!-- Mobile Slide-in Menu -->
@@ -199,34 +255,231 @@
     
 
 <!-- Bottom Log Out Button -->
-<div class="w-full text-center mt-20 mb-6">
-  <button class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
-    Log Out
-  </button>
-  </div>
-  
+<button id="mobileAuthButton" class="bg-[#FAF1E6] text-[#5F8B4C] px-6 py-2 rounded-full hover:bg-green-700 font-semibold w-32">
+  Log In
+</button>
+
 </div>
 </nav>
 
 <script>
- const menuBtn = document.getElementById("menu-btn");
-const closeBtn = document.getElementById("close-btn");
-const sidebar = document.getElementById("sidebar");
+// Initialize Supabase
+(function() {
+  const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
+  window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  
+  // Initialize auth state listener
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log('Auth state changed:', event, session);
+    updateUIForAuthState(session);
+    updateAuthButton(session);
+  });
+})();
 
-menuBtn.addEventListener("click", () => {
-  sidebar.classList.remove("translate-x-full", "hidden");
-  sidebar.classList.add("translate-x-0");
+  // Add these functions to handle login/signup
+async function handleLogin(email, password) {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+    
+    if (error) throw error;
+    
+    // Close modal and update UI
+    document.getElementById('authModal').classList.add('hidden');
+    updateUIForAuthState(data.session);
+    updateAuthButton(data.session);
+    
+    return true;
+  } catch (error) {
+    console.error('Login error:', error);
+    alert(error.message);
+    return false;
+  }
+}
+
+async function handleSignup(fullName, email, password, address, mobileNumber) {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: fullName,
+          address: address,
+          phone: mobileNumber
+        }
+      }
+    });
+    
+    if (error) throw error;
+    
+    alert('Signup successful! Please check your email for confirmation.');
+    switchToLogin();
+    return true;
+  } catch (error) {
+    console.error('Signup error:', error);
+    alert(error.message);
+    return false;
+  }
+}
+
+// Add form submission handlers
+document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  await handleLogin(email, password);
 });
 
-closeBtn.addEventListener("click", () => {
-  sidebar.classList.remove("translate-x-0");
-  sidebar.classList.add("translate-x-full");
-
-  // Wait for transition to end before hiding completely
-  setTimeout(() => {
-    sidebar.classList.add("hidden");
-  }, 300); // matches the Tailwind transition duration
+document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fullName = document.getElementById('fullName').value;
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const address = document.getElementById('address').value;
+  const mobileNumber = document.getElementById('mobileNumber').value;
+  
+  if (password !== confirmPassword) {
+    alert("Passwords don't match!");
+    return;
+  }
+  
+  await handleSignup(fullName, email, password, address, mobileNumber);
 });
+
+  // Function to update UI based on auth state
+  function updateUIForAuthState(session) {
+  const profileBtn = document.getElementById("profileBtn");
+  const profileModal = document.getElementById("profileModal");
+  const mobileAuthButton = document.getElementById('mobileAuthButton');
+  const authButton = document.getElementById('authButton');
+  
+  if (session) {
+    // User is logged in
+    if (profileBtn) {
+      profileBtn.innerHTML = `
+        <img src="${session.user.user_metadata?.avatar_url || '/pictures/profile.png'}" 
+             alt="Profile" class="h-8 w-8 rounded-full">
+      `;
+    }
+    if (mobileAuthButton) {
+      mobileAuthButton.textContent = 'Log Out';
+      mobileAuthButton.onclick = () => supabase.auth.signOut();
+    }
+    if (authButton) {
+      authButton.onclick = () => supabase.auth.signOut();
+    }
+  } else {
+    // User is not logged in
+    if (profileBtn) {
+      profileBtn.innerHTML = `
+        <img src="/pictures/profile.png" alt="Profile" class="h-8 w-8 rounded-full">
+      `;
+    }
+    if (mobileAuthButton) {
+      mobileAuthButton.textContent = 'Log In';
+      mobileAuthButton.onclick = () => document.getElementById('authModal').classList.remove('hidden');
+    }
+    if (authButton) {
+      authButton.onclick = () => document.getElementById('authModal').classList.remove('hidden');
+    }
+  }
+}
+
+function switchToSignup() {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('signupForm').classList.remove('hidden');
+}
+
+function switchToLogin() {
+  document.getElementById('signupForm').classList.add('hidden');
+  document.getElementById('loginForm').classList.remove('hidden');
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').classList.add('hidden');
+  // Reset forms when closing
+  document.getElementById('loginForm').reset();
+  document.getElementById('signupForm').reset();
+  // Switch back to login form
+  switchToLogin();
+}
+
+  // Function to update auth button state
+  function updateAuthButton(session) {
+    const authButton = document.getElementById('authButton');
+    const authText = document.getElementById('authText');
+    const authIcon = document.getElementById('authIcon');
+    
+    if (authButton && authText && authIcon) {
+      if (session) {
+        authText.textContent = 'Log Out';
+        authIcon.src = '/pictures/logout_icon.png';
+      } else {
+        authText.textContent = 'Log In';
+        authIcon.src = '/pictures/login_icon.png';
+      }
+    }
+  }
+
+  // Function to handle auth action (login/logout)
+  async function handleAuthAction() {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (session) {
+      await supabase.auth.signOut();
+    } else {
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+  }
+
+  // Profile dropdown functionality
+  const profileBtn = document.getElementById("profileBtn");
+  const profileModal = document.getElementById("profileModal");
+
+  if (profileBtn && profileModal) {
+    profileBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      profileModal.classList.toggle("hidden");
+    });
+    
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!profileBtn.contains(e.target) && !profileModal.contains(e.target)) {
+        profileModal.classList.add("hidden");
+      }
+    });
+  }
+
+  // Menu toggle functionality
+  document.addEventListener('DOMContentLoaded', async () => {
+    const menuBtn = document.getElementById("menu-btn");
+    const closeBtn = document.getElementById("close-btn");
+    const sidebar = document.getElementById("sidebar");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.remove("translate-x-full", "hidden");
+      sidebar.classList.add("translate-x-0");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      sidebar.classList.remove("translate-x-0");
+      sidebar.classList.add("translate-x-full");
+      setTimeout(() => sidebar.classList.add("hidden"), 300);
+    });
+
+    // Initialize auth state
+    const { data: { session } } = await supabase.auth.getSession();
+    updateUIForAuthState(session);
+    updateAuthButton(session);
+
+    // Add click handler for auth button
+    document.getElementById('authButton')?.addEventListener('click', handleAuthAction);
+  });
 </script>
   
    <div class="flex justify-between items-center py-6 w-full ">
@@ -370,13 +623,6 @@ closeBtn.addEventListener("click", () => {
 </div>
 
 <script>
-  // Initialize Supabase (same as announcements.html)
-  (function() {
-    const supabaseUrl = 'https://bynplwqqzlzfbdrbvuzk.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5bnBsd3Fxemx6ZmJkcmJ2dXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNDQ4NDIsImV4cCI6MjA2MjgyMDg0Mn0.w69ANA33wQnVONct7WX-lDrWqFZNWhuV96iHf5AKrXM';
-    window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
-  })();
-
   // DOM Elements
   const bookingForm = document.getElementById('booking-form'); // Ensure your form has this ID
   const submitBtn = bookingForm?.querySelector('button[type="submit"]');
@@ -888,29 +1134,6 @@ function formatTime(timeStr) {
     setupAmenityButtons();
     updateButtonStyles('btn-basketball'); // Set default active button
   });
-</script>
-
-
- <script>
-  const profileBtn = document.getElementById("profileBtn");
-  const profileModal = document.getElementById("profileModal");
-
-  profileBtn.addEventListener("click", () => {
-    profileModal.classList.toggle("hidden");
-  });
-
-  // Optional: Close when clicking outside
-  document.addEventListener("click", (event) => {
-    if (!profileBtn.contains(event.target) && !profileModal.contains(event.target)) {
-      profileModal.classList.add("hidden");
-    }
-  });
-
-  function logout() {
-    // perform logout logic
-    alert("Logging out...");
-    // redirect or clear session, etc.
-  }
 </script>
 
 
